@@ -1,6 +1,7 @@
 <div align="center">
   <img src="src/assets/hiking-club-banner.png" alt="Hiking Club Frontend Banner" width="100%">
 </div>
+
 # 🏔️ Hiking Club Frontend
 
 一个现代化的徒步俱乐部前端应用，帮助户外爱好者发现、组织和参与徒步活动。
