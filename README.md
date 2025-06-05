@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/hiking-club-banner.png" alt="Hiking Club Frontend Banner" width="100%">
+  <img src="src/assets/hiking-club-banner.png" alt="Hiking Club Frontend Banner" width="100%">
 </div>
 # 🏔️ Hiking Club Frontend
 
