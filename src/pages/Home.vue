@@ -10,7 +10,7 @@
           />
           <h1 class="title">Hiking Club</h1>
         </div>
-        <p class="subtitle">探索自然，结交朋友</p>
+        <p class="subtitle">探索自然，结交朋友~</p>
       </div>
     </div>
 
