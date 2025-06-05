@@ -8,7 +8,7 @@ on:
 
 jobs:
   sync:
-    if: github.repository == 'hikingclub-cn/hiking-club-website'
+    if: github.repository == 'hikingclub-cn/hiking-club-frontend'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout upstream
@@ -27,7 +27,7 @@ jobs:
           git config --global --unset-all http.https://github.com/.extraheader || true
           
           # 添加 fork 远程仓库
-          git remote add fork https://x-access-token:${GH_TOKEN}@github.com/lizheyong/hiking-club-website.git
+          git remote add fork https://x-access-token:${GH_TOKEN}@github.com/lizheyong/hiking-club-frontend.git
           
           # 推送到 fork
           git push -f fork main
