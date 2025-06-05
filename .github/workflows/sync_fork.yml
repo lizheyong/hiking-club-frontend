@@ -1,10 +1,12 @@
 name: Sync to Fork
+
 on:
   push:
     branches:
       - main
     paths-ignore:
-      - .github/workflows/sync_fork.yml
+      - '.github/workflows/**'
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -14,20 +16,31 @@ jobs:
       - name: Checkout upstream
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取完整历史记录
-          
+          fetch-depth: 1
+          persist-credentials: false
+
       - name: Push to fork
         env:
-          GH_TOKEN: ${{ secrets.PUSH_TO_FORK_TOKEN_WEBSITE }}
+          GH_PAT: ${{ secrets.PUSH_TO_FORK_TOKEN_WEBSITE }}
+          FORK_OWNER: lizheyong
+          FORK_REPO: hiking-club-frontend
         run: |
-          git config --global user.name "lizheyong"
-          git config --global user.email "740967133@mail.nwpu.edu.cn"
-          
-          # ✅关键修复，移除默认身份 header，确保使用 token 认证
-          git config --global --unset-all http.https://github.com/.extraheader || true
-          
-          # 添加 fork 远程仓库
-          git remote add fork https://x-access-token:${GH_TOKEN}@github.com/lizheyong/hiking-club-frontend.git
-          
-          # 推送到 fork
-          git push -f fork main
+          set -e
+
+          echo "源仓库当前分支: ${{ github.ref_name }}"
+          echo "目标用户/组织: ${FORK_OWNER}"
+          echo "目标仓库名: ${FORK_REPO}"
+
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "github-actions-bot@users.noreply.github.com"
+
+          git config --global --unset-all "http.https://github.com/.extraheader" || true
+          git config --global --unset-all credential.helper || true
+          git config --global credential.helper ""
+
+          TARGET_REPO_URL_WITH_PAT="https://x-access-token:${GH_PAT}@github.com/${FORK_OWNER}/${FORK_REPO}.git"
+
+          echo "正在将本地分支 '${{ github.ref_name }}' 推送到远程仓库 '${FORK_OWNER}/${FORK_REPO}' 的 'main' 分支..."
+          git push --force "${TARGET_REPO_URL_WITH_PAT}" "${{ github.ref_name }}:main"
+
+          echo "成功推送！"
