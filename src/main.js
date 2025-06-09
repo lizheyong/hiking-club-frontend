@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+import i18n from './i18n'
 import {
   Button,
   Field,
@@ -40,6 +41,7 @@ import App from "./App.vue";
 import router from "./router";
 
 const app = createApp(App);
+app.use(i18n)
 
 // 注册 Vant 组件
 const vantComponents = [
@@ -86,6 +88,7 @@ vantComponents.forEach((component) => {
 });
 
 app.use(createPinia());
+
 app.use(router);
 
 app.mount("#app");

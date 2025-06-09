@@ -3,7 +3,7 @@
     <div class="search-bar glass-card">
       <van-search
         v-model="searchText"
-        placeholder="搜索活动"
+        :placeholder="$t('activities.search.placeholder')"
         shape="round"
         @search="onSearch"
       />
@@ -27,7 +27,7 @@
           class="tag-button"
           @click="showTagPopup = true"
         >
-          筛选标签
+          {{ $t('activities.search.filterTags') }}
         </van-button>
       </div>
     </div>
@@ -65,9 +65,10 @@
             <div class="activity-footer">
               <div class="participants">
                 <van-icon name="friends-o" />
-                {{ activity.currentParticipants }}/{{
-                  activity.maxParticipants
-                }}
+                {{ $t('activities.meta.participants', {
+                  current: activity.currentParticipants,
+                  max: activity.maxParticipants
+                }) }}
               </div>
               <div class="tags">
                 <van-tag
@@ -96,7 +97,7 @@
     >
       <div class="tag-popup glass-inner">
         <div class="popup-header">
-          <h3 class="popup-title">选择标签</h3>
+          <h3 class="popup-title">{{ $t('activities.tagPopup.title') }}</h3>
           <van-icon
             name="cross"
             class="close-icon"
@@ -124,7 +125,7 @@
             class="confirm-button"
             @click="showTagPopup = false"
           >
-            确定
+            {{ $t('activities.tagPopup.confirm') }}
           </van-button>
         </div>
       </div>
@@ -146,7 +147,7 @@
           @click="handleTabChange(tab, index)"
         >
           <van-icon :name="tab.icon" />
-          <span>{{ tab.text }}</span>
+          <span>{{ $t(tab.textKey) }}</span>
         </div>
       </div>
     </div>
@@ -159,9 +160,11 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { activityApi } from "../api/activity";
 import { showToast } from "vant";
+import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
 const userStore = useUserStore();
+const { t } = useI18n();
 
 // 状态
 const searchText = ref("");
@@ -171,22 +174,13 @@ const showDatePicker = ref(false);
 const activeTab = ref(1); // 活动页面默认选中第二个标签
 
 // 可用标签
-const availableTags = [
-  "徒步",
-  "登山",
-  "露营",
-  "摄影",
-  "观星",
-  "野餐",
-  "亲子",
-  "交友",
-];
+const availableTags = computed(() => t('activities.availableTags'));
 
 // 底部标签栏
 const tabs = [
-  { name: "home", icon: "home-o", text: "首页", route: "/" },
-  { name: "activities", icon: "search", text: "活动", route: "/activities" },
-  { name: "profile", icon: "user-o", text: "我的", route: "/profile" },
+  { name: "home", icon: "home-o", textKey: "home.tabs.home", route: "/" },
+  { name: "activities", icon: "search", textKey: "home.tabs.activities", route: "/activities" },
+  { name: "profile", icon: "user-o", textKey: "home.tabs.profile", route: "/profile" },
 ];
 
 const handleTabChange = (tab, index) => {
@@ -203,8 +197,16 @@ const loadActivities = async () => {
     const res = await activityApi.getActivities();
     activities.value = res.data;
   } catch (error) {
-    showToast("加载失败");
+    showToast(t('activities.errors.loadFailed'));
   }
+};
+
+// 获取活动状态文本
+const getStatusText = (activity) => {
+  if (activity.status === 'upcoming') {
+    return t(`activities.status.upcoming.${activity.phase}`);
+  }
+  return t(`activities.status.${activity.status}`);
 };
 
 // 过滤活动
@@ -248,38 +250,20 @@ const onDateConfirm = (date) => {
 const formatDate = (date) => {
   if (!date) return "";
   const d = new Date(date);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
-    2,
-    "0"
-  )}-${String(d.getDate()).padStart(2, "0")} ${String(d.getHours()).padStart(
-    2,
-    "0"
-  )}:${String(d.getMinutes()).padStart(2, "0")}`;
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${months[d.getMonth()]} ${d.getDate()} ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 };
 
-const getStatusText = (activity) => {
-  if (activity.status === "upcoming") {
-    return activity.phase === "voting" ? "投票中" : "报名中";
-  }
-  const statusMap = {
-    upcoming: "即将开始",
-    ongoing: "进行中",
-    completed: "已结束",
-    cancelled: "已取消",
-  };
-  return statusMap[activity.status] || activity.status;
-};
-
-// 事件处理
-const onSearch = () => {
-  // 搜索逻辑已通过计算属性实现
-};
-
+// 跳转到详情页
 const goToDetail = (id) => {
   router.push(`/activity/${id}`);
 };
 
-// 初始化
+// 搜索
+const onSearch = () => {
+  // 实现搜索逻辑
+};
+
 onMounted(() => {
   loadActivities();
 });

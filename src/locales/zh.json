@@ -1,0 +1,354 @@
+{
+  "login": {
+    "title": "登录",
+    "welcome": "欢迎登录",
+    "phone": {
+      "title": "手机号登录",
+      "phoneNumber": "手机号",
+      "phonePlaceholder": "请输入手机号",
+      "phoneRequired": "请填写手机号",
+      "verificationCode": "验证码",
+      "codePlaceholder": "请输入验证码",
+      "codeRequired": "请填写验证码",
+      "sendCode": "发送验证码",
+      "resendCode": "{countdown}s后重试",
+      "login": "登录"
+    },
+    "email": {
+      "title": "邮箱登录",
+      "email": "邮箱",
+      "emailPlaceholder": "请输入邮箱",
+      "emailRequired": "请填写邮箱",
+      "password": "密码",
+      "passwordPlaceholder": "请输入密码",
+      "passwordRequired": "请填写密码",
+      "login": "登录"
+    },
+    "switchToEmail": "使用邮箱登录",
+    "switchToPhone": "使用手机号登录",
+    "noAccount": "还没有账号？",
+    "registerNow": "立即注册",
+    "codeSent": "验证码已发送",
+    "sendFailed": "发送失败，请重试",
+    "loginSuccess": "登录成功",
+    "loginFailed": "登录失败，请重试"
+  },
+  "register": {
+    "title": "注册账号",
+    "welcome": "创建账号",
+    "form": {
+      "username": {
+        "label": "用户名",
+        "placeholder": "请输入用户名",
+        "required": "请输入用户名"
+      },
+      "email": {
+        "label": "邮箱",
+        "placeholder": "请输入邮箱",
+        "required": "请输入邮箱",
+        "invalid": "请输入正确的邮箱格式"
+      },
+      "phone": {
+        "label": "手机号",
+        "placeholder": "请输入手机号",
+        "required": "请输入手机号",
+        "invalid": "请输入正确的手机号格式"
+      },
+      "password": {
+        "label": "密码",
+        "placeholder": "请输入密码",
+        "required": "请输入密码",
+        "minLength": "密码长度不能小于6位"
+      },
+      "confirmPassword": {
+        "label": "确认密码",
+        "placeholder": "请再次输入密码",
+        "required": "请确认密码",
+        "mismatch": "两次输入的密码不一致"
+      }
+    },
+    "submit": "注册",
+    "hasAccount": "已有账号？",
+    "loginNow": "立即登录",
+    "success": "注册成功",
+    "failed": "注册失败"
+  },
+  "home": {
+    "title": "Hiking Club",
+    "subtitle": "探索自然，结交朋友～",
+    "quickActions": {
+      "createActivity": "发布活动",
+      "myActivities": "我的活动",
+      "favoriteActivities": "收藏活动",
+      "activityGuide": "活动指南"
+    },
+    "sections": {
+      "enrolling": {
+        "title": "活动报名中",
+        "status": "报名中",
+        "participants": "{current}/{max}人"
+      },
+      "voting": {
+        "title": "活动投票中",
+        "status": "投票中",
+        "routes": "{count}条路线"
+      }
+    },
+    "tabs": {
+      "home": "首页",
+      "activities": "活动",
+      "profile": "我的"
+    }
+  },
+  "activities": {
+    "search": {
+      "placeholder": "搜索活动",
+      "filterTags": "筛选标签"
+    },
+    "status": {
+      "upcoming": {
+        "enrolling": "报名中",
+        "voting": "投票中",
+        "confirmed": "已确认"
+      },
+      "ongoing": "进行中",
+      "completed": "已结束",
+      "cancelled": "已取消"
+    },
+    "meta": {
+      "participants": "{current}/{max}",
+      "location": "地点",
+      "time": "时间"
+    },
+    "tagPopup": {
+      "title": "选择标签",
+      "confirm": "确定"
+    },
+    "availableTags": [
+      "徒步",
+      "登山",
+      "露营",
+      "摄影",
+      "观星",
+      "野餐",
+      "亲子",
+      "交友"
+    ],
+    "errors": {
+      "loadFailed": "加载失败"
+    }
+  },
+  "activityDetail": {
+    "title": "活动详情",
+    "loading": "加载中...",
+    "loadFailed": "加载失败: {error}",
+    "meta": {
+      "creator": "发起人: {name}",
+      "location": "地点",
+      "time": "时间"
+    },
+    "status": {
+      "review": "(待审核)",
+      "rejected": {
+        "title": "活动被拒原因",
+        "reason": "活动被拒绝"
+      },
+      "cancelled": {
+        "title": "活动取消原因",
+        "reason": "活动已取消"
+      }
+    },
+    "routes": {
+      "voting": {
+        "title": "路线投票 (选择一条)",
+        "myVote": "我的投票",
+        "votedOther": "已投其他",
+        "voteThis": "投此路线",
+        "votes": "{count}票"
+      },
+      "selected": {
+        "title": "活动路线",
+        "finalVotes": "最终票数: {count}"
+      },
+      "info": {
+        "title": "路线信息",
+        "distance": "距离: {distance}公里",
+        "duration": "时长: {duration}小时",
+        "difficulty": "难度: {level}"
+      }
+    },
+    "participants": {
+      "title": "参与者 ({current}/{max})",
+      "full": "已满员",
+      "empty": "暂无参与者",
+      "remove": "移除该参与者"
+    },
+    "actions": {
+      "join": "报名活动",
+      "cancelJoin": "取消报名",
+      "vote": "投票",
+      "cancelVote": "取消投票",
+      "confirm": "确认",
+      "cancel": "取消"
+    },
+    "errors": {
+      "joinFailed": "报名失败",
+      "cancelJoinFailed": "取消报名失败",
+      "voteFailed": "投票失败",
+      "cancelVoteFailed": "取消投票失败",
+      "removeParticipantFailed": "移除参与者失败"
+    }
+  },
+  "profile": {
+    "title": "个人资料",
+    "userId": "ID：{id}",
+    "stats": {
+      "createdActivities": "已创建",
+      "joinedActivities": "已参与",
+      "favoriteActivities": "已收藏"
+    },
+    "myActivities": {
+      "title": "我的活动",
+      "created": "已创建",
+      "joined": "已参与",
+      "favorite": "已收藏",
+      "empty": {
+        "created": "暂无创建的活动",
+        "joined": "暂无参与的活动",
+        "favorite": "暂无收藏的活动"
+      }
+    },
+    "errors": {
+      "loadFailed": "加载个人资料失败"
+    }
+  },
+  "createActivity": {
+    "title": "发布活动",
+    "basicInfo": {
+      "title": "基本信息",
+      "titlePlaceholder": "请输入活动标题",
+      "titleRequired": "请输入活动标题",
+      "description": "活动描述",
+      "descriptionPlaceholder": "请输入活动描述",
+      "descriptionRequired": "请输入活动描述",
+      "location": "活动地点",
+      "locationPlaceholder": "请输入活动地点",
+      "locationRequired": "请输入活动地点",
+      "startTime": "开始时间",
+      "startTimePlaceholder": "请选择开始时间",
+      "startTimeRequired": "请选择开始时间",
+      "maxParticipants": "最大参与人数",
+      "maxParticipantsPlaceholder": "请输入最大参与人数（2-100）",
+      "maxParticipantsRequired": "请输入最大参与人数",
+      "maxParticipantsInvalid": "最大参与人数必须在2到100之间"
+    },
+    "routes": {
+      "title": "路线",
+      "route": "路线 {number}",
+      "remove": "删除",
+      "title": "标题",
+      "titlePlaceholder": "请输入路线标题",
+      "titleRequired": "请输入路线标题",
+      "description": "描述",
+      "descriptionPlaceholder": "请输入路线描述",
+      "descriptionRequired": "请输入路线描述",
+      "distance": "距离（公里）",
+      "distancePlaceholder": "请输入距离",
+      "distanceRequired": "请输入距离",
+      "distanceInvalid": "距离必须在0到100公里之间",
+      "duration": "时长（小时）",
+      "durationPlaceholder": "请输入时长",
+      "durationRequired": "请输入时长",
+      "durationInvalid": "时长必须在0到24小时之间",
+      "difficulty": "难度",
+      "difficultyPlaceholder": "请选择难度",
+      "difficultyRequired": "请选择难度",
+      "add": "添加路线"
+    },
+    "tags": {
+      "title": "标签",
+      "placeholder": "输入标签并按回车",
+      "add": "添加"
+    },
+    "datePicker": {
+      "title": "选择日期"
+    },
+    "difficultyPicker": {
+      "title": "选择难度",
+      "easy": "简单",
+      "medium": "中等",
+      "hard": "困难"
+    },
+    "submit": "发布活动",
+    "success": "活动发布成功",
+    "errors": {
+      "createFailed": "活动发布失败，请稍后重试"
+    }
+  },
+  "editActivity": {
+    "title": "编辑活动",
+    "basicInfo": {
+      "title": "基本信息",
+      "titlePlaceholder": "请输入活动标题",
+      "titleRequired": "请输入活动标题",
+      "description": "活动描述",
+      "descriptionPlaceholder": "请输入活动描述",
+      "descriptionRequired": "请输入活动描述",
+      "location": "活动地点",
+      "locationPlaceholder": "请输入活动地点",
+      "locationRequired": "请输入活动地点",
+      "startTime": "开始时间",
+      "startTimePlaceholder": "请选择开始时间",
+      "startTimeRequired": "请选择开始时间",
+      "maxParticipants": "最大参与人数",
+      "maxParticipantsPlaceholder": "请输入最大参与人数（2-100）",
+      "maxParticipantsRequired": "请输入最大参与人数",
+      "maxParticipantsInvalid": "最大参与人数必须在2到100之间"
+    },
+    "routes": {
+      "title": "路线",
+      "route": "路线 {number}",
+      "remove": "删除",
+      "title": "标题",
+      "titlePlaceholder": "请输入路线标题",
+      "titleRequired": "请输入路线标题",
+      "description": "描述",
+      "descriptionPlaceholder": "请输入路线描述",
+      "descriptionRequired": "请输入路线描述",
+      "distance": "距离（公里）",
+      "distancePlaceholder": "请输入距离",
+      "distanceRequired": "请输入距离",
+      "distanceInvalid": "距离必须在0到100公里之间",
+      "duration": "时长（小时）",
+      "durationPlaceholder": "请输入时长",
+      "durationRequired": "请输入时长",
+      "durationInvalid": "时长必须在0到24小时之间",
+      "difficulty": "难度",
+      "difficultyPlaceholder": "请选择难度",
+      "difficultyRequired": "请选择难度",
+      "add": "添加路线"
+    },
+    "tags": {
+      "title": "标签",
+      "placeholder": "输入标签并按回车",
+      "add": "添加"
+    },
+    "datePicker": {
+      "title": "选择日期"
+    },
+    "difficultyPicker": {
+      "title": "选择难度",
+      "easy": "简单",
+      "medium": "中等",
+      "hard": "困难"
+    },
+    "submit": "保存修改",
+    "success": "活动更新成功",
+    "errors": {
+      "notLoggedIn": "请先登录",
+      "notCreator": "您不是该活动的创建者",
+      "loadFailed": "加载活动数据失败",
+      "updateFailed": "更新活动失败，请稍后重试"
+    }
+  }
+}

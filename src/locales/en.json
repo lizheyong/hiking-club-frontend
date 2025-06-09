@@ -1,0 +1,354 @@
+{
+  "login": {
+    "title": "Login",
+    "welcome": "Welcome",
+    "phone": {
+      "title": "Phone Login",
+      "phoneNumber": "Phone Number",
+      "phonePlaceholder": "Please enter phone number",
+      "phoneRequired": "Please enter phone number",
+      "verificationCode": "Verification Code",
+      "codePlaceholder": "Please enter verification code",
+      "codeRequired": "Please enter verification code",
+      "sendCode": "Send Code",
+      "resendCode": "Resend in {countdown}s",
+      "login": "Login"
+    },
+    "email": {
+      "title": "Email Login",
+      "email": "Email",
+      "emailPlaceholder": "Please enter email",
+      "emailRequired": "Please enter email",
+      "password": "Password",
+      "passwordPlaceholder": "Please enter password",
+      "passwordRequired": "Please enter password",
+      "login": "Login"
+    },
+    "switchToEmail": "Login with Email",
+    "switchToPhone": "Login with Phone",
+    "noAccount": "No account?",
+    "registerNow": "Register Now",
+    "codeSent": "Verification code sent",
+    "sendFailed": "Failed to send, please try again",
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed, please try again"
+  },
+  "register": {
+    "title": "Register",
+    "welcome": "Create Account",
+    "form": {
+      "username": {
+        "label": "Username",
+        "placeholder": "Please enter username",
+        "required": "Please enter username"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Please enter email",
+        "required": "Please enter email",
+        "invalid": "Please enter a valid email format"
+      },
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": "Please enter phone number",
+        "required": "Please enter phone number",
+        "invalid": "Please enter a valid phone number format"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Please enter password",
+        "required": "Please enter password",
+        "minLength": "Password must be at least 6 characters"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Please enter password again",
+        "required": "Please confirm password",
+        "mismatch": "Passwords do not match"
+      }
+    },
+    "submit": "Register",
+    "hasAccount": "Already have an account?",
+    "loginNow": "Login Now",
+    "success": "Registration successful",
+    "failed": "Registration failed"
+  },
+  "home": {
+    "title": "Hiking Club",
+    "subtitle": "Explore nature, make friends",
+    "quickActions": {
+      "createActivity": "Create Activity",
+      "myActivities": "My Activities",
+      "favoriteActivities": "Favorite Activities",
+      "activityGuide": "Activity Guide"
+    },
+    "sections": {
+      "enrolling": {
+        "title": "Enrolling Activities",
+        "status": "Enrolling",
+        "participants": "{current}/{max} participants"
+      },
+      "voting": {
+        "title": "Voting Activities",
+        "status": "Voting",
+        "routes": "{count} routes"
+      }
+    },
+    "tabs": {
+      "home": "Home",
+      "activities": "Activities",
+      "profile": "Profile"
+    }
+  },
+  "activities": {
+    "search": {
+      "placeholder": "Search activities",
+      "filterTags": "Filter Tags"
+    },
+    "status": {
+      "upcoming": {
+        "enrolling": "Enrolling",
+        "voting": "Voting",
+        "confirmed": "Confirmed"
+      },
+      "ongoing": "Ongoing",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "meta": {
+      "participants": "{current}/{max}",
+      "location": "Location",
+      "time": "Time"
+    },
+    "tagPopup": {
+      "title": "Select Tags",
+      "confirm": "Confirm"
+    },
+    "availableTags": [
+      "Hiking",
+      "Mountain Climbing",
+      "Camping",
+      "Photography",
+      "Stargazing",
+      "Picnic",
+      "Family",
+      "Social"
+    ],
+    "errors": {
+      "loadFailed": "Failed to load activities"
+    }
+  },
+  "activityDetail": {
+    "title": "Activity Details",
+    "loading": "Loading...",
+    "loadFailed": "Failed to load: {error}",
+    "meta": {
+      "creator": "Creator: {name}",
+      "location": "Location",
+      "time": "Time"
+    },
+    "status": {
+      "review": "(Pending Review)",
+      "rejected": {
+        "title": "Rejection Reason",
+        "reason": "Activity was rejected"
+      },
+      "cancelled": {
+        "title": "Cancellation Reason",
+        "reason": "Activity was cancelled"
+      }
+    },
+    "routes": {
+      "voting": {
+        "title": "Route Voting (Choose One)",
+        "myVote": "My Vote",
+        "votedOther": "Voted Other",
+        "voteThis": "Vote This Route",
+        "votes": "{count} votes"
+      },
+      "selected": {
+        "title": "Selected Route",
+        "finalVotes": "Final Votes: {count}"
+      },
+      "info": {
+        "title": "Route Information",
+        "distance": "Distance: {distance}km",
+        "duration": "Duration: {duration}h",
+        "difficulty": "Difficulty: {level}"
+      }
+    },
+    "participants": {
+      "title": "Participants ({current}/{max})",
+      "full": "Full",
+      "empty": "No participants yet",
+      "remove": "Remove participant"
+    },
+    "actions": {
+      "join": "Join Activity",
+      "cancelJoin": "Cancel Join",
+      "vote": "Vote",
+      "cancelVote": "Cancel Vote",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "joinFailed": "Failed to join activity",
+      "cancelJoinFailed": "Failed to cancel join",
+      "voteFailed": "Failed to vote",
+      "cancelVoteFailed": "Failed to cancel vote",
+      "removeParticipantFailed": "Failed to remove participant"
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "userId": "ID: {id}",
+    "stats": {
+      "createdActivities": "Created",
+      "joinedActivities": "Joined",
+      "favoriteActivities": "Favorites"
+    },
+    "myActivities": {
+      "title": "My Activities",
+      "created": "Created",
+      "joined": "Joined",
+      "favorite": "Favorites",
+      "empty": {
+        "created": "No activities created yet",
+        "joined": "No activities joined yet",
+        "favorite": "No favorite activities yet"
+      }
+    },
+    "errors": {
+      "loadFailed": "Failed to load profile data"
+    }
+  },
+  "createActivity": {
+    "title": "Create Activity",
+    "basicInfo": {
+      "title": "Basic Information",
+      "titlePlaceholder": "Enter activity title",
+      "titleRequired": "Please enter activity title",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter activity description",
+      "descriptionRequired": "Please enter activity description",
+      "location": "Location",
+      "locationPlaceholder": "Enter activity location",
+      "locationRequired": "Please enter activity location",
+      "startTime": "Start Time",
+      "startTimePlaceholder": "Select start time",
+      "startTimeRequired": "Please select start time",
+      "maxParticipants": "Max Participants",
+      "maxParticipantsPlaceholder": "Enter max participants (2-100)",
+      "maxParticipantsRequired": "Please enter max participants",
+      "maxParticipantsInvalid": "Max participants must be between 2 and 100"
+    },
+    "routes": {
+      "title": "Routes",
+      "route": "Route {number}",
+      "remove": "Remove",
+      "title": "Title",
+      "titlePlaceholder": "Enter route title",
+      "titleRequired": "Please enter route title",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter route description",
+      "descriptionRequired": "Please enter route description",
+      "distance": "Distance (km)",
+      "distancePlaceholder": "Enter distance",
+      "distanceRequired": "Please enter distance",
+      "distanceInvalid": "Distance must be between 0 and 100 km",
+      "duration": "Duration (hours)",
+      "durationPlaceholder": "Enter duration",
+      "durationRequired": "Please enter duration",
+      "durationInvalid": "Duration must be between 0 and 24 hours",
+      "difficulty": "Difficulty",
+      "difficultyPlaceholder": "Select difficulty",
+      "difficultyRequired": "Please select difficulty",
+      "add": "Add Route"
+    },
+    "tags": {
+      "title": "Tags",
+      "placeholder": "Enter tag and press Enter",
+      "add": "Add"
+    },
+    "datePicker": {
+      "title": "Select Date"
+    },
+    "difficultyPicker": {
+      "title": "Select Difficulty",
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "submit": "Create Activity",
+    "success": "Activity created successfully",
+    "errors": {
+      "createFailed": "Failed to create activity, please try again"
+    }
+  },
+  "editActivity": {
+    "title": "Edit Activity",
+    "basicInfo": {
+      "title": "Basic Information",
+      "titlePlaceholder": "Enter activity title",
+      "titleRequired": "Please enter activity title",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter activity description",
+      "descriptionRequired": "Please enter activity description",
+      "location": "Location",
+      "locationPlaceholder": "Enter activity location",
+      "locationRequired": "Please enter activity location",
+      "startTime": "Start Time",
+      "startTimePlaceholder": "Select start time",
+      "startTimeRequired": "Please select start time",
+      "maxParticipants": "Max Participants",
+      "maxParticipantsPlaceholder": "Enter max participants (2-100)",
+      "maxParticipantsRequired": "Please enter max participants",
+      "maxParticipantsInvalid": "Max participants must be between 2 and 100"
+    },
+    "routes": {
+      "title": "Routes",
+      "route": "Route {number}",
+      "remove": "Remove",
+      "title": "Title",
+      "titlePlaceholder": "Enter route title",
+      "titleRequired": "Please enter route title",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter route description",
+      "descriptionRequired": "Please enter route description",
+      "distance": "Distance (km)",
+      "distancePlaceholder": "Enter distance",
+      "distanceRequired": "Please enter distance",
+      "distanceInvalid": "Distance must be between 0 and 100 km",
+      "duration": "Duration (hours)",
+      "durationPlaceholder": "Enter duration",
+      "durationRequired": "Please enter duration",
+      "durationInvalid": "Duration must be between 0 and 24 hours",
+      "difficulty": "Difficulty",
+      "difficultyPlaceholder": "Select difficulty",
+      "difficultyRequired": "Please select difficulty",
+      "add": "Add Route"
+    },
+    "tags": {
+      "title": "Tags",
+      "placeholder": "Enter tag and press Enter",
+      "add": "Add"
+    },
+    "datePicker": {
+      "title": "Select Date"
+    },
+    "difficultyPicker": {
+      "title": "Select Difficulty",
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "submit": "Save Changes",
+    "success": "Activity updated successfully",
+    "errors": {
+      "notLoggedIn": "Please login first",
+      "notCreator": "You are not the creator of this activity",
+      "loadFailed": "Failed to load activity data",
+      "updateFailed": "Failed to update activity, please try again"
+    }
+  }
+}

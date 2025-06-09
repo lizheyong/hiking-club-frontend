@@ -1,12 +1,12 @@
 <template>
   <div class="register-page">
-    <van-nav-bar title="注册账号" left-arrow @click-left="router.back()" />
+    <van-nav-bar :title="$t('register.title')" left-arrow @click-left="router.back()" />
 
     <div class="register-container">
       <div class="register-header glass-card">
         <div class="logo-title-container">
           <img src="../assets/logo.png" alt="Logo" class="logo" />
-          <h2 class="welcome-text">创建账号</h2>
+          <h2 class="welcome-text">{{ $t('register.welcome') }}</h2>
         </div>
       </div>
 
@@ -16,52 +16,52 @@
             <van-field
               v-model="form.username"
               name="username"
-              label="用户名"
-              placeholder="请输入用户名"
-              :rules="[{ required: true, message: '请输入用户名' }]"
+              :label="$t('register.form.username.label')"
+              :placeholder="$t('register.form.username.placeholder')"
+              :rules="[{ required: true, message: $t('register.form.username.required') }]"
             />
             <van-field
               v-model="form.email"
               name="email"
-              label="邮箱"
-              placeholder="请输入邮箱"
+              :label="$t('register.form.email.label')"
+              :placeholder="$t('register.form.email.placeholder')"
               :rules="[
-                { required: true, message: '请输入邮箱' },
-                { pattern: /.+@.+\..+/, message: '请输入正确的邮箱格式' },
+                { required: true, message: $t('register.form.email.required') },
+                { pattern: /.+@.+\..+/, message: $t('register.form.email.invalid') },
               ]"
             />
             <van-field
               v-model="form.phone"
               name="phone"
-              label="手机号"
-              placeholder="请输入手机号"
+              :label="$t('register.form.phone.label')"
+              :placeholder="$t('register.form.phone.placeholder')"
               :rules="[
-                { required: true, message: '请输入手机号' },
-                { pattern: /^1[3-9]\d{9}$/, message: '请输入正确的手机号格式' },
+                { required: true, message: $t('register.form.phone.required') },
+                { pattern: /^1[3-9]\d{9}$/, message: $t('register.form.phone.invalid') },
               ]"
             />
             <van-field
               v-model="form.password"
               type="password"
               name="password"
-              label="密码"
-              placeholder="请输入密码"
+              :label="$t('register.form.password.label')"
+              :placeholder="$t('register.form.password.placeholder')"
               :rules="[
-                { required: true, message: '请输入密码' },
-                { min: 6, message: '密码长度不能小于6位' },
+                { required: true, message: $t('register.form.password.required') },
+                { min: 6, message: $t('register.form.password.minLength') },
               ]"
             />
             <van-field
               v-model="form.confirmPassword"
               type="password"
               name="confirmPassword"
-              label="确认密码"
-              placeholder="请再次输入密码"
+              :label="$t('register.form.confirmPassword.label')"
+              :placeholder="$t('register.form.confirmPassword.placeholder')"
               :rules="[
-                { required: true, message: '请确认密码' },
+                { required: true, message: $t('register.form.confirmPassword.required') },
                 {
                   validator: validateConfirmPassword,
-                  message: '两次输入的密码不一致',
+                  message: $t('register.form.confirmPassword.mismatch'),
                 },
               ]"
             />
@@ -76,13 +76,13 @@
               :loading="loading"
               class="submit-button"
             >
-              注册
+              {{ $t('register.submit') }}
             </van-button>
           </div>
 
           <div class="login-link">
-            已有账号？
-            <router-link to="/login">立即登录</router-link>
+            {{ $t('register.hasAccount') }}
+            <router-link to="/login">{{ $t('register.loginNow') }}</router-link>
           </div>
         </van-form>
       </div>
@@ -96,9 +96,11 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { userApi } from "../api/user";
 import { showToast } from "vant";
+import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
 const userStore = useUserStore();
+const { t } = useI18n();
 
 const loading = ref(false);
 const form = ref({
@@ -130,10 +132,10 @@ const onSubmit = async () => {
     // 获取用户信息
     await userStore.getUserInfo();
 
-    showToast("注册成功");
+    showToast(t('register.success'));
     router.push("/");
   } catch (error) {
-    showToast(error.message || "注册失败");
+    showToast(error.message || t('register.failed'));
   } finally {
     loading.value = false;
   }

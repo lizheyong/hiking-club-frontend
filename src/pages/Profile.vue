@@ -1,125 +1,195 @@
 <template>
   <div class="profile-page">
     <div class="header glass-card">
-      <div class="user-info" v-if="userStore.user">
-        <van-image
-          round
-          width="80"
-          height="80"
-          :src="userStore.user.avatar"
-          class="avatar"
-        />
-        <h2 class="username">{{ userStore.user.name }}</h2>
-        <p class="user-id">ID: {{ userStore.user.id }}</p>
-      </div>
-      <div class="login-prompt" v-else>
-        <p>登录后查看更多信息</p>
-        <van-button
-          type="primary"
-          size="small"
-          class="login-button"
-          @click="goToLogin"
-        >
-          立即登录
-        </van-button>
-      </div>
+      <van-nav-bar>
+        <template #title>
+          <span class="title-text">{{ $t('profile.title') }}</span>
+        </template>
+      </van-nav-bar>
     </div>
 
-    <div class="stats-bar glass-card">
-      <div class="stat-item">
-        <span class="number">{{
-          userStore.user?.activities?.length || 0
-        }}</span>
-        <span class="label">参与活动</span>
+    <div class="content">
+      <div class="user-info glass-card">
+        <div class="avatar-section">
+          <van-image
+            round
+            width="80"
+            height="80"
+            :src="userInfo.avatar"
+            class="avatar"
+          />
+          <div class="user-meta">
+            <h2 class="username">{{ userInfo.name }}</h2>
+            <p class="user-id">{{ $t('profile.userId', { id: userInfo.id }) }}</p>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat-item">
+            <span class="value">{{ userInfo.createdActivities }}</span>
+            <span class="label">{{ $t('profile.stats.createdActivities') }}</span>
+          </div>
+          <div class="stat-item">
+            <span class="value">{{ userInfo.joinedActivities }}</span>
+            <span class="label">{{ $t('profile.stats.joinedActivities') }}</span>
+          </div>
+          <div class="stat-item">
+            <span class="value">{{ userInfo.favoriteActivities }}</span>
+            <span class="label">{{ $t('profile.stats.favoriteActivities') }}</span>
+          </div>
+        </div>
       </div>
-      <div class="stat-item">
-        <span class="number">{{ userStore.user?.favorites?.length || 0 }}</span>
-        <span class="label">收藏活动</span>
+
+      <div class="section-title">{{ $t('profile.myActivities.title') }}</div>
+      <div class="tabs glass-card">
+        <van-tabs v-model:active="activeTab" animated swipeable>
+          <van-tab :title="$t('profile.myActivities.created')">
+            <div v-if="createdActivities.length" class="activity-list">
+              <div
+                v-for="activity in createdActivities"
+                :key="activity.id"
+                class="activity-item glass-card"
+                @click="goToActivity(activity.id)"
+              >
+                <div class="activity-cover">
+                  <van-image :src="activity.coverImage" fit="cover" />
+                  <van-tag
+                    :type="getStatusTagType(activity)"
+                    class="status-tag"
+                  >
+                    {{ getCombinedStatusText(activity) }}
+                  </van-tag>
+                </div>
+                <div class="activity-info">
+                  <h3 class="activity-title">{{ activity.title }}</h3>
+                  <div class="activity-meta">
+                    <span class="location">
+                      <van-icon name="location-o" />
+                      {{ activity.location }}
+                    </span>
+                    <span class="time">
+                      <van-icon name="clock-o" />
+                      {{ formatDate(activity.startTime) }}
+                    </span>
+                  </div>
+                  <div class="activity-stats">
+                    <span class="participants">
+                      <van-icon name="friends-o" />
+                      {{ activity.currentParticipants }}/{{ activity.maxParticipants }}
+                    </span>
+                    <span class="routes">
+                      <van-icon name="guide-o" />
+                      {{ activity.routes?.length || 0 }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <van-empty
+              v-else
+              :description="$t('profile.myActivities.empty.created')"
+              image-size="60"
+            />
+          </van-tab>
+
+          <van-tab :title="$t('profile.myActivities.joined')">
+            <div v-if="joinedActivities.length" class="activity-list">
+              <div
+                v-for="activity in joinedActivities"
+                :key="activity.id"
+                class="activity-item glass-card"
+                @click="goToActivity(activity.id)"
+              >
+                <div class="activity-cover">
+                  <van-image :src="activity.coverImage" fit="cover" />
+                  <van-tag
+                    :type="getStatusTagType(activity)"
+                    class="status-tag"
+                  >
+                    {{ getCombinedStatusText(activity) }}
+                  </van-tag>
+                </div>
+                <div class="activity-info">
+                  <h3 class="activity-title">{{ activity.title }}</h3>
+                  <div class="activity-meta">
+                    <span class="location">
+                      <van-icon name="location-o" />
+                      {{ activity.location }}
+                    </span>
+                    <span class="time">
+                      <van-icon name="clock-o" />
+                      {{ formatDate(activity.startTime) }}
+                    </span>
+                  </div>
+                  <div class="activity-stats">
+                    <span class="participants">
+                      <van-icon name="friends-o" />
+                      {{ activity.currentParticipants }}/{{ activity.maxParticipants }}
+                    </span>
+                    <span class="routes">
+                      <van-icon name="guide-o" />
+                      {{ activity.routes?.length || 0 }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <van-empty
+              v-else
+              :description="$t('profile.myActivities.empty.joined')"
+              image-size="60"
+            />
+          </van-tab>
+
+          <van-tab :title="$t('profile.myActivities.favorite')">
+            <div v-if="favoriteActivities.length" class="activity-list">
+              <div
+                v-for="activity in favoriteActivities"
+                :key="activity.id"
+                class="activity-item glass-card"
+                @click="goToActivity(activity.id)"
+              >
+                <div class="activity-cover">
+                  <van-image :src="activity.coverImage" fit="cover" />
+                  <van-tag
+                    :type="getStatusTagType(activity)"
+                    class="status-tag"
+                  >
+                    {{ getCombinedStatusText(activity) }}
+                  </van-tag>
+                </div>
+                <div class="activity-info">
+                  <h3 class="activity-title">{{ activity.title }}</h3>
+                  <div class="activity-meta">
+                    <span class="location">
+                      <van-icon name="location-o" />
+                      {{ activity.location }}
+                    </span>
+                    <span class="time">
+                      <van-icon name="clock-o" />
+                      {{ formatDate(activity.startTime) }}
+                    </span>
+                  </div>
+                  <div class="activity-stats">
+                    <span class="participants">
+                      <van-icon name="friends-o" />
+                      {{ activity.currentParticipants }}/{{ activity.maxParticipants }}
+                    </span>
+                    <span class="routes">
+                      <van-icon name="guide-o" />
+                      {{ activity.routes?.length || 0 }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <van-empty
+              v-else
+              :description="$t('profile.myActivities.empty.favorite')"
+              image-size="60"
+            />
+          </van-tab>
+        </van-tabs>
       </div>
-      <div class="stat-item">
-        <span class="number">{{
-          userStore.user?.createdActivities?.length || 0
-        }}</span>
-        <span class="label">发布活动</span>
-      </div>
-    </div>
-
-    <div class="menu-list">
-      <van-cell-group inset class="menu-group glass-card">
-        <van-cell
-          title="我的活动"
-          is-link
-          to="/profile/activities"
-          icon="friends-o"
-          class="menu-item"
-        />
-        <van-cell
-          title="收藏的活动"
-          is-link
-          to="/profile/favorites"
-          icon="like-o"
-          class="menu-item"
-        />
-        <van-cell
-          title="发布的活动"
-          is-link
-          to="/profile/created"
-          icon="plus"
-          class="menu-item"
-        />
-        <van-cell
-          title="个人信息"
-          is-link
-          to="/profile/info"
-          icon="user-o"
-          class="menu-item"
-        />
-        <van-cell
-          title="设置"
-          is-link
-          to="/profile/settings"
-          icon="setting-o"
-          class="menu-item"
-        />
-      </van-cell-group>
-    </div>
-
-    <div class="admin-section" v-if="userStore.user?.isAdmin">
-      <h3 class="section-title">管理员功能</h3>
-      <van-cell-group inset class="menu-group glass-card">
-        <van-cell
-          title="活动管理"
-          is-link
-          to="/admin/activities"
-          icon="guide-o"
-          class="menu-item"
-        />
-        <van-cell
-          title="用户管理"
-          is-link
-          to="/admin/users"
-          icon="friends-o"
-          class="menu-item"
-        />
-        <van-cell
-          title="系统设置"
-          is-link
-          to="/admin/settings"
-          icon="setting-o"
-          class="menu-item"
-        />
-      </van-cell-group>
-    </div>
-
-    <div class="logout-section" v-if="userStore.user">
-      <van-button
-        block
-        type="danger"
-        class="logout-button glass-button"
-        @click="handleLogout"
-      >
-        退出登录
-      </van-button>
     </div>
 
     <div class="tabbar-container">
@@ -132,7 +202,7 @@
           @click="handleTabChange(tab, index)"
         >
           <van-icon :name="tab.icon" />
-          <span>{{ tab.text }}</span>
+          <span>{{ $t(tab.textKey) }}</span>
         </div>
       </div>
     </div>
@@ -140,216 +210,192 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
-import { showDialog } from "vant";
+import { activityApi } from "../api/activity";
+import { userApi } from "../api/user";
+import { showToast } from "vant";
+import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
 const userStore = useUserStore();
-const activeTab = ref(2);
+const { t } = useI18n();
+
+const userInfo = ref({
+  id: "",
+  name: "",
+  avatar: "",
+  createdActivities: 0,
+  joinedActivities: 0,
+  favoriteActivities: 0,
+});
+
+const activeTab = ref(2); // 默认选中第三个标签（profile）
+const createdActivities = ref([]);
+const joinedActivities = ref([]);
+const favoriteActivities = ref([]);
 
 const tabs = [
-  { name: "home", icon: "home-o", text: "首页", route: "/" },
-  { name: "activities", icon: "search", text: "活动", route: "/activities" },
-  { name: "profile", icon: "user-o", text: "我的", route: "/profile" },
+  { name: "home", icon: "home-o", textKey: "home.tabs.home", route: "/" },
+  { name: "activities", icon: "search", textKey: "home.tabs.activities", route: "/activities" },
+  { name: "profile", icon: "user-o", textKey: "home.tabs.profile", route: "/profile" },
 ];
+
+onMounted(async () => {
+  try {
+    const user = await userApi.getUserInfo();
+    userInfo.value = user;
+
+    const [created, joined, favorite] = await Promise.all([
+      activityApi.getUserCreatedActivities(),
+      activityApi.getUserJoinedActivities(),
+      activityApi.getUserFavoriteActivities(),
+    ]);
+
+    createdActivities.value = created;
+    joinedActivities.value = joined;
+    favoriteActivities.value = favorite;
+  } catch (error) {
+    showToast(t('profile.errors.loadFailed'));
+    console.error(error);
+  }
+});
+
+const goToActivity = (id) => {
+  router.push(`/activity/${id}`);
+};
+
+const getStatusTagType = (activity) => {
+  const typeMap = {
+    upcoming: "primary",
+    ongoing: "success",
+    completed: "default",
+    cancelled: "danger",
+    pending: "warning",
+    rejected: "danger",
+  };
+  return typeMap[activity.status] || "default";
+};
+
+const getCombinedStatusText = (activity) => {
+  if (activity.status === 'upcoming') {
+    return t(`activities.status.upcoming.${activity.phase}`);
+  }
+  return t(`activities.status.${activity.status}`);
+};
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString();
+};
 
 const handleTabChange = (tab, index) => {
   activeTab.value = index;
   router.push(tab.route);
-};
-
-const goToLogin = () => {
-  router.push("/login");
-};
-
-const handleLogout = () => {
-  showDialog({
-    title: "确认退出",
-    message: "确定要退出登录吗？",
-    showCancelButton: true,
-  }).then(() => {
-    userStore.logout();
-    router.push("/login");
-  });
 };
 </script>
 
 <style lang="scss" scoped>
 .profile-page {
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    #f5f7fa 0%,
-    #c3cfe2 25%,
-    #e2e2e2 50%,
-    #c9d6ff 75%,
-    #e0eafc 100%
-  );
-  padding: 20px 16px 100px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding-bottom: calc(60px + env(safe-area-inset-bottom));
   position: relative;
-
-  &::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(
-        circle at 20% 20%,
-        rgba(255, 255, 255, 0.4) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 80% 80%,
-        rgba(255, 255, 255, 0.2) 0%,
-        transparent 50%
-      );
-    pointer-events: none;
-    z-index: 0;
-  }
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 20px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  position: relative;
-  z-index: 1;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.02) 100%
-    );
-    border-radius: inherit;
-    pointer-events: none;
-  }
+  box-sizing: border-box;
 }
 
 .header {
-  padding: 32px 16px;
-  text-align: center;
-  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(25px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  margin-left: 0;
+  margin-right: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 
-  .user-info {
-    .avatar {
-      margin-bottom: 16px;
-      border: 4px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  :deep(.van-nav-bar) {
+    background: transparent !important;
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+
+    .van-nav-bar__content {
+      height: 50px;
     }
 
-    .username {
-      font-size: 24px;
+    .van-nav-bar__title {
+      color: #000000;
       font-weight: 600;
-      margin-bottom: 8px;
-      color: #000000;
-      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
-    }
-
-    .user-id {
-      color: #000000;
-      font-size: 14px;
-      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
-    }
-  }
-
-  .login-prompt {
-    p {
-      margin-bottom: 16px;
-      color: #000000;
-      font-weight: 500;
-      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
-    }
-
-    .login-button {
-      background: linear-gradient(
-        135deg,
-        rgba(52, 152, 219, 0.9) 0%,
-        rgba(155, 89, 182, 0.9) 100%
-      );
-      border: none;
-      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
-      font-weight: 600;
+      max-width: calc(100% - 120px);
     }
   }
 }
 
-.stats-bar {
-  display: flex;
-  justify-content: space-around;
-  padding: 20px 16px;
-  margin-bottom: 24px;
+.content {
+  padding: 16px;
+}
 
-  .stat-item {
+.user-info {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(25px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+  .avatar-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .avatar {
+      border: 3px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-meta {
+      margin-left: 16px;
+
+      .username {
+        margin: 0 0 4px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #2c3e50;
+      }
+
+      .user-id {
+        margin: 0;
+        font-size: 14px;
+        color: #7f8c8d;
+      }
+    }
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
     text-align: center;
 
-    .number {
-      display: block;
-      font-size: 28px;
-      font-weight: 600;
-      color: #000000;
-      margin-bottom: 6px;
-      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
-    }
+    .stat-item {
+      .value {
+        display: block;
+        font-size: 24px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 4px;
+      }
 
-    .label {
-      font-size: 14px;
-      color: #000000;
-      font-weight: 500;
-      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
-    }
-  }
-}
-
-.menu-list {
-  margin-bottom: 24px;
-
-  .menu-group {
-    overflow: hidden;
-    padding: 0;
-  }
-
-  :deep(.menu-item) {
-    background: transparent;
-    margin: 0;
-    position: relative;
-
-    .van-cell__title {
-      color: #000000;
-      font-weight: 500;
-      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
-    }
-
-    .van-icon {
-      color: #000000;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      left: 16px;
-      right: 16px;
-      bottom: 0;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    &:last-child::after {
-      display: none;
+      .label {
+        font-size: 12px;
+        color: #7f8c8d;
+      }
     }
   }
 }
@@ -357,46 +403,152 @@ const handleLogout = () => {
 .section-title {
   font-size: 18px;
   font-weight: 600;
-  margin: 24px 16px 16px;
-  color: #000000;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+  color: #2c3e50;
+  margin: 24px 0 16px;
+  padding-left: 4px;
 }
 
-.admin-section {
-  margin-bottom: 30px;
-}
+.tabs {
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(25px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 
-.logout-section {
-  padding: 0 16px;
-  margin-bottom: 80px;
+  :deep(.van-tabs__wrap) {
+    background: rgba(255, 255, 255, 0.5);
+  }
 
-  .logout-button {
-    border-radius: 20px;
-    height: 48px;
-    font-size: 16px;
+  :deep(.van-tab) {
+    color: #7f8c8d;
+    font-size: 14px;
+  }
+
+  :deep(.van-tab--active) {
+    color: #2c3e50;
     font-weight: 600;
-    background: linear-gradient(
-      135deg,
-      rgba(231, 76, 60, 0.8) 0%,
-      rgba(192, 57, 43, 0.8) 100%
-    );
-    border: none;
-    box-shadow: 0 8px 16px rgba(231, 76, 60, 0.3);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.activity-list {
+  padding: 16px;
+}
+
+.activity-item {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  .activity-cover {
+    position: relative;
+    height: 160px;
+
+    :deep(.van-image) {
+      width: 100%;
+      height: 100%;
+    }
+
+    .status-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .activity-info {
+    padding: 16px;
+
+    .activity-title {
+      margin: 0 0 12px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .activity-meta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: #7f8c8d;
+
+      .location,
+      .time {
+        display: flex;
+        align-items: center;
+
+        .van-icon {
+          margin-right: 4px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .activity-stats {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: #7f8c8d;
+
+      .participants,
+      .routes {
+        display: flex;
+        align-items: center;
+
+        .van-icon {
+          margin-right: 4px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+:deep(.van-empty) {
+  padding: 32px 0;
+  background: transparent;
+
+  .van-empty__description {
+    color: #7f8c8d;
+    font-size: 14px;
   }
 }
 
 .tabbar-container {
   position: fixed;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
-  z-index: 100;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 99;
+  padding: 8px 16px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  box-sizing: border-box;
 
   .tabbar {
     display: flex;
     justify-content: space-around;
-    padding: 12px 0;
+    align-items: center;
+    padding: 6px 0;
+    height: 55px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
 
     .tab-item {
       display: flex;
@@ -439,41 +591,5 @@ const handleLogout = () => {
       }
     }
   }
-}
-
-:deep(.van-dialog) {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-:deep(.van-dialog__content) {
-  padding: 24px 20px;
-}
-
-:deep(.van-dialog__message) {
-  color: #2c3e50;
-  font-size: 16px;
-}
-
-:deep(.van-dialog__footer) {
-  padding: 8px;
-}
-
-:deep(.van-button--default) {
-  background: rgba(255, 255, 255, 0.3);
-  color: #34495e;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-:deep(.van-button--primary) {
-  background: linear-gradient(
-    135deg,
-    rgba(52, 152, 219, 0.9) 0%,
-    rgba(155, 89, 182, 0.9) 100%
-  );
-  border: none;
 }
 </style>

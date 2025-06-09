@@ -4,7 +4,7 @@
       <van-nav-bar left-arrow @click-left="goBack">
         <template #title>
           <div class="nav-title">
-            <span class="title-text">活动详情</span>
+            <span class="title-text">{{ $t('activityDetail.title') }}</span>
             <van-tag
               v-if="activity && activity.status"
               :type="getStatusTagType(activity)"
@@ -16,7 +16,7 @@
                 activity.phase === "review" &&
                 currentUser &&
                 currentUser.isAdmin
-                  ? "(待审核)"
+                  ? $t('activityDetail.status.review')
                   : ""
               }}
             </van-tag>
@@ -48,10 +48,10 @@
       </van-nav-bar>
     </div>
 
-    <van-loading v-if="loading" class="loading" type="spinner" vertical
-      >加载中...</van-loading
-    >
-    <van-empty v-else-if="error" :description="`加载失败: ${error}`" />
+    <van-loading v-if="loading" class="loading" type="spinner" vertical>
+      {{ $t('activityDetail.loading') }}
+    </van-loading>
+    <van-empty v-else-if="error" :description="$t('activityDetail.loadFailed', { error })" />
 
     <div v-else-if="activity" class="content">
       <div class="cover-image glass-card">
@@ -68,7 +68,7 @@
               {{ formatDate(activity.startTime) }}
             </span>
           </div>
-          <div class="creator-info">发起人: {{ activity.creatorName }}</div>
+          <div class="creator-info">{{ $t('activityDetail.meta.creator', { name: activity.creatorName }) }}</div>
         </div>
       </div>
 
@@ -92,14 +92,14 @@
         v-if="activity.status === 'rejected' && activity.rejectReason"
         class="reason-card glass-card rejected"
       >
-        <h4>活动被拒原因</h4>
+        <h4>{{ $t('activityDetail.status.rejected.title') }}</h4>
         <p>{{ activity.rejectReason }}</p>
       </div>
       <div
         v-if="activity.status === 'cancelled' && activity.cancelReason"
         class="reason-card glass-card cancelled"
       >
-        <h4>活动取消原因</h4>
+        <h4>{{ $t('activityDetail.status.cancelled.title') }}</h4>
         <p>{{ activity.cancelReason }}</p>
       </div>
 
@@ -108,9 +108,9 @@
         class="routes-section glass-card"
         v-if="activity.routes && activity.routes.length"
       >
-        <h3 v-if="activity.phase === 'voting'">路线投票 (选择一条)</h3>
-        <h3 v-else-if="selectedRoute">活动路线</h3>
-        <h3 v-else>路线信息</h3>
+        <h3 v-if="activity.phase === 'voting'">{{ $t('activityDetail.routes.voting.title') }}</h3>
+        <h3 v-else-if="selectedRoute">{{ $t('activityDetail.routes.selected.title') }}</h3>
+        <h3 v-else>{{ $t('activityDetail.routes.info.title') }}</h3>
 
         <div class="routes-list">
           <!-- 投票阶段 -->
@@ -125,9 +125,9 @@
                 <h4>{{ route.title }}</h4>
                 <p>{{ route.description }}</p>
                 <div class="route-meta">
-                  <span>距离: {{ route.distance }}公里</span>
-                  <span>时长: {{ route.duration }}小时</span>
-                  <span>难度: {{ route.difficulty }}</span>
+                  <span>{{ $t('activityDetail.routes.info.distance', { distance: route.distance }) }}</span>
+                  <span>{{ $t('activityDetail.routes.info.duration', { duration: route.duration }) }}</span>
+                  <span>{{ $t('activityDetail.routes.info.difficulty', { level: route.difficulty }) }}</span>
                 </div>
               </div>
               <div class="route-votes">
@@ -141,13 +141,13 @@
                 >
                   {{
                     route.isVoted
-                      ? "我的投票"
+                      ? $t('activityDetail.routes.voting.myVote')
                       : hasVotedForThisActivity
-                      ? "已投其他"
-                      : "投此路线"
+                      ? $t('activityDetail.routes.voting.votedOther')
+                      : $t('activityDetail.routes.voting.voteThis')
                   }}
                 </van-button>
-                <span class="votes-count">{{ route.votes }}票</span>
+                <span class="votes-count">{{ $t('activityDetail.routes.voting.votes', { count: route.votes }) }}</span>
               </div>
             </div>
           </template>
@@ -158,15 +158,15 @@
                 <h4>{{ selectedRoute.title }}</h4>
                 <p>{{ selectedRoute.description }}</p>
                 <div class="route-meta">
-                  <span>距离: {{ selectedRoute.distance }}公里</span>
-                  <span>时长: {{ selectedRoute.duration }}小时</span>
-                  <span>难度: {{ selectedRoute.difficulty }}</span>
+                  <span>{{ $t('activityDetail.routes.info.distance', { distance: selectedRoute.distance }) }}</span>
+                  <span>{{ $t('activityDetail.routes.info.duration', { duration: selectedRoute.duration }) }}</span>
+                  <span>{{ $t('activityDetail.routes.info.difficulty', { level: selectedRoute.difficulty }) }}</span>
                 </div>
               </div>
               <div v-if="selectedRoute.votes > 0" class="route-votes">
-                <van-tag type="primary" size="medium"
-                  >最终票数: {{ selectedRoute.votes }}</van-tag
-                >
+                <van-tag type="primary" size="medium">
+                  {{ $t('activityDetail.routes.selected.finalVotes', { count: selectedRoute.votes }) }}
+                </van-tag>
               </div>
             </div>
           </template>
@@ -181,9 +181,9 @@
                 <h4>{{ route.title }}</h4>
                 <p>{{ route.description }}</p>
                 <div class="route-meta">
-                  <span>距离: {{ route.distance }}公里</span>
-                  <span>时长: {{ route.duration }}小时</span>
-                  <span>难度: {{ route.difficulty }}</span>
+                  <span>{{ $t('activityDetail.routes.info.distance', { distance: route.distance }) }}</span>
+                  <span>{{ $t('activityDetail.routes.info.duration', { duration: route.duration }) }}</span>
+                  <span>{{ $t('activityDetail.routes.info.difficulty', { level: route.difficulty }) }}</span>
                 </div>
               </div>
             </div>
@@ -193,12 +193,13 @@
 
       <div class="participants-section glass-card">
         <h3>
-          参与者 ({{ activity.currentParticipants }}/{{
-            activity.maxParticipants
-          }})
-          <van-tag v-if="isFull" type="danger" style="margin-left: 5px"
-            >已满员</van-tag
-          >
+          {{ $t('activityDetail.participants.title', {
+            current: activity.currentParticipants,
+            max: activity.maxParticipants
+          }) }}
+          <van-tag v-if="isFull" type="danger" style="margin-left: 5px">
+            {{ $t('activityDetail.participants.full') }}
+          </van-tag>
         </h3>
         <div
           v-if="activity.participants && activity.participants.length"
@@ -228,11 +229,11 @@
               icon="cross"
               class="remove-participant-btn"
               @click="handleRemoveParticipant(participant)"
-              title="移除该参与者"
+              :title="$t('activityDetail.participants.remove')"
             />
           </div>
         </div>
-        <van-empty v-else description="暂无参与者" image-size="60" />
+        <van-empty v-else :description="$t('activityDetail.participants.empty')" image-size="60" />
       </div>
 
       <!-- 主要操作按钮 -->
@@ -248,77 +249,20 @@
               :loading="cancelling"
               @click="handleCancelJoin"
             >
-              取消报名
+              {{ $t('activityDetail.actions.cancelJoin') }}
             </van-button>
             <van-button
-              v-else-if="!isFull"
+              v-else
               type="primary"
               block
               class="action-button join-button"
               :loading="joining"
+              :disabled="isFull"
               @click="handleJoin"
             >
-              立即报名
-            </van-button>
-            <van-button
-              v-else
-              type="default"
-              block
-              class="action-button"
-              disabled
-            >
-              已满员
+              {{ $t('activityDetail.actions.join') }}
             </van-button>
           </template>
-          <!-- 其他阶段提示 -->
-          <van-tag
-            v-else-if="activity.phase === 'voting'"
-            type="warning"
-            size="large"
-            block
-            plain
-            >路线投票中，暂不能报名</van-tag
-          >
-          <van-tag
-            v-else-if="activity.status === 'ongoing'"
-            type="success"
-            size="large"
-            block
-            plain
-            >活动进行中</van-tag
-          >
-          <van-tag
-            v-else-if="activity.status === 'completed'"
-            type="default"
-            size="large"
-            block
-            plain
-            >活动已结束</van-tag
-          >
-          <van-tag
-            v-else-if="activity.status === 'cancelled'"
-            type="danger"
-            size="large"
-            block
-            plain
-            >活动已取消</van-tag
-          >
-          <van-tag
-            v-else-if="activity.status === 'pending'"
-            type="primary"
-            size="large"
-            block
-            plain
-            >活动审核中</van-tag
-          >
-          <van-tag
-            v-else-if="activity.status === 'rejected'"
-            type="danger"
-            size="large"
-            block
-            plain
-            >活动未通过审核</van-tag
-          >
         </div>
       </div>
     </div>
@@ -492,7 +436,7 @@
           @click="handleTabChange(tab, index)"
         >
           <van-icon :name="tab.icon" />
-          <span>{{ tab.text }}</span>
+          <span>{{ $t(tab.textKey) }}</span>
         </div>
       </div>
     </div>
@@ -502,26 +446,28 @@
 <script setup>
 import { ref, computed, onMounted, reactive, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-// import { useUserStore } from "../stores/user"; // 假设你用Pinia
-import { activityApi } from "../api/activity"; // 你的 activity.js
-import { userApi } from '../api/user'; // 你的 user.js
-import { mockApi } from '../api/mock'; //直接用mockApi里的管理员操作
+import { useUserStore } from "../stores/user";
+import { activityApi } from "../api/activity";
+import { userApi } from '../api/user';
+import { mockApi } from '../api/mock';
 import { showToast, Dialog, Notify } from "vant";
+import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
 const route = useRoute();
-// const userStore = useUserStore(); // 如果使用 Pinia
+const userStore = useUserStore();
+const { t } = useI18n();
 
 // --- 状态 ---
 const activity = ref(null);
 const loading = ref(true);
 const error = ref(null);
-const currentUser = ref(null); // 模拟当前登录用户
+const currentUser = ref(null);
 
 const joining = ref(false);
 const cancelling = ref(false);
 const updating = ref(false);
-const votingRouteId = ref(null); // 记录正在投票的路线ID，用于loading
+const votingRouteId = ref(null);
 
 const showEditPopup = ref(false);
 const editableActivity = reactive({
@@ -535,45 +481,18 @@ const editableActivity = reactive({
 });
 
 const showDatePicker = ref(false);
-const minDate = new Date(); // 日期选择器最小可选今天
+const minDate = new Date();
 const showTagPopup = ref(false);
 const newTag = ref("");
 
-const activeTab = ref(1); // 活动页面默认选中第二个标签 (根据你的TABS_CONFIG)
+const activeTab = ref(1);
 const showAdminActions = ref(false);
 
-
-// --- Mock User ---
-// onMounted(async () => {
-//   // 模拟从 store 或 auth service 获取当前用户
-//   if (userStore.user) {
-//       currentUser.value = userStore.user;
-//   } else {
-//       // 如果store中没有，尝试从API获取（对于mock，这会返回mockUsers[0]）
-//       try {
-//         currentUser.value = await userApi.getUserInfo();
-//         userStore.setUser(currentUser.value); // 可选：如果希望存入store
-//       } catch (e) {
-//         console.warn("无法获取模拟用户信息:", e.message)
-//       }
-//   }
-// });
-// --- END Mock User ---
-
-// --- 底部标签栏配置 (从你原来的代码迁移) ---
 const TABS_CONFIG = [
-  { name: "home", icon: "home-o", text: "首页", route: "/" },
-  { name: "activities", icon: "search", text: "活动", route: "/activities" },
-  { name: "profile", icon: "user-o", text: "我的", route: "/profile" },
+  { name: "home", icon: "home-o", textKey: "home.tabs.home", route: "/" },
+  { name: "activities", icon: "search", textKey: "home.tabs.activities", route: "/activities" },
+  { name: "profile", icon: "user-o", textKey: "home.tabs.profile", route: "/profile" },
 ];
-
-const handleTabChange = (tab, index) => {
-  activeTab.value = index;
-  if (route.path !== tab.route) {
-     router.push(tab.route);
-  }
-};
-const goBack = () => router.back();
 
 // --- 计算属性 ---
 const isCreatorOrAdmin = computed(() => {
@@ -593,8 +512,6 @@ const selectedRoute = computed(() => {
 
 const hasVotedForThisActivity = computed(() => {
   if (!activity.value || activity.value.phase !== 'voting' || !activity.value.routes) return false;
-  // mock.js 中 isVoted 代表用户对 *这条* 路线的投票状态
-  // 所以需要检查所有路线中是否有 isVoted 为 true 的
   return activity.value.routes.some(r => r.isVoted);
 });
 
@@ -604,12 +521,10 @@ const formattedEditableStartTime = computed(() => {
 
 const canShowMainActionButtons = computed(() => {
     if (!activity.value) return false;
-    // 只在特定阶段显示主要的报名/取消报名按钮区域
     return ['enrolling', 'voting', 'ongoing', 'completed', 'cancelled', 'pending', 'rejected'].includes(activity.value.phase) ||
            ['enrolling', 'voting', 'ongoing', 'completed', 'cancelled', 'pending', 'rejected'].includes(activity.value.status);
 });
 
-// --- 管理员操作选项 ---
 const adminActionOptions = computed(() => {
     const actions = [];
     if (!activity.value || !isCreatorOrAdmin.value) return actions;
@@ -630,7 +545,7 @@ const adminActionOptions = computed(() => {
     if (['pending', 'upcoming', 'ongoing'].includes(activity.value.status) && isCreatorOrAdmin.value) {
          actions.push({ name: '取消活动', actionType: 'cancelActivity', color: '#ee0a24' });
     }
-    if (isCreatorOrAdmin.value) { // 任何时候创建者或管理员都可以编辑
+    if (isCreatorOrAdmin.value) {
         actions.push({ name: '编辑活动信息', actionType: 'editActivity' });
     }
      if (isCreatorOrAdmin.value && activity.value.status !== 'pending' && activity.value.status !== 'cancelled' && activity.value.status !== 'rejected') {
@@ -649,27 +564,24 @@ const loadActivityDetail = async () => {
   }
   try {
     loading.value = true;
-    error.value = null; // 重置错误
-    // 模拟获取当前用户
-    if (!currentUser.value) { // 避免重复获取
+    error.value = null;
+    if (!currentUser.value) {
         try {
             currentUser.value = await userApi.getUserInfo();
         } catch (userErr) {
             console.warn("获取用户信息失败 (mock):", userErr.message);
-            // 即使获取用户失败，也尝试加载活动详情，但某些操作可能受限
         }
     }
 
     const fetchedActivity = await activityApi.getActivityDetail(activityId);
     activity.value = fetchedActivity;
 
-    // 初始化编辑表单数据
     if (fetchedActivity) {
       editableActivity.id = fetchedActivity.id;
       editableActivity.title = fetchedActivity.title;
       editableActivity.description = fetchedActivity.description;
       editableActivity.location = fetchedActivity.location;
-      editableActivity.startTime = fetchedActivity.startTime; // 保持ISO字符串
+      editableActivity.startTime = fetchedActivity.startTime;
       editableActivity.maxParticipants = fetchedActivity.maxParticipants;
       editableActivity.tags = [...(fetchedActivity.tags || [])];
     }
@@ -678,7 +590,6 @@ const loadActivityDetail = async () => {
     console.error("加载活动详情失败:", err);
     error.value = err.message || "未知错误";
     showToast(error.value);
-    // router.back(); // 考虑是否自动返回
   } finally {
     loading.value = false;
   }
@@ -688,28 +599,27 @@ onMounted(() => {
   loadActivityDetail();
 });
 
-// 监听路由变化，如果 activity id 变了，重新加载 (例如从一个详情页跳到另一个)
 watch(() => route.params.id, (newId, oldId) => {
     if (newId && newId !== oldId) {
         loadActivityDetail();
     }
 });
 
-
 function formatDate(dateString, format = 'YYYY-MM-DD HH:mm:ss') {
   if (!dateString) return '待定';
   const date = new Date(dateString);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
+  const month = months[date.getMonth()];
+  const day = date.getDate();
   const hours = String(date.getHours()).padStart(2, '0');
   const minutes = String(date.getMinutes()).padStart(2, '0');
   const seconds = String(date.getSeconds()).padStart(2, '0');
 
   if (format === 'YYYY-MM-DD HH:mm') {
-      return `${year}-${month}-${day} ${hours}:${minutes}`;
+      return `${month} ${day}, ${year} ${hours}:${minutes}`;
   }
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  return `${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
 }
 
 function getStatusTagType(act) {
@@ -719,38 +629,22 @@ function getStatusTagType(act) {
     ongoing: 'success',
     completed: 'default',
     cancelled: 'danger',
-    pending: 'primary', // Vant 没有 'warning' plain tag, 用 primary 代替
+    pending: 'primary',
     rejected: 'danger',
   };
   return statusMap[act.status] || 'default';
 }
 
 function getCombinedStatusText(act) {
-  if (!act) return '';
-  const statusTextMap = {
-    upcoming: '即将开始',
-    ongoing: '正在进行',
-    completed: '已结束',
-    cancelled: '已取消',
-    pending: '审核中',
-    rejected: '已拒绝',
-  };
-  const phaseTextMap = {
-    voting: ' (路线投票中)',
-    enrolling: ' (报名中)',
-    // active, finished, cancelled, review, rejected 通常不需额外phase文字，status已说明
-  };
-  let text = statusTextMap[act.status] || act.status;
-  if (act.phase && (act.phase === 'voting' || act.phase === 'enrolling')) {
-      text += phaseTextMap[act.phase] || '';
+  if (act.status === 'upcoming') {
+    return t(`activities.status.upcoming.${act.phase}`);
   }
-  return text;
+  return t(`activities.status.${act.status}`);
 }
 
 async function handleVote(routeId) {
-  if (!activity.value || !currentUser.value) { // 检查用户是否登录
+  if (!activity.value || !currentUser.value) {
     showToast('请先登录后再投票');
-    // router.push('/login'); // 跳转到登录页
     return;
   }
   if (hasVotedForThisActivity.value && !activity.value.routes.find(r => r.id === routeId)?.isVoted) {
@@ -761,22 +655,16 @@ async function handleVote(routeId) {
   votingRouteId.value = routeId;
   try {
     await activityApi.voteRoute(activity.value.id, routeId);
-    // 更新本地数据以反映投票状态 - mock.js 的 voteRoute 应该会更新 isVoted 和 votes
-    // 为确保一致性，可以重新获取活动详情，或者相信 mock.js 的修改
     const votedActivityRoute = activity.value.routes.find(r => r.id === routeId);
     if (votedActivityRoute) {
-        // 如果 mock API 没有正确增加 votes 或设置 isVoted, 在这里手动改
-        if (!votedActivityRoute.isVoted) votedActivityRoute.votes++; // 假设 API 会处理重复投票
+        if (!votedActivityRoute.isVoted) votedActivityRoute.votes++;
         votedActivityRoute.isVoted = true;
 
-        // 如果业务逻辑是只能投一个，需要把其他路线的 isVoted 置为 false (如果之前投过别的)
         activity.value.routes.forEach(r => {
             if (r.id !== routeId && r.isVoted) r.isVoted = false;
         });
     }
     showToast("投票成功！");
-    // 如果mockAPI不能保证数据一致性，可以考虑重新加载
-    // await loadActivityDetail();
   } catch (err) {
     showToast(`投票失败: ${err.message}`);
   } finally {
@@ -787,7 +675,6 @@ async function handleVote(routeId) {
 async function handleJoin() {
   if (!activity.value || !currentUser.value) {
      showToast('请先登录后再报名');
-    // router.push('/login');
     return;
   }
   joining.value = true;
@@ -795,7 +682,6 @@ async function handleJoin() {
     await activityApi.joinActivity(activity.value.id);
     activity.value.isJoined = true;
     activity.value.currentParticipants++;
-    // 添加当前用户到参与者列表（简化，实际应从API响应获取或重新拉取）
     if (currentUser.value && !activity.value.participants.find(p => p.id === currentUser.value.id)) {
         activity.value.participants.push({
             id: currentUser.value.id,
@@ -819,7 +705,6 @@ async function handleCancelJoin() {
     await activityApi.cancelJoin(activity.value.id);
     activity.value.isJoined = false;
     activity.value.currentParticipants--;
-    // 从参与者列表移除当前用户
     if (currentUser.value) {
         activity.value.participants = activity.value.participants.filter(p => p.id !== currentUser.value.id);
     }
@@ -834,7 +719,7 @@ async function handleCancelJoin() {
 async function handleToggleFavorite() {
     if (!activity.value) return;
     try {
-        const response = await mockApi.toggleFavorite(activity.value.id); // 使用 mockApi 中的
+        const response = await mockApi.toggleFavorite(activity.value.id);
         activity.value.isFavorite = response.isFavorite;
         showToast(response.message);
     } catch (err) {
@@ -842,34 +727,23 @@ async function handleToggleFavorite() {
     }
 }
 
-
-// --- 编辑相关 ---
 const openEditPopup = () => {
     if (!activity.value) return;
-    // 重新从 activity ref填充，确保是最新数据
     editableActivity.id = activity.value.id;
     editableActivity.title = activity.value.title;
     editableActivity.description = activity.value.description;
     editableActivity.location = activity.value.location;
-    editableActivity.startTime = activity.value.startTime; // ISO String
+    editableActivity.startTime = activity.value.startTime;
     editableActivity.maxParticipants = activity.value.maxParticipants;
     editableActivity.tags = [...(activity.value.tags || [])];
     showEditPopup.value = true;
 }
 
-const handleDateConfirm = (date) => { // date 是 Date 对象
-    // Vant Calendar 返回的 date 参数本身就是一个 Date 对象
-    // 所以不需要 new Date(date.getFullYear(), ...) 除非你有特殊目的只取年月日
-    // 直接使用 date.toISOString() 即可
-
-    // 如果你的意图是只保留日期部分，并将时间设置为当天的开始（00:00:00 本地时间）
-    // const selectedDateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    // editableActivity.startTime = selectedDateOnly.toISOString();
-
-    // 如果直接使用 Vant Calendar 返回的日期（可能包含它默认的时间，通常是选择当天的某个时间点）
+const handleDateConfirm = (date) => {
     editableActivity.startTime = date.toISOString();
     showDatePicker.value = false;
-}; // 注意这里有分号，虽然在很多情况下JS会自动插入，但明确写上更好
+};
+
 const handleRemoveEditableTag = (tagToRemove) => {
   editableActivity.tags = editableActivity.tags.filter(tag => tag !== tagToRemove);
 }
@@ -878,23 +752,20 @@ const handleSaveNewTag = () => {
   if (newTag.value && !editableActivity.tags.includes(newTag.value.trim())) {
     editableActivity.tags.push(newTag.value.trim());
   }
-  newTag.value = ""; // 清空输入
-  // showTagPopup.value = false; // 添加后可以选择不立即关闭，让用户连续添加
+  newTag.value = "";
 }
 
 async function handleSaveActivity() {
   if (!editableActivity.id) return;
   updating.value = true;
   try {
-    // 确保 startTime 是 ISO 字符串
     const dataToUpdate = {
         ...editableActivity,
-        startTime: new Date(editableActivity.startTime).toISOString(), // 确保是标准格式
+        startTime: new Date(editableActivity.startTime).toISOString(),
     };
-    delete dataToUpdate.id; // API 通常不需要在body中传id
+    delete dataToUpdate.id;
 
     const updated = await activityApi.updateActivity(editableActivity.id, dataToUpdate);
-    // 更新主 activity 对象
     activity.value = { ...activity.value, ...updated };
     showEditPopup.value = false;
     showToast("活动已更新");
@@ -905,7 +776,6 @@ async function handleSaveActivity() {
   }
 }
 
-// --- 管理员/创建者操作处理 ---
 async function onAdminActionSelect(item) {
     if (!activity.value) return;
     const activityId = activity.value.id;
@@ -923,7 +793,7 @@ async function onAdminActionSelect(item) {
                 break;
             case 'reject':
                 const rejectReason = await Dialog.prompt({ title: '拒绝原因', message: '请输入拒绝此活动的原因 (可选)' });
-                if (rejectReason.action === 'confirm') { // Vant 3 Dialog.prompt
+                if (rejectReason.action === 'confirm') {
                     await mockApi.rejectActivity(activityId, rejectReason.value || "管理员未提供原因");
                     activity.value.status = "rejected";
                     activity.value.phase = "rejected";
@@ -942,7 +812,7 @@ async function onAdminActionSelect(item) {
                     if (confirmed.action !== 'confirm') return;
                 }
                 await mockApi.startEnrollment(activityId);
-                const updatedActivityEnroll = await activityApi.getActivityDetail(activityId); // 重新获取以更新路线选择状态
+                const updatedActivityEnroll = await activityApi.getActivityDetail(activityId);
                 activity.value = updatedActivityEnroll;
                 showToast("已开始报名阶段");
                 break;
@@ -971,25 +841,25 @@ async function onAdminActionSelect(item) {
             case 'deleteActivity':
                 const confirmDelete = await Dialog.confirm({ title: '确认删除', message: '确定要永久删除此活动吗？此操作不可恢复。', confirmButtonColor: '#ee0a24'});
                 if (confirmDelete.action === 'confirm') {
-                    await activityApi.deleteActivity(activityId); // 使用 activityApi 里的删除
+                    await activityApi.deleteActivity(activityId);
                     showToast("活动已删除");
-                    router.replace('/activities'); // 或其他合适的页面
+                    router.replace('/activities');
                 }
                 break;
             default:
                 console.warn("未知的管理操作:", item.actionType);
         }
     } catch (err) {
-        if (err && err.action === 'cancel') { // Dialog.prompt 取消
+        if (err && err.action === 'cancel') {
             // 用户取消输入，不做处理
-        } else if (err.name === 'DialogCancel') { // Dialog.confirm 取消 (Vant 2.x)
+        } else if (err.name === 'DialogCancel') {
              // 用户取消确认，不做处理
         }
         else {
             showToast(`操作失败: ${err.message || '未知错误'}`);
         }
     }
-    showAdminActions.value = false; // 关闭动作面板
+    showAdminActions.value = false;
 }
 
 async function handleRemoveParticipant(participant) {
@@ -1002,7 +872,6 @@ async function handleRemoveParticipant(participant) {
 
         if (confirmResult.action === 'confirm') {
             await mockApi.removeParticipant(activity.value.id, participant.id);
-            // 更新参与者列表和计数
             activity.value.participants = activity.value.participants.filter(p => p.id !== participant.id);
             activity.value.currentParticipants--;
             if (currentUser.value && participant.id === currentUser.value.id) {
@@ -1015,6 +884,10 @@ async function handleRemoveParticipant(participant) {
        showToast(`移除失败: ${err.message}`);
     }
 }
+
+const goBack = () => {
+  router.back();
+};
 </script>
 
 <style lang="scss" scoped>
@@ -1030,7 +903,7 @@ async function handleRemoveParticipant(participant) {
   );
   padding-bottom: calc(
     60px + env(safe-area-inset-bottom)
-  ); // 为底部tabbar留出空间，并考虑安全区域
+  );
   position: relative;
   box-sizing: border-box;
 
@@ -1102,55 +975,54 @@ async function handleRemoveParticipant(participant) {
   z-index: 100;
   margin-bottom: 16px;
   border-radius: 0 0 12px 12px;
-  overflow: hidden; // 防止内部内容溢出影响圆角
+  overflow: hidden;
 
-  // 应用 glass-card 样式到 header 本身，而不是作为子元素
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  margin-left: 0; // sticky 时占满宽度
-  margin-right: 0; // sticky 时占满宽度
-  border-top-left-radius: 0; // 顶部不需要圆角
+  margin-left: 0;
+  margin-right: 0;
+  border-top-left-radius: 0;
   border-top-right-radius: 0;
 
   :deep(.van-nav-bar) {
-    background: transparent !important; // 确保透明
-    width: 100%; // 确保导航栏内容区占满
-    padding-left: 16px; // 给左箭头留出空间
-    padding-right: 16px; // 给右侧图标留出空间
+    background: transparent !important;
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
     box-sizing: border-box;
 
     .van-nav-bar__content {
-      height: 50px; // 可以根据需要调整导航栏高度
+      height: 50px;
     }
 
     .van-nav-bar__title {
       color: #000000;
       font-weight: 600;
-      max-width: calc(100% - 120px); // 留出左右按钮空间
+      max-width: calc(100% - 120px);
     }
     .van-icon {
       color: #000000 !important;
     }
     .van-nav-bar__right .van-icon {
-      margin-left: 10px; // 右侧图标之间的间距
-      font-size: 22px; // 图标大小
+      margin-left: 10px;
+      font-size: 22px;
     }
     .van-nav-bar__left .van-icon {
-      font-size: 22px; // 返回箭头图标大小
+      font-size: 22px;
     }
   }
 
   .nav-title {
     display: flex;
     align-items: center;
-    justify-content: center; // 使标题内容居中
+    justify-content: center;
     gap: 8px;
-    width: 100%; // 确保 flex 容器占满可用空间
-    overflow: hidden; // 防止文字过长溢出
+    width: 100%;
+    overflow: hidden;
 
     .title-text {
       color: #000000;
@@ -1160,7 +1032,7 @@ async function handleRemoveParticipant(participant) {
       text-overflow: ellipsis;
     }
     .status-tag {
-      flex-shrink: 0; // 防止tag被压缩
+      flex-shrink: 0;
       background: linear-gradient(
         135deg,
         rgba(52, 152, 219, 0.7) 0%,
@@ -1190,9 +1062,9 @@ async function handleRemoveParticipant(participant) {
       border: none;
       color: #ffffff;
       font-weight: 500;
-      padding: 3px 8px; // 调整padding
+      padding: 3px 8px;
       border-radius: 10px;
-      font-size: 11px; // 调整字体大小
+      font-size: 11px;
     }
   }
 }
@@ -1202,7 +1074,7 @@ async function handleRemoveParticipant(participant) {
   justify-content: center;
   align-items: center;
   min-height: 200px;
-  padding-top: 50px; // 避免被sticky header遮挡
+  padding-top: 50px;
   :deep(.van-loading__spinner) {
     color: var(--van-primary-color, #1989fa);
   }
@@ -1211,19 +1083,19 @@ async function handleRemoveParticipant(participant) {
   }
 }
 :deep(.van-empty) {
-  padding-top: 50px; // 避免被sticky header遮挡
+  padding-top: 50px;
   .van-empty__description {
     color: #000000;
   }
 }
 
 .content {
-  padding-top: 10px; // 与 header 的间距
+  padding-top: 10px;
 }
 
 .cover-image {
   position: relative;
-  height: 240px; // 稍微高一点
+  height: 240px;
   overflow: hidden;
   margin-bottom: 24px;
   .van-image {
@@ -1235,14 +1107,14 @@ async function handleRemoveParticipant(participant) {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 16px 20px; // 调整padding
+    padding: 16px 20px;
     background: linear-gradient(
       transparent,
       rgba(0, 0, 0, 0.75) 80%
-    ); // 渐变调整
+    );
     .title {
       margin: 0 0 8px;
-      font-size: 24px; // 调整字体
+      font-size: 24px;
       color: #ffffff;
       font-weight: 600;
       text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
@@ -1256,7 +1128,7 @@ async function handleRemoveParticipant(participant) {
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
       .van-icon {
         margin-right: 6px;
-        vertical-align: middle; // 图标与文字对齐
+        vertical-align: middle;
       }
     }
     .creator-info {
@@ -1273,20 +1145,20 @@ async function handleRemoveParticipant(participant) {
   .description {
     margin-bottom: 20px;
     line-height: 1.7;
-    color: #2c3e50; // 深灰色，更易读
+    color: #2c3e50;
     font-size: 15px;
   }
   .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px; // 标签间距
+    gap: 10px;
     .tag {
-      background: rgba(255, 255, 255, 0.1); // 半透明背景
+      background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(0, 0, 0, 0.1);
-      color: #34495e; // 深色文字
+      color: #34495e;
       font-weight: 500;
       padding: 5px 12px;
-      border-radius: 15px; // 更圆润的标签
+      border-radius: 15px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
   }
@@ -1294,8 +1166,8 @@ async function handleRemoveParticipant(participant) {
 
 .reason-card {
   padding: 15px 20px;
-  margin-top: -10px; // 调整与上方卡片的间距
-  margin-bottom: 20px; // 确保与下方卡片有间距
+  margin-top: -10px;
+  margin-bottom: 20px;
   h4 {
     margin: 0 0 10px;
     font-size: 17px;
@@ -1308,7 +1180,7 @@ async function handleRemoveParticipant(participant) {
   }
   &.rejected {
     border-left: 5px solid #ee0a24;
-    background: rgba(238, 10, 36, 0.05); // 更淡的背景
+    background: rgba(238, 10, 36, 0.05);
     h4 {
       color: #c82333;
     }
@@ -1318,7 +1190,7 @@ async function handleRemoveParticipant(participant) {
   }
   &.cancelled {
     border-left: 5px solid #ff976a;
-    background: rgba(255, 151, 106, 0.05); // 更淡的背景
+    background: rgba(255, 151, 106, 0.05);
     h4 {
       color: #e67e22;
     }
@@ -1331,14 +1203,14 @@ async function handleRemoveParticipant(participant) {
 .participants-section {
   padding: 20px;
   h3 {
-    margin: 0 0 18px; // 增加与列表的间距
+    margin: 0 0 18px;
     font-size: 18px;
     color: #2c3e50;
     font-weight: 600;
   }
   .participants-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); // 调整最小宽度
+    grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
     gap: 16px;
     .participant {
       display: flex;
@@ -1348,8 +1220,8 @@ async function handleRemoveParticipant(participant) {
       position: relative;
       .avatar {
         border: 2px solid rgba(255, 255, 255, 0.7);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // 增加阴影
-        width: 48px; // 统一大小
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 48px;
         height: 48px;
       }
       .name {
@@ -1360,20 +1232,20 @@ async function handleRemoveParticipant(participant) {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        padding: 0 2px; // 防止文字紧贴边缘
+        padding: 0 2px;
       }
       .remove-participant-btn {
         position: absolute;
-        top: -6px; // 调整位置
+        top: -6px;
         right: -6px;
         border-radius: 50%;
-        width: 22px; // 稍大一点
+        width: 22px;
         height: 22px;
         padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: rgba(238, 10, 36, 0.8); // 按钮背景色
+        background-color: rgba(238, 10, 36, 0.8);
         border: 1px solid rgba(255, 255, 255, 0.5);
         :deep(.van-icon) {
           font-size: 14px;
@@ -1398,24 +1270,24 @@ async function handleRemoveParticipant(participant) {
   .routes-list {
     display: flex;
     flex-direction: column;
-    gap: 18px; // 路线间距
+    gap: 18px;
     .route-item {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start; // 垂直方向顶部对齐
-      gap: 12px; // 内部元素间距
-      background: rgba(255, 255, 255, 0.35); // 背景更明显些
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.35);
       border-radius: 12px;
       padding: 16px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); // 阴影调整
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
       transition: transform 0.2s ease-in-out;
 
       &:hover {
-        transform: translateY(-2px); // 轻微上浮效果
+        transform: translateY(-2px);
       }
 
       &.voted-by-me {
-        border-left: 5px solid #2ecc71; // Vant success color
+        border-left: 5px solid #2ecc71;
         background: rgba(46, 204, 113, 0.1);
       }
       &.selected-route-display {
@@ -1440,11 +1312,11 @@ async function handleRemoveParticipant(participant) {
         .route-meta {
           display: flex;
           flex-wrap: wrap;
-          gap: 8px 15px; // 行间距和列间距
+          gap: 8px 15px;
           font-size: 13px;
           color: #666;
           span {
-            padding: 2px 0; // 给meta一点垂直空间
+            padding: 2px 0;
           }
         }
       }
@@ -1455,33 +1327,30 @@ async function handleRemoveParticipant(participant) {
         gap: 8px;
         min-width: 90px;
         text-align: center;
-        padding-top: 5px; // 给投票按钮一点上边距
+        padding-top: 5px;
         .vote-button {
           min-width: 80px;
-          height: 32px; // 固定按钮高度
+          height: 32px;
           font-size: 13px;
-          border-radius: 16px; // 圆角按钮
+          border-radius: 16px;
           font-weight: 500;
-          border: none; // 通常渐变按钮不需要边框
+          border: none;
           box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-          color: #fff; // 统一文字颜色为白色
+          color: #fff;
 
           &.van-button--warning {
-            // 投票按钮
-            background: linear-gradient(135deg, #fbc531, #f9a825); // 黄色系渐变
+            background: linear-gradient(135deg, #fbc531, #f9a825);
           }
           &.van-button--success {
-            // 已投票/我的投票
-            background: linear-gradient(135deg, #45aaf2, #2d98da); // 蓝色系渐变
+            background: linear-gradient(135deg, #45aaf2, #2d98da);
           }
           &:disabled {
-            // 已投其他或loading时
-            background: #bdc3c7; // 灰色
+            background: #bdc3c7;
             opacity: 0.8;
             box-shadow: none;
           }
           :deep(.van-loading__spinner) {
-            color: white !important; // loading图标颜色
+            color: white !important;
           }
         }
         .votes-count {
@@ -1499,13 +1368,13 @@ async function handleRemoveParticipant(participant) {
   margin-bottom: 20px;
 }
 .action-bar {
-  padding: 15px 20px; // 增加内边距
+  padding: 15px 20px;
   margin: 0;
   .action-button {
-    height: 48px; // 按钮高度
+    height: 48px;
     font-size: 16px;
     font-weight: 600;
-    border-radius: 24px; // 更圆的按钮
+    border-radius: 24px;
     border: none;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -1516,23 +1385,24 @@ async function handleRemoveParticipant(participant) {
     }
 
     &.join-button {
-      background: linear-gradient(135deg, #2ecc71, #27ae60); // 绿色报名
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
     }
     &.cancel-button {
-      background: linear-gradient(135deg, #e74c3c, #c0392b); // 红色取消
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
     }
     &.van-button--default[disabled] {
-      //满员状态
-      background: #dcdde1; // 浅灰色
-      color: #7f8c8d; // 文字颜色
-      opacity: 1; // 不需要额外透明度
+      background: #dcdde1;
+      color: #7f8c8d;
+      opacity: 1;
       box-shadow: none;
     }
   }
   .van-tag {
     width: 100%;
-    padding: 12px 0; // 标签内边距
+    padding: 12px 0;
     justify-content: center;
+    font-size: 15px;
+    border-radius: 10px;
     font-size: 15px; // 标签字体
     border-radius: 10px; // 标签圆角
     &.van-tag--plain.van-tag--warning {

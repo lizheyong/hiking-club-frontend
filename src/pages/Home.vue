@@ -8,9 +8,9 @@
             alt="Hiking Club Logo"
             class="logo-image"
           />
-          <h1 class="title">Hiking Club</h1>
+          <h1 class="title">{{ $t('home.title') }}</h1>
         </div>
-        <p class="subtitle">探索自然，结交朋友～</p>
+        <p class="subtitle">{{ $t('home.subtitle') }}</p>
       </div>
     </div>
 
@@ -35,7 +35,7 @@
     <!-- 活动报名中 -->
     <div class="enrolling-activities">
       <div class="section-header glass-card enrolling-header">
-        <h2 class="section-title">活动报名中</h2>
+        <h2 class="section-title">{{ $t('home.sections.enrolling.title') }}</h2>
       </div>
 
       <div class="activity-list">
@@ -58,11 +58,12 @@
               </div>
             </div>
             <div class="activity-status">
-              <div class="status-tag enrolling">报名中</div>
+              <div class="status-tag enrolling">{{ $t('home.sections.enrolling.status') }}</div>
               <span class="participants">
-                {{ activity.currentParticipants }}/{{
-                  activity.maxParticipants
-                }}人
+                {{ $t('home.sections.enrolling.participants', {
+                  current: activity.currentParticipants,
+                  max: activity.maxParticipants
+                }) }}
               </span>
             </div>
           </div>
@@ -81,7 +82,7 @@
     <!-- 活动投票中 -->
     <div class="voting-activities">
       <div class="section-header glass-card voting-header">
-        <h2 class="section-title">活动投票中</h2>
+        <h2 class="section-title">{{ $t('home.sections.voting.title') }}</h2>
       </div>
 
       <div class="activity-list">
@@ -109,9 +110,9 @@
               </span>
             </div>
             <div class="activity-status">
-              <div class="status-tag voting">投票中</div>
+              <div class="status-tag voting">{{ $t('home.sections.voting.status') }}</div>
               <span class="routes-count">
-                {{ activity.routes.length }}条路线
+                {{ $t('home.sections.voting.routes', { count: activity.routes.length }) }}
               </span>
             </div>
           </div>
@@ -137,7 +138,7 @@
           @click="handleTabChange(tab, index)"
         >
           <van-icon :name="tab.icon" />
-          <span>{{ tab.text }}</span>
+          <span>{{ $t(tab.textKey) }}</span>
         </div>
       </div>
     </div>
@@ -150,9 +151,11 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { activityApi } from "../api/activity";
 import { Toast } from "vant";
+import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
 const userStore = useUserStore();
+const { t } = useI18n();
 
 const activeTab = ref(0);
 const searchText = ref("");
@@ -192,7 +195,7 @@ const votingActivities = computed(() => {
 const quickActions = [
   {
     icon: "plus",
-    text: "发布活动",
+    text: t('home.quickActions.createActivity'),
     handler: () => {
       if (!userStore.user) {
         router.push("/login");
@@ -203,7 +206,7 @@ const quickActions = [
   },
   {
     icon: "friends-o",
-    text: "我的活动",
+    text: t('home.quickActions.myActivities'),
     handler: () => {
       if (!userStore.user) {
         router.push("/login");
@@ -214,7 +217,7 @@ const quickActions = [
   },
   {
     icon: "like-o",
-    text: "收藏活动",
+    text: t('home.quickActions.favoriteActivities'),
     handler: () => {
       if (!userStore.user) {
         router.push("/login");
@@ -225,7 +228,7 @@ const quickActions = [
   },
   {
     icon: "guide-o",
-    text: "活动指南",
+    text: t('home.quickActions.activityGuide'),
     handler: () => {
       router.push("/guide");
     },
@@ -233,9 +236,9 @@ const quickActions = [
 ];
 
 const tabs = [
-  { name: "home", icon: "home-o", text: "首页", route: "/" },
-  { name: "activities", icon: "search", text: "活动", route: "/activities" },
-  { name: "profile", icon: "user-o", text: "我的", route: "/profile" },
+  { name: "home", icon: "home-o", textKey: "home.tabs.home", route: "/" },
+  { name: "activities", icon: "search", textKey: "home.tabs.activities", route: "/activities" },
+  { name: "profile", icon: "user-o", textKey: "home.tabs.profile", route: "/profile" },
 ];
 
 // Tab切换处理函数
@@ -258,10 +261,8 @@ const loadActivities = async () => {
 const formatDate = (date) => {
   if (!date) return "";
   const d = new Date(date);
-  return `${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(
-    2,
-    "0"
-  )}:${String(d.getMinutes()).padStart(2, "0")}`;
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${months[d.getMonth()]} ${d.getDate()} ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 };
 
 const goToDetail = (id) => {

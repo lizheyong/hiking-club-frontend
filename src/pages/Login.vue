@@ -1,12 +1,12 @@
 <template>
   <div class="login-page">
-    <van-nav-bar title="登录" left-arrow @click-left="router.back()" />
+    <van-nav-bar :title="$t('login.title')" left-arrow @click-left="router.back()" />
 
     <div class="login-container">
       <div class="login-header glass-card">
         <div class="logo-title-container">
           <img src="../assets/logo.png" alt="Logo" class="logo" />
-          <h2 class="welcome-text">欢迎登录</h2>
+          <h2 class="welcome-text">{{ $t('login.welcome') }}</h2>
         </div>
       </div>
 
@@ -21,17 +21,17 @@
             <van-field
               v-model="phoneForm.phone"
               name="phone"
-              label="手机号"
-              placeholder="请输入手机号"
-              :rules="[{ required: true, message: '请填写手机号' }]"
+              :label="$t('login.phone.phoneNumber')"
+              :placeholder="$t('login.phone.phonePlaceholder')"
+              :rules="[{ required: true, message: $t('login.phone.phoneRequired') }]"
             />
             <van-field
               v-model="phoneForm.code"
               center
               clearable
-              label="验证码"
-              placeholder="请输入验证码"
-              :rules="[{ required: true, message: '请填写验证码' }]"
+              :label="$t('login.phone.verificationCode')"
+              :placeholder="$t('login.phone.codePlaceholder')"
+              :rules="[{ required: true, message: $t('login.phone.codeRequired') }]"
             >
               <template #button>
                 <van-button
@@ -41,7 +41,7 @@
                   :disabled="!!countdown"
                   @click="sendCode"
                 >
-                  {{ countdown ? `${countdown}s后重试` : "发送验证码" }}
+                  {{ countdown ? $t('login.phone.resendCode', { countdown }) : $t('login.phone.sendCode') }}
                 </van-button>
               </template>
             </van-field>
@@ -54,7 +54,7 @@
               native-type="submit"
               class="submit-button"
             >
-              登录
+              {{ $t('login.phone.login') }}
             </van-button>
           </div>
         </van-form>
@@ -65,17 +65,17 @@
             <van-field
               v-model="emailForm.email"
               name="email"
-              label="邮箱"
-              placeholder="请输入邮箱"
-              :rules="[{ required: true, message: '请填写邮箱' }]"
+              :label="$t('login.email.email')"
+              :placeholder="$t('login.email.emailPlaceholder')"
+              :rules="[{ required: true, message: $t('login.email.emailRequired') }]"
             />
             <van-field
               v-model="emailForm.password"
               type="password"
               name="password"
-              label="密码"
-              placeholder="请输入密码"
-              :rules="[{ required: true, message: '请填写密码' }]"
+              :label="$t('login.email.password')"
+              :placeholder="$t('login.email.passwordPlaceholder')"
+              :rules="[{ required: true, message: $t('login.email.passwordRequired') }]"
             />
           </van-cell-group>
           <div class="submit-btn">
@@ -86,7 +86,7 @@
               native-type="submit"
               class="submit-button"
             >
-              登录
+              {{ $t('login.email.login') }}
             </van-button>
           </div>
         </van-form>
@@ -95,13 +95,13 @@
         <div class="action-options">
           <div class="switch-login-type">
             <span @click="switchLoginType">
-              {{ loginType === "phone" ? "使用邮箱登录" : "使用手机号登录" }}
+              {{ loginType === "phone" ? $t('login.switchToEmail') : $t('login.switchToPhone') }}
             </span>
           </div>
 
           <div class="register-link">
-            还没有账号？
-            <router-link to="/register">立即注册</router-link>
+            {{ $t('login.noAccount') }}
+            <router-link to="/register">{{ $t('login.registerNow') }}</router-link>
           </div>
         </div>
       </div>
@@ -115,9 +115,11 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { userApi } from "../api/user";
 import { showToast } from "vant";
+import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
 const userStore = useUserStore();
+const { t } = useI18n();
 const countdown = ref(0);
 const loginType = ref("phone"); // 默认使用手机号登录
 
@@ -148,10 +150,10 @@ const startCountdown = () => {
 const sendCode = async () => {
   try {
     await userApi.sendVerificationCode(phoneForm.value.phone);
-    showToast("验证码已发送");
+    showToast(t('login.codeSent'));
     startCountdown();
   } catch (error) {
-    showToast("发送失败，请重试");
+    showToast(t('login.sendFailed'));
   }
 };
 
@@ -165,11 +167,11 @@ const onPhoneSubmit = async () => {
     console.log("登录成功，返回数据:", { token, user });
     userStore.setToken(token);
     userStore.setUser(user);
-    showToast("登录成功");
+    showToast(t('login.loginSuccess'));
     router.push("/");
   } catch (error) {
     console.error("登录失败:", error);
-    showToast(error.message || "登录失败，请重试");
+    showToast(error.message || t('login.loginFailed'));
   }
 };
 
@@ -183,11 +185,11 @@ const onEmailSubmit = async () => {
     console.log("登录成功，返回数据:", { token, user });
     userStore.setToken(token);
     userStore.setUser(user);
-    showToast("登录成功");
+    showToast(t('login.loginSuccess'));
     router.push("/");
   } catch (error) {
     console.error("登录失败:", error);
-    showToast(error.message || "登录失败，请重试");
+    showToast(error.message || t('login.loginFailed'));
   }
 };
 </script>

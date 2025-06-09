@@ -27,4 +27,8 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    host: true,           // 开全网监听（相当于你现在 --host）
+    allowedHosts: 'all',  // 必须加，解决 ngrok blocked 问题
+  }
 });

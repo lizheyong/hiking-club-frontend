@@ -1,12 +1,12 @@
 <template>
-  <div class="create-activity-page">
+  <div class="edit-activity-page">
     <div class="header glass-card">
       <van-nav-bar
         left-arrow
         @click-left="goBack"
       >
         <template #title>
-          <span class="title-text">{{ $t('createActivity.title') }}</span>
+          <span class="title-text">{{ $t('editActivity.title') }}</span>
         </template>
       </van-nav-bar>
     </div>
@@ -14,59 +14,59 @@
     <div class="content">
       <van-form @submit="onSubmit">
         <div class="form-section glass-card">
-          <h3 class="section-title">{{ $t('createActivity.basicInfo.title') }}</h3>
+          <h3 class="section-title">{{ $t('editActivity.basicInfo.title') }}</h3>
           
           <van-field
             v-model="formData.title"
             name="title"
-            :label="$t('createActivity.basicInfo.title')"
-            :placeholder="$t('createActivity.basicInfo.titlePlaceholder')"
-            :rules="[{ required: true, message: $t('createActivity.basicInfo.titleRequired') }]"
+            :label="$t('editActivity.basicInfo.title')"
+            :placeholder="$t('editActivity.basicInfo.titlePlaceholder')"
+            :rules="[{ required: true, message: $t('editActivity.basicInfo.titleRequired') }]"
           />
 
           <van-field
             v-model="formData.description"
             name="description"
-            :label="$t('createActivity.basicInfo.description')"
-            :placeholder="$t('createActivity.basicInfo.descriptionPlaceholder')"
+            :label="$t('editActivity.basicInfo.description')"
+            :placeholder="$t('editActivity.basicInfo.descriptionPlaceholder')"
             type="textarea"
             rows="4"
-            :rules="[{ required: true, message: $t('createActivity.basicInfo.descriptionRequired') }]"
+            :rules="[{ required: true, message: $t('editActivity.basicInfo.descriptionRequired') }]"
           />
 
           <van-field
             v-model="formData.location"
             name="location"
-            :label="$t('createActivity.basicInfo.location')"
-            :placeholder="$t('createActivity.basicInfo.locationPlaceholder')"
-            :rules="[{ required: true, message: $t('createActivity.basicInfo.locationRequired') }]"
+            :label="$t('editActivity.basicInfo.location')"
+            :placeholder="$t('editActivity.basicInfo.locationPlaceholder')"
+            :rules="[{ required: true, message: $t('editActivity.basicInfo.locationRequired') }]"
           />
 
           <van-field
             v-model="formData.startTime"
             name="startTime"
-            :label="$t('createActivity.basicInfo.startTime')"
-            :placeholder="$t('createActivity.basicInfo.startTimePlaceholder')"
+            :label="$t('editActivity.basicInfo.startTime')"
+            :placeholder="$t('editActivity.basicInfo.startTimePlaceholder')"
             readonly
-            :rules="[{ required: true, message: $t('createActivity.basicInfo.startTimeRequired') }]"
+            :rules="[{ required: true, message: $t('editActivity.basicInfo.startTimeRequired') }]"
             @click="showDatePicker = true"
           />
 
           <van-field
             v-model="formData.maxParticipants"
             name="maxParticipants"
-            :label="$t('createActivity.basicInfo.maxParticipants')"
-            :placeholder="$t('createActivity.basicInfo.maxParticipantsPlaceholder')"
+            :label="$t('editActivity.basicInfo.maxParticipants')"
+            :placeholder="$t('editActivity.basicInfo.maxParticipantsPlaceholder')"
             type="number"
             :rules="[
-              { required: true, message: $t('createActivity.basicInfo.maxParticipantsRequired') },
-              { validator: validateMaxParticipants, message: $t('createActivity.basicInfo.maxParticipantsInvalid') }
+              { required: true, message: $t('editActivity.basicInfo.maxParticipantsRequired') },
+              { validator: validateMaxParticipants, message: $t('editActivity.basicInfo.maxParticipantsInvalid') }
             ]"
           />
         </div>
 
         <div class="form-section glass-card">
-          <h3 class="section-title">{{ $t('createActivity.routes.title') }}</h3>
+          <h3 class="section-title">{{ $t('editActivity.routes.title') }}</h3>
           
           <div class="routes-list">
             <div
@@ -75,7 +75,7 @@
               class="route-item glass-card"
             >
               <div class="route-header">
-                <h4>{{ $t('createActivity.routes.route', { number: index + 1 }) }}</h4>
+                <h4>{{ $t('editActivity.routes.route', { number: index + 1 }) }}</h4>
                 <van-button
                   v-if="formData.routes.length > 1"
                   type="danger"
@@ -83,54 +83,54 @@
                   icon="delete-o"
                   @click="removeRoute(index)"
                 >
-                  {{ $t('createActivity.routes.remove') }}
+                  {{ $t('editActivity.routes.remove') }}
                 </van-button>
               </div>
 
               <van-field
                 v-model="route.title"
-                :label="$t('createActivity.routes.title')"
-                :placeholder="$t('createActivity.routes.titlePlaceholder')"
-                :rules="[{ required: true, message: $t('createActivity.routes.titleRequired') }]"
+                :label="$t('editActivity.routes.title')"
+                :placeholder="$t('editActivity.routes.titlePlaceholder')"
+                :rules="[{ required: true, message: $t('editActivity.routes.titleRequired') }]"
               />
 
               <van-field
                 v-model="route.description"
-                :label="$t('createActivity.routes.description')"
-                :placeholder="$t('createActivity.routes.descriptionPlaceholder')"
+                :label="$t('editActivity.routes.description')"
+                :placeholder="$t('editActivity.routes.descriptionPlaceholder')"
                 type="textarea"
                 rows="3"
-                :rules="[{ required: true, message: $t('createActivity.routes.descriptionRequired') }]"
+                :rules="[{ required: true, message: $t('editActivity.routes.descriptionRequired') }]"
               />
 
               <van-field
                 v-model="route.distance"
-                :label="$t('createActivity.routes.distance')"
-                :placeholder="$t('createActivity.routes.distancePlaceholder')"
+                :label="$t('editActivity.routes.distance')"
+                :placeholder="$t('editActivity.routes.distancePlaceholder')"
                 type="number"
                 :rules="[
-                  { required: true, message: $t('createActivity.routes.distanceRequired') },
-                  { validator: validateDistance, message: $t('createActivity.routes.distanceInvalid') }
+                  { required: true, message: $t('editActivity.routes.distanceRequired') },
+                  { validator: validateDistance, message: $t('editActivity.routes.distanceInvalid') }
                 ]"
               />
 
               <van-field
                 v-model="route.duration"
-                :label="$t('createActivity.routes.duration')"
-                :placeholder="$t('createActivity.routes.durationPlaceholder')"
+                :label="$t('editActivity.routes.duration')"
+                :placeholder="$t('editActivity.routes.durationPlaceholder')"
                 type="number"
                 :rules="[
-                  { required: true, message: $t('createActivity.routes.durationRequired') },
-                  { validator: validateDuration, message: $t('createActivity.routes.durationInvalid') }
+                  { required: true, message: $t('editActivity.routes.durationRequired') },
+                  { validator: validateDuration, message: $t('editActivity.routes.durationInvalid') }
                 ]"
               />
 
               <van-field
                 v-model="route.difficulty"
-                :label="$t('createActivity.routes.difficulty')"
-                :placeholder="$t('createActivity.routes.difficultyPlaceholder')"
+                :label="$t('editActivity.routes.difficulty')"
+                :placeholder="$t('editActivity.routes.difficultyPlaceholder')"
                 readonly
-                :rules="[{ required: true, message: $t('createActivity.routes.difficultyRequired') }]"
+                :rules="[{ required: true, message: $t('editActivity.routes.difficultyRequired') }]"
                 @click="showDifficultyPicker = true; currentRouteIndex = index"
               />
             </div>
@@ -143,13 +143,13 @@
               icon="plus"
               @click="addRoute"
             >
-              {{ $t('createActivity.routes.add') }}
+              {{ $t('editActivity.routes.add') }}
             </van-button>
           </div>
         </div>
 
         <div class="form-section glass-card">
-          <h3 class="section-title">{{ $t('createActivity.tags.title') }}</h3>
+          <h3 class="section-title">{{ $t('editActivity.tags.title') }}</h3>
           
           <div class="tags-container">
             <van-tag
@@ -166,7 +166,7 @@
 
           <van-field
             v-model="newTag"
-            :placeholder="$t('createActivity.tags.placeholder')"
+            :placeholder="$t('editActivity.tags.placeholder')"
             @keyup.enter="addTag"
           >
             <template #button>
@@ -175,7 +175,7 @@
                 type="primary"
                 @click="addTag"
               >
-                {{ $t('createActivity.tags.add') }}
+                {{ $t('editActivity.tags.add') }}
               </van-button>
             </template>
           </van-field>
@@ -189,7 +189,7 @@
             native-type="submit"
             :loading="submitting"
           >
-            {{ $t('createActivity.submit') }}
+            {{ $t('editActivity.submit') }}
           </van-button>
         </div>
       </van-form>
@@ -197,7 +197,7 @@
 
     <van-popup v-model:show="showDatePicker" position="bottom">
       <van-date-picker
-        :title="$t('createActivity.datePicker.title')"
+        :title="$t('editActivity.datePicker.title')"
         :min-date="minDate"
         @confirm="onDateConfirm"
         @cancel="showDatePicker = false"
@@ -206,7 +206,7 @@
 
     <van-popup v-model:show="showDifficultyPicker" position="bottom">
       <van-picker
-        :title="$t('createActivity.difficultyPicker.title')"
+        :title="$t('editActivity.difficultyPicker.title')"
         :columns="difficultyOptions"
         @confirm="onDifficultyConfirm"
         @cancel="showDifficultyPicker = false"
@@ -216,14 +216,15 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-import { useRouter } from "vue-router";
+import { ref, reactive, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { activityApi } from "../api/activity";
 import { showToast } from "vant";
 import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
+const route = useRoute();
 const userStore = useUserStore();
 const { t } = useI18n();
 
@@ -253,9 +254,9 @@ const currentRouteIndex = ref(0);
 const minDate = new Date();
 
 const difficultyOptions = [
-  t('createActivity.difficultyPicker.easy'),
-  t('createActivity.difficultyPicker.medium'),
-  t('createActivity.difficultyPicker.hard'),
+  t('editActivity.difficultyPicker.easy'),
+  t('editActivity.difficultyPicker.medium'),
+  t('editActivity.difficultyPicker.hard'),
 ];
 
 const validateMaxParticipants = (value) => {
@@ -312,14 +313,42 @@ const onDifficultyConfirm = (value) => {
   showDifficultyPicker.value = false;
 };
 
+const loadActivity = async () => {
+  try {
+    const activityId = route.params.id;
+    const activity = await activityApi.getActivity(activityId);
+    
+    // 检查是否是活动创建者
+    if (activity.creator.id !== userStore.user?.id) {
+      showToast(t('editActivity.errors.notCreator'));
+      router.push(`/activity/${activityId}`);
+      return;
+    }
+
+    // 填充表单数据
+    formData.title = activity.title;
+    formData.description = activity.description;
+    formData.location = activity.location;
+    formData.startTime = activity.startTime;
+    formData.maxParticipants = activity.maxParticipants;
+    formData.routes = activity.routes;
+    formData.tags = activity.tags;
+  } catch (error) {
+    showToast(t('editActivity.errors.loadFailed'));
+    console.error(error);
+    router.push('/activities');
+  }
+};
+
 const onSubmit = async () => {
   try {
     submitting.value = true;
-    const activity = await activityApi.createActivity(formData);
-    showToast(t('createActivity.success'));
-    router.push(`/activity/${activity.id}`);
+    const activityId = route.params.id;
+    await activityApi.updateActivity(activityId, formData);
+    showToast(t('editActivity.success'));
+    router.push(`/activity/${activityId}`);
   } catch (error) {
-    showToast(t('createActivity.errors.createFailed'));
+    showToast(t('editActivity.errors.updateFailed'));
     console.error(error);
   } finally {
     submitting.value = false;
@@ -329,10 +358,19 @@ const onSubmit = async () => {
 const goBack = () => {
   router.back();
 };
+
+onMounted(() => {
+  if (!userStore.user) {
+    showToast(t('editActivity.errors.notLoggedIn'));
+    router.push('/login');
+    return;
+  }
+  loadActivity();
+});
 </script>
 
 <style lang="scss" scoped>
-.create-activity-page {
+.edit-activity-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   padding-bottom: calc(60px + env(safe-area-inset-bottom));
@@ -496,4 +534,4 @@ const goBack = () => {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
 }
-</style>
+</style> 
