@@ -211,11 +211,12 @@
             class="participant"
           >
             <van-image
-              :src="participant.avatar"
+              :src="participant.avatar || 'https://picsum.photos/40/40?random=' + participant.id"
               round
               width="40"
               height="40"
               class="avatar"
+              error-icon="user-o"
             />
             <span class="name">{{ participant.name }}</span>
             <van-button
@@ -556,7 +557,7 @@ const adminActionOptions = computed(() => {
 
 // --- 方法 ---
 const loadActivityDetail = async () => {
-  const activityId = Number(route.params.id);
+  const activityId = route.params.id;
   if (!activityId) {
     error.value = "未提供活动ID";
     loading.value = false;
@@ -884,6 +885,13 @@ async function handleRemoveParticipant(participant) {
        showToast(`移除失败: ${err.message}`);
     }
 }
+
+const handleTabChange = (tab, index) => {
+  activeTab.value = index;
+  if (tab.route) {
+    router.push(tab.route);
+  }
+};
 
 const goBack = () => {
   router.back();

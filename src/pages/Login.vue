@@ -91,11 +91,60 @@
           </div>
         </van-form>
 
-        <!-- 切换登录方式 -->
+        <!-- 第三方登录 -->
+        <div class="third-party-login">
+          <div class="divider">
+            <span>{{ $t('login.orLogin') }}</span>
+          </div>
+          
+          <div class="social-buttons">
+            <!-- 邮箱登录按钮 (在手机登录页面显示) -->
+            <van-button 
+              v-if="loginType === 'phone'"
+              class="email-btn"
+              @click="switchLoginType"
+            >
+              <div class="btn-content">
+                <van-icon name="envelop-o" class="btn-icon" />
+                <span>{{ $t('login.email.login') }}</span>
+              </div>
+            </van-button>
+            
+            <!-- 手机登录按钮 (在邮箱登录页面显示) -->
+            <van-button 
+              v-if="loginType === 'email'"
+              class="phone-btn"
+              @click="switchLoginType"
+            >
+              <div class="btn-content">
+                <van-icon name="phone" class="btn-icon" />
+                <span>{{ $t('login.phone.login') }}</span>
+              </div>
+            </van-button>
+            
+            <!-- Google登录按钮 -->
+            <van-button 
+              class="google-btn"
+              @click="handleGoogleLogin"
+            >
+              <div class="btn-content">
+                <img 
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" 
+                  alt="Google" 
+                  class="btn-icon"
+                />
+                <span>Google {{ $t('login.login') }}</span>
+              </div>
+            </van-button>
+          </div>
+        </div>
+
+        <!-- 其他操作选项 -->
         <div class="action-options">
-          <div class="switch-login-type">
-            <span @click="switchLoginType">
-              {{ loginType === "phone" ? $t('login.switchToEmail') : $t('login.switchToPhone') }}
+          <!-- 忘记密码 -->
+          <div v-if="loginType === 'email'" class="forgot-password">
+            <span @click="handleForgotPassword">
+              {{ $t('login.forgotPassword') }}
             </span>
           </div>
 
@@ -121,7 +170,7 @@ const router = useRouter();
 const userStore = useUserStore();
 const { t } = useI18n();
 const countdown = ref(0);
-const loginType = ref("phone"); // 默认使用手机号登录
+const loginType = ref("email"); // 默认使用邮箱登录
 
 const phoneForm = ref({
   phone: "",
@@ -190,6 +239,39 @@ const onEmailSubmit = async () => {
   } catch (error) {
     console.error("登录失败:", error);
     showToast(error.message || t('login.loginFailed'));
+  }
+};
+
+// Google登录
+const handleGoogleLogin = async () => {
+  try {
+    const result = await userApi.loginWithGoogle();
+    if (result.url && result.url !== "#mock-google-redirect") {
+      // 真实的Google登录会跳转到OAuth页面
+      window.location.href = result.url;
+    } else {
+      // Mock模式显示提示
+      showToast("Mock模式：Google登录功能需要配置Supabase");
+    }
+  } catch (error) {
+    console.error("Google登录失败:", error);
+    showToast(error.message || "Google登录失败");
+  }
+};
+
+// 忘记密码
+const handleForgotPassword = async () => {
+  if (!emailForm.value.email) {
+    showToast("请先输入邮箱地址");
+    return;
+  }
+  
+  try {
+    await userApi.resetPassword(emailForm.value.email);
+    showToast("密码重置邮件已发送");
+  } catch (error) {
+    console.error("密码重置失败:", error);
+    showToast(error.message || "密码重置失败");
   }
 };
 </script>
@@ -337,6 +419,91 @@ const onEmailSubmit = async () => {
   }
 }
 
+.third-party-login {
+  margin: 20px 0;
+  
+  .divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    span {
+      background: rgba(255, 255, 255, 0.25);
+      padding: 0 16px;
+      color: #666;
+      font-size: 14px;
+      position: relative;
+      z-index: 1;
+    }
+  }
+  
+  .social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    
+    .btn-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 100%;
+    }
+    
+    .btn-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .email-btn,
+    .phone-btn,
+    .google-btn {
+      width: 100%;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.95);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+    
+    .email-btn {
+      .btn-icon {
+        color: #4285f4; // 蓝色 - 类似邮箱品牌色
+        font-size: 24px;
+      }
+    }
+    
+    .phone-btn {
+      .btn-icon {
+        color: #34a853; // 绿色 - 类似电话/短信品牌色
+        font-size: 24px;
+      }
+    }
+  }
+}
+
 .action-options {
   display: flex;
   flex-direction: column;
@@ -355,6 +522,23 @@ const onEmailSubmit = async () => {
 
     &:hover {
       color: #34495e;
+      text-decoration: underline;
+    }
+  }
+}
+
+.forgot-password {
+  text-align: center;
+  
+  span {
+    color: #3498db;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+    
+    &:hover {
+      color: #2980b9;
       text-decoration: underline;
     }
   }

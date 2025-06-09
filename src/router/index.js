@@ -21,6 +21,18 @@ const routes = [
     meta: { requiresAuth: false },
   },
   {
+    path: "/auth/callback",
+    name: "AuthCallback",
+    component: () => import("../pages/AuthCallback.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/data-migration",
+    name: "DataMigration",
+    component: () => import("../pages/DataMigration.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
     path: "/profile",
     name: "Profile",
     component: () => import("../pages/Profile.vue"),
@@ -105,8 +117,18 @@ const router = createRouter({
 });
 
 // 路由守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore();
+
+  // 如果是Supabase模式且有token但没有用户信息，尝试获取用户信息
+  const API_MODE = import.meta.env.VITE_API_MODE || 'mock';
+  if (API_MODE === 'supabase' && userStore.token && !userStore.user) {
+    try {
+      await userStore.initAuth();
+    } catch (error) {
+      console.error('路由守卫：获取用户信息失败', error);
+    }
+  }
 
   // 需要登录的页面
   if (to.meta.requiresAuth && !userStore.user) {

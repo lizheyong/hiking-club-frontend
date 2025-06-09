@@ -1,79 +1,161 @@
 import request from "./request";
 import { mockApi } from "./mock";
+import { supabaseApi } from "./supabase";
 
-// 是否使用模拟数据
-const USE_MOCK = true;
+// API模式配置: 'mock' | 'supabase' | 'backend'
+const API_MODE = import.meta.env.VITE_API_MODE || 'mock';
 
-export const userApi = USE_MOCK
-  ? {
-      // 手机验证码登录
-      loginByPhone(phone, code) {
-        return mockApi.loginByPhone(phone, code);
-      },
+const createUserApi = () => {
+  switch (API_MODE) {
+    case 'supabase':
+      return {
+        // 手机验证码登录
+        loginByPhone(phone, code) {
+          return supabaseApi.loginByPhone(phone, code);
+        },
 
-      // 邮箱登录
-      loginByEmail(email, password) {
-        return mockApi.loginByEmail(email, password);
-      },
+        // 邮箱登录
+        loginByEmail(email, password) {
+          return supabaseApi.loginByEmail(email, password);
+        },
 
-      // 发送验证码
-      sendVerificationCode(phone) {
-        return mockApi.sendVerificationCode(phone);
-      },
+        // 发送验证码
+        sendVerificationCode(phone) {
+          return supabaseApi.sendVerificationCode(phone);
+        },
 
-      // 注册
-      register(data) {
-        return mockApi.register(data);
-      },
+        // 注册
+        register(data) {
+          return supabaseApi.register(data);
+        },
 
-      // 获取用户信息
-      getUserInfo() {
-        return mockApi.getUserInfo();
-      },
+        // 获取用户信息
+        getUserInfo() {
+          return supabaseApi.getUserInfo();
+        },
 
-      // 更新用户信息
-      updateUserInfo(data) {
-        return mockApi.updateUserInfo(data);
-      },
+        // 更新用户信息
+        updateUserInfo(data) {
+          return supabaseApi.updateUserInfo(data);
+        },
 
-      // 修改密码
-      changePassword(data) {
-        return mockApi.changePassword(data);
-      },
-    }
-  : {
-      // 手机验证码登录
-      loginByPhone(phone, code) {
-        return request.post("/auth/phone-login", { phone, code });
-      },
+        // 修改密码
+        changePassword(data) {
+          return supabaseApi.changePassword(data);
+        },
 
-      // 邮箱登录
-      loginByEmail(email, password) {
-        return request.post("/auth/email-login", { email, password });
-      },
+        // Google登录
+        loginWithGoogle() {
+          return supabaseApi.loginWithGoogle();
+        },
 
-      // 发送验证码
-      sendVerificationCode(phone) {
-        return request.post("/auth/send-code", { phone });
-      },
+        // 重置密码
+        resetPassword(email) {
+          return supabaseApi.resetPassword(email);
+        },
+      };
 
-      // 注册
-      register(data) {
-        return request.post("/auth/register", data);
-      },
+    case 'backend':
+      return {
+        // 手机验证码登录
+        loginByPhone(phone, code) {
+          return request.post("/auth/phone-login", { phone, code });
+        },
 
-      // 获取用户信息
-      getUserInfo() {
-        return request.get("/user/info");
-      },
+        // 邮箱登录
+        loginByEmail(email, password) {
+          return request.post("/auth/email-login", { email, password });
+        },
 
-      // 更新用户信息
-      updateUserInfo(data) {
-        return request.put("/user/info", data);
-      },
+        // 发送验证码
+        sendVerificationCode(phone) {
+          return request.post("/auth/send-code", { phone });
+        },
 
-      // 修改密码
-      changePassword(data) {
-        return request.put("/user/password", data);
-      },
-    };
+        // 注册
+        register(data) {
+          return request.post("/auth/register", data);
+        },
+
+        // 获取用户信息
+        getUserInfo() {
+          return request.get("/user/info");
+        },
+
+        // 更新用户信息
+        updateUserInfo(data) {
+          return request.put("/user/info", data);
+        },
+
+        // 修改密码
+        changePassword(data) {
+          return request.put("/user/password", data);
+        },
+
+        // Google登录
+        loginWithGoogle() {
+          return request.post("/auth/google");
+        },
+
+        // 重置密码
+        resetPassword(email) {
+          return request.post("/auth/reset-password", { email });
+        },
+      };
+
+    default: // mock
+      return {
+        // 手机验证码登录
+        loginByPhone(phone, code) {
+          return mockApi.loginByPhone(phone, code);
+        },
+
+        // 邮箱登录
+        loginByEmail(email, password) {
+          return mockApi.loginByEmail(email, password);
+        },
+
+        // 发送验证码
+        sendVerificationCode(phone) {
+          return mockApi.sendVerificationCode(phone);
+        },
+
+        // 注册
+        register(data) {
+          return mockApi.register(data);
+        },
+
+        // 获取用户信息
+        getUserInfo() {
+          return mockApi.getUserInfo();
+        },
+
+        // 更新用户信息
+        updateUserInfo(data) {
+          return mockApi.updateUserInfo(data);
+        },
+
+        // 修改密码
+        changePassword(data) {
+          return mockApi.changePassword(data);
+        },
+
+        // Google登录 (Mock版本)
+        loginWithGoogle() {
+          return Promise.resolve({
+            message: "Mock Google登录",
+            url: "#mock-google-redirect"
+          });
+        },
+
+        // 重置密码 (Mock版本)
+        resetPassword(email) {
+          return Promise.resolve({
+            message: "Mock密码重置邮件已发送"
+          });
+        },
+      };
+  }
+};
+
+export const userApi = createUserApi();

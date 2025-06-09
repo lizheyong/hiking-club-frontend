@@ -39,6 +39,7 @@ import "./styles/main.scss";
 
 import App from "./App.vue";
 import router from "./router";
+import { useUserStore } from "./stores/user";
 
 const app = createApp(App);
 app.use(i18n)
@@ -87,8 +88,13 @@ vantComponents.forEach((component) => {
   app.use(component);
 });
 
-app.use(createPinia());
+const pinia = createPinia();
+app.use(pinia);
 
 app.use(router);
+
+// 初始化认证状态
+const userStore = useUserStore();
+userStore.initAuth();
 
 app.mount("#app");

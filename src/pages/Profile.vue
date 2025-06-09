@@ -5,6 +5,9 @@
         <template #title>
           <span class="title-text">{{ $t('profile.title') }}</span>
         </template>
+        <template #right>
+          <van-icon name="setting-o" size="20" @click="showSettingsMenu" />
+        </template>
       </van-nav-bar>
     </div>
 
@@ -206,6 +209,9 @@
         </div>
       </div>
     </div>
+
+    <!-- 设置菜单 -->
+    <van-action-sheet v-model:show="showSettings" :actions="settingsActions" @select="onSettingsSelect" />
   </div>
 </template>
 
@@ -215,7 +221,7 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { activityApi } from "../api/activity";
 import { userApi } from "../api/user";
-import { showToast } from "vant";
+import { showToast, showConfirmDialog } from "vant";
 import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
@@ -235,6 +241,16 @@ const activeTab = ref(2); // 默认选中第三个标签（profile）
 const createdActivities = ref([]);
 const joinedActivities = ref([]);
 const favoriteActivities = ref([]);
+
+// 设置相关
+const showSettings = ref(false);
+const settingsActions = [
+  { name: '个人信息', value: 'profile-info' },
+  { name: '我的收藏', value: 'favorites' },
+  { name: '我创建的活动', value: 'created' },
+  { name: '设置', value: 'settings' },
+  { name: '退出登录', value: 'logout', color: '#ee0a24' },
+];
 
 const tabs = [
   { name: "home", icon: "home-o", textKey: "home.tabs.home", route: "/" },
@@ -294,6 +310,55 @@ const handleTabChange = (tab, index) => {
   activeTab.value = index;
   router.push(tab.route);
 };
+
+// 显示设置菜单
+const showSettingsMenu = () => {
+  showSettings.value = true;
+};
+
+// 处理设置菜单选择
+const onSettingsSelect = async (action) => {
+  switch (action.value) {
+    case 'profile-info':
+      router.push('/profile/info');
+      break;
+    case 'favorites':
+      router.push('/profile/favorites');
+      break;
+    case 'created':
+      router.push('/profile/created');
+      break;
+    case 'settings':
+      router.push('/profile/settings');
+      break;
+    case 'logout':
+      await handleLogout();
+      break;
+  }
+};
+
+// 退出登录
+const handleLogout = async () => {
+  try {
+    await showConfirmDialog({
+      title: '确认退出',
+      message: '您确定要退出登录吗？',
+      confirmButtonText: '退出',
+      cancelButtonText: '取消',
+      confirmButtonColor: '#ee0a24',
+    });
+    
+    await userStore.logout();
+    showToast('已退出登录');
+    router.replace('/login');
+  } catch (error) {
+    // 用户取消退出，不需要处理
+    if (error !== 'cancel') {
+      console.error('退出登录失败:', error);
+      showToast('退出登录失败');
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -333,6 +398,18 @@ const handleTabChange = (tab, index) => {
       color: #000000;
       font-weight: 600;
       max-width: calc(100% - 120px);
+    }
+
+    .van-nav-bar__right {
+      .van-icon {
+        color: #000000;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+        
+        &:hover {
+          opacity: 0.7;
+        }
+      }
     }
   }
 }
