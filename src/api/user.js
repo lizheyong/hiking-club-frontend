@@ -53,6 +53,23 @@ const createUserApi = () => {
         resetPassword(email) {
           return supabaseApi.resetPassword(email);
         },
+
+        // 管理员方法
+        getAllUsers() {
+          return supabaseApi.getAllUsers();
+        },
+
+        deleteUser(id) {
+          return supabaseApi.deleteUser(id);
+        },
+
+        updateUser(id, data) {
+          return supabaseApi.updateUser(id, data);
+        },
+
+        createUser(data) {
+          return supabaseApi.createUser(data);
+        },
       };
 
     case 'backend':
@@ -100,6 +117,23 @@ const createUserApi = () => {
         // 重置密码
         resetPassword(email) {
           return request.post("/auth/reset-password", { email });
+        },
+
+        // 管理员方法
+        getAllUsers() {
+          return request.get("/admin/users");
+        },
+
+        deleteUser(id) {
+          return request.delete(`/admin/users/${id}`);
+        },
+
+        updateUser(id, data) {
+          return request.put(`/admin/users/${id}`, data);
+        },
+
+        createUser(data) {
+          return request.post("/admin/users", data);
         },
       };
 
@@ -153,6 +187,23 @@ const createUserApi = () => {
           return Promise.resolve({
             message: "Mock密码重置邮件已发送"
           });
+        },
+
+        // 管理员方法
+        getAllUsers() {
+          return mockApi.getAllUsers();
+        },
+
+        deleteUser(id) {
+          return mockApi.deleteUser(id);
+        },
+
+        updateUser(id, data) {
+          return mockApi.updateUser(id, data);
+        },
+
+        createUser(data) {
+          return mockApi.createUser(data);
         },
       };
   }

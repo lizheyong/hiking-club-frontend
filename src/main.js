@@ -32,6 +32,14 @@ import {
   Collapse,
   CollapseItem,
   ActionSheet,
+  // --- 新增选择器组件 ---
+  Picker,
+  DatePicker,
+  // --- 管理员页面需要的组件 ---
+  Tab,
+  Tabs,
+  Switch,
+  Stepper,
   // --- 添加结束 ---
 } from "vant";
 import "vant/lib/index.css";
@@ -76,6 +84,14 @@ const vantComponents = [
   Collapse,
   CollapseItem,
   ActionSheet,
+  // --- 新增选择器组件 ---
+  Picker,
+  DatePicker,
+  // --- 管理员页面需要的组件 ---
+  Tab,
+  Tabs,
+  Switch,
+  Stepper,
   // --- 添加结束 ---
 ];
 

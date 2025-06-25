@@ -116,7 +116,8 @@
       },
       "ongoing": "进行中",
       "completed": "已结束",
-      "cancelled": "已取消"
+      "cancelled": "已取消",
+      "pending": "待审核"
     },
     "meta": {
       "participants": "{current}/{max}",
@@ -352,6 +353,43 @@
       "notCreator": "您不是该活动的创建者",
       "loadFailed": "加载活动数据失败",
       "updateFailed": "更新活动失败，请稍后重试"
+    }
+  },
+  "common": {
+    "messages": {
+      "loadFailed": "加载失败",
+      "saveFailed": "保存失败",
+      "saveSuccess": "保存成功",
+      "deleteFailed": "删除失败",
+      "deleteSuccess": "删除成功",
+      "operationFailed": "操作失败",
+      "operationSuccess": "操作成功",
+      "createSuccess": "创建成功",
+      "updateSuccess": "更新成功",
+      "favoriteAdded": "已收藏",
+      "favoriteRemoved": "已取消收藏",
+      "joinSuccess": "报名成功",
+      "joinCancelled": "已取消报名",
+      "voteSuccess": "投票成功",
+      "alreadyVoted": "您已经投过票了，每人只能投一次",
+      "activityUpdated": "活动已更新",
+      "activityApproved": "活动已审核通过",
+      "activityRejected": "活动已拒绝",
+      "activityStarted": "活动已开始",
+      "activityCompleted": "活动已完成",
+      "activityCancelled": "活动已取消",
+      "activityDeleted": "活动已删除",
+      "participantRemoved": "参与者已移除",
+      "enrollmentStarted": "已开始报名阶段",
+      "noRoutesError": "活动没有路线，无法开始报名",
+      "backupSuccess": "备份成功",
+      "backupFailed": "备份失败",
+      "clearSuccess": "清除成功",
+      "clearFailed": "清除失败",
+      "tagExists": "标签已存在",
+      "pleaseEnterEmail": "请先输入邮箱地址",
+      "passwordResetSent": "密码重置邮件已发送",
+      "googleLoginMock": "Mock模式：Google登录功能需要配置Supabase"
     }
   }
 }

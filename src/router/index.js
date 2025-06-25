@@ -137,7 +137,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 需要管理员权限的页面
-  if (to.meta.requiresAdmin && !userStore.user?.isAdmin) {
+  if (to.meta.requiresAdmin && !userStore.user?.isAdmin && !userStore.user?.is_admin) {
     next("/");
     return;
   }

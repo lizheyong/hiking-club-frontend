@@ -289,7 +289,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Toast, Dialog } from "vant";
+import { showToast, showConfirmDialog } from "vant";
 import { settingsApi } from "../../api/settings";
 
 // 系统设置
@@ -332,7 +332,7 @@ const loadSettings = async () => {
     const res = await settingsApi.getSettings();
     settings.value = res.data;
   } catch (error) {
-    Toast("加载设置失败");
+    showToast("加载设置失败");
   }
 };
 
@@ -343,9 +343,9 @@ const updateActivitySettings = async () => {
       requireActivityApproval: settings.value.requireActivityApproval,
       maxParticipants: settings.value.maxParticipants,
     });
-    Toast("保存成功");
+    showToast("保存成功");
   } catch (error) {
-    Toast("保存失败");
+    showToast("保存失败");
   }
 };
 
@@ -357,9 +357,9 @@ const updateNotificationSettings = async () => {
       enableSMSNotification: settings.value.enableSMSNotification,
       enableSystemNotification: settings.value.enableSystemNotification,
     });
-    Toast("保存成功");
+    showToast("保存成功");
   } catch (error) {
-    Toast("保存失败");
+    showToast("保存失败");
   }
 };
 
@@ -367,7 +367,7 @@ const updateNotificationSettings = async () => {
 const addTag = () => {
   if (!newTag.value) return;
   if (settings.value.activityTags.includes(newTag.value)) {
-    Toast("标签已存在");
+    showToast("标签已存在");
     return;
   }
   settings.value.activityTags.push(newTag.value);
@@ -385,10 +385,10 @@ const removeTag = (tag) => {
 const updatePasswordPolicy = async () => {
   try {
     await settingsApi.updatePasswordPolicy(passwordPolicy.value);
-    Toast("保存成功");
+    showToast("保存成功");
     showPasswordPolicy.value = false;
   } catch (error) {
-    Toast("保存失败");
+    showToast("保存失败");
   }
 };
 
@@ -396,10 +396,10 @@ const updatePasswordPolicy = async () => {
 const updateLoginPolicy = async () => {
   try {
     await settingsApi.updateLoginPolicy(loginPolicy.value);
-    Toast("保存成功");
+    showToast("保存成功");
     showLoginPolicy.value = false;
   } catch (error) {
-    Toast("保存失败");
+    showToast("保存失败");
   }
 };
 
@@ -407,26 +407,26 @@ const updateLoginPolicy = async () => {
 const backupData = async () => {
   try {
     await settingsApi.backupData();
-    Toast("备份成功");
+    showToast("备份成功");
   } catch (error) {
-    Toast("备份失败");
+    showToast("备份失败");
   }
 };
 
 // 清除缓存
 const clearCache = async () => {
   try {
-    await Dialog.confirm({
+    await showConfirmDialog({
       title: "清除缓存",
       message: "确定要清除系统缓存吗？",
       showCancelButton: true,
     });
 
     await settingsApi.clearCache();
-    Toast("清除成功");
+    showToast("清除成功");
   } catch (error) {
     if (error) {
-      Toast("清除失败");
+      showToast("清除失败");
     }
   }
 };

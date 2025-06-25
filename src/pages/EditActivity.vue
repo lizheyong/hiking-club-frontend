@@ -126,7 +126,7 @@
               />
 
               <van-field
-                v-model="route.difficulty"
+                :model-value="getDifficultyText(route.difficulty)"
                 :label="$t('editActivity.routes.difficulty')"
                 :placeholder="$t('editActivity.routes.difficultyPlaceholder')"
                 readonly
@@ -254,9 +254,9 @@ const currentRouteIndex = ref(0);
 const minDate = new Date();
 
 const difficultyOptions = [
-  t('editActivity.difficultyPicker.easy'),
-  t('editActivity.difficultyPicker.medium'),
-  t('editActivity.difficultyPicker.hard'),
+  { text: t('editActivity.difficultyPicker.easy'), value: 'Easy' },
+  { text: t('editActivity.difficultyPicker.medium'), value: 'Medium' },
+  { text: t('editActivity.difficultyPicker.hard'), value: 'Hard' },
 ];
 
 const validateMaxParticipants = (value) => {
@@ -308,9 +308,14 @@ const onDateConfirm = (date) => {
   showDatePicker.value = false;
 };
 
-const onDifficultyConfirm = (value) => {
-  formData.routes[currentRouteIndex.value].difficulty = value;
+const onDifficultyConfirm = ({ selectedOptions }) => {
+  formData.routes[currentRouteIndex.value].difficulty = selectedOptions[0].value;
   showDifficultyPicker.value = false;
+};
+
+const getDifficultyText = (value) => {
+  const option = difficultyOptions.find(opt => opt.value === value);
+  return option ? option.text : '';
 };
 
 const loadActivity = async () => {
@@ -341,6 +346,7 @@ const loadActivity = async () => {
 };
 
 const onSubmit = async () => {
+  console.log('Submitting formData:', JSON.stringify(formData, null, 2));
   try {
     submitting.value = true;
     const activityId = route.params.id;
@@ -523,15 +529,22 @@ onMounted(() => {
 :deep(.van-popup) {
   border-radius: 16px 16px 0 0;
   overflow: hidden;
+  z-index: 10000 !important;
 }
 
 :deep(.van-picker) {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
+  z-index: 10001 !important;
 }
 
 :deep(.van-date-picker) {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
+  z-index: 10001 !important;
+}
+
+:deep(.van-overlay) {
+  z-index: 9999 !important;
 }
 </style> 

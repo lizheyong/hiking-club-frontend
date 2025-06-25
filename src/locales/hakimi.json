@@ -1,0 +1,394 @@
+{
+  "login": {
+    "title": "喵喵登录",
+    "welcome": "欢迎喵~",
+    "phone": {
+      "title": "手机喵喵登录",
+      "phoneNumber": "手机喵",
+      "phonePlaceholder": "请输入手机号码喵~",
+      "phoneRequired": "请输入手机号码喵!",
+      "verificationCode": "验证码喵",
+      "codePlaceholder": "请输入验证码喵~",
+      "codeRequired": "请输入验证码喵!",
+      "sendCode": "发送验证码喵",
+      "resendCode": "{countdown}秒后重新发送喵~",
+      "login": "登录喵"
+    },
+    "email": {
+      "title": "邮箱喵喵登录",
+      "email": "邮箱喵",
+      "emailPlaceholder": "请输入邮箱喵~",
+      "emailRequired": "请输入邮箱喵!",
+      "password": "密码喵",
+      "passwordPlaceholder": "请输入密码喵~",
+      "passwordRequired": "请输入密码喵!",
+      "login": "登录喵"
+    },
+    "switchToEmail": "用邮箱登录喵",
+    "switchToPhone": "用手机登录喵",
+    "noAccount": "没有账号喵?",
+    "registerNow": "立即注册喵",
+    "orLogin": "或者用这个登录喵",
+    "login": "登录喵",
+    "forgotPassword": "忘记密码了喵?",
+    "codeSent": "验证码已发送喵~",
+    "sendFailed": "发送失败了喵，请重试喵",
+    "loginSuccess": "登录成功喵~",
+    "loginFailed": "登录失败了喵，请重试喵"
+  },
+  "register": {
+    "title": "注册喵",
+    "welcome": "创建账户喵",
+    "form": {
+      "username": {
+        "label": "用户名喵",
+        "placeholder": "请输入用户名喵~",
+        "required": "请输入用户名喵!"
+      },
+      "email": {
+        "label": "邮箱喵",
+        "placeholder": "请输入邮箱喵~",
+        "required": "请输入邮箱喵!",
+        "invalid": "请输入有效的邮箱格式喵!"
+      },
+      "phone": {
+        "label": "手机号码喵",
+        "placeholder": "请输入手机号码喵~",
+        "required": "请输入手机号码喵!",
+        "invalid": "请输入有效的手机号码格式喵!"
+      },
+      "password": {
+        "label": "密码喵",
+        "placeholder": "请输入密码喵~",
+        "required": "请输入密码喵!",
+        "minLength": "密码至少需要6个字符喵!"
+      },
+      "confirmPassword": {
+        "label": "确认密码喵",
+        "placeholder": "请再次输入密码喵~",
+        "required": "请确认密码喵!",
+        "mismatch": "密码不匹配喵!"
+      }
+    },
+    "submit": "注册喵",
+    "hasAccount": "已经有账号了喵?",
+    "loginNow": "立即登录喵",
+    "success": "注册成功喵~",
+    "failed": "注册失败喵"
+  },
+  "home": {
+    "title": "喵喵登山俱乐部",
+    "subtitle": "探索大自然喵，结交朋友喵~",
+    "quickActions": {
+      "createActivity": "创建活动喵",
+      "myActivities": "我的活动喵",
+      "favoriteActivities": "收藏活动喵",
+      "activityGuide": "活动指南喵"
+    },
+    "sections": {
+      "enrolling": {
+        "title": "报名中的活动喵",
+        "status": "报名中喵",
+        "participants": "{current}/{max}只喵参加"
+      },
+      "voting": {
+        "title": "投票中的活动喵",
+        "status": "投票中喵",
+        "routes": "{count}条路线喵"
+      }
+    },
+    "tabs": {
+      "home": "首页喵",
+      "activities": "活动喵",
+      "profile": "个人资料喵"
+    }
+  },
+  "activities": {
+    "search": {
+      "placeholder": "搜索活动喵~",
+      "filterTags": "筛选标签喵"
+    },
+    "status": {
+      "upcoming": {
+        "enrolling": "报名中喵",
+        "voting": "投票中喵",
+        "confirmed": "已确认喵"
+      },
+      "ongoing": "进行中喵",
+      "completed": "已完成喵",
+      "cancelled": "已取消喵"
+    },
+    "meta": {
+      "participants": "{current}/{max}",
+      "location": "地点喵",
+      "time": "时间喵"
+    },
+    "tagPopup": {
+      "title": "选择标签喵",
+      "confirm": "确认喵"
+    },
+    "availableTags": [
+      "登山喵",
+      "爬山喵",
+      "露营喵",
+      "摄影喵",
+      "观星喵",
+      "野餐喵",
+      "亲子喵",
+      "社交喵"
+    ],
+    "errors": {
+      "loadFailed": "加载活动失败了喵"
+    }
+  },
+  "activityDetail": {
+    "title": "活动详情喵",
+    "loading": "加载中喵...",
+    "loadFailed": "加载失败喵: {error}",
+    "meta": {
+      "creator": "创建者: {name}喵",
+      "location": "地点喵",
+      "time": "时间喵"
+    },
+    "status": {
+      "review": "(待审核喵)",
+      "rejected": {
+        "title": "拒绝原因喵",
+        "reason": "活动被拒绝了喵"
+      },
+      "cancelled": {
+        "title": "取消原因喵",
+        "reason": "活动被取消了喵"
+      }
+    },
+    "routes": {
+      "voting": {
+        "title": "路线投票喵 (选择一个喵)",
+        "myVote": "我的投票喵",
+        "votedOther": "已投其他喵",
+        "voteThis": "投票这条路线喵",
+        "votes": "{count}票喵"
+      },
+      "selected": {
+        "title": "已选择路线喵",
+        "finalVotes": "最终票数: {count}票喵"
+      },
+      "info": {
+        "title": "路线信息喵",
+        "distance": "距离: {distance}公里喵",
+        "duration": "时长: {duration}小时喵",
+        "difficulty": "难度: {level}喵"
+      }
+    },
+    "participants": {
+      "title": "参加者喵 ({current}/{max})",
+      "full": "满了喵",
+      "empty": "还没有参加者喵",
+      "remove": "移除参加者喵"
+    },
+    "actions": {
+      "join": "参加活动喵",
+      "cancelJoin": "取消参加喵",
+      "vote": "投票喵",
+      "cancelVote": "取消投票喵",
+      "confirm": "确认喵",
+      "cancel": "取消喵"
+    },
+    "errors": {
+      "joinFailed": "参加活动失败了喵",
+      "cancelJoinFailed": "取消参加失败了喵",
+      "voteFailed": "投票失败了喵",
+      "cancelVoteFailed": "取消投票失败了喵",
+      "removeParticipantFailed": "移除参加者失败了喵"
+    }
+  },
+  "profile": {
+    "title": "我的资料喵",
+    "userId": "ID: {id}喵",
+    "stats": {
+      "createdActivities": "已创建喵",
+      "joinedActivities": "已参加喵",
+      "favoriteActivities": "已收藏喵"
+    },
+    "myActivities": {
+      "title": "我的活动喵",
+      "created": "已创建喵",
+      "joined": "已参加喵",
+      "favorite": "已收藏喵",
+      "empty": {
+        "created": "还没有创建任何活动喵",
+        "joined": "还没有参加任何活动喵",
+        "favorite": "还没有收藏任何活动喵"
+      }
+    },
+    "errors": {
+      "loadFailed": "加载个人资料数据失败了喵"
+    }
+  },
+  "createActivity": {
+    "title": "创建活动喵",
+    "basicInfo": {
+      "title": "基本信息喵",
+      "titlePlaceholder": "输入活动标题喵~",
+      "titleRequired": "请输入活动标题喵!",
+      "description": "描述喵",
+      "descriptionPlaceholder": "输入活动描述喵~",
+      "descriptionRequired": "请输入活动描述喵!",
+      "location": "地点喵",
+      "locationPlaceholder": "输入活动地点喵~",
+      "locationRequired": "请输入活动地点喵!",
+      "startTime": "开始时间喵",
+      "startTimePlaceholder": "选择开始时间喵~",
+      "startTimeRequired": "请选择开始时间喵!",
+      "maxParticipants": "最大参加人数喵",
+      "maxParticipantsPlaceholder": "输入最大参加人数(2-100)喵~",
+      "maxParticipantsRequired": "请输入最大参加人数喵!",
+      "maxParticipantsInvalid": "最大参加人数必须在2到100之间喵!"
+    },
+    "routes": {
+      "title": "路线喵",
+      "route": "路线{number}喵",
+      "remove": "移除喵",
+      "title": "标题喵",
+      "titlePlaceholder": "输入路线标题喵~",
+      "titleRequired": "请输入路线标题喵!",
+      "description": "描述喵",
+      "descriptionPlaceholder": "输入路线描述喵~",
+      "descriptionRequired": "请输入路线描述喵!",
+      "distance": "距离(公里)喵",
+      "distancePlaceholder": "输入距离喵~",
+      "distanceRequired": "请输入距离喵!",
+      "distanceInvalid": "距离必须在0到100公里之间喵!",
+      "duration": "时长(小时)喵",
+      "durationPlaceholder": "输入时长喵~",
+      "durationRequired": "请输入时长喵!",
+      "durationInvalid": "时长必须在0到24小时之间喵!",
+      "difficulty": "难度喵",
+      "difficultyPlaceholder": "选择难度喵~",
+      "difficultyRequired": "请选择难度喵!",
+      "add": "添加路线喵"
+    },
+    "tags": {
+      "title": "标签喵",
+      "placeholder": "输入标签并按Enter喵~",
+      "add": "添加喵"
+    },
+    "datePicker": {
+      "title": "选择日期喵"
+    },
+    "difficultyPicker": {
+      "title": "选择难度喵",
+      "easy": "简单喵",
+      "medium": "中等喵",
+      "hard": "困难喵"
+    },
+    "submit": "创建活动喵",
+    "success": "活动创建成功喵~",
+    "errors": {
+      "createFailed": "创建活动失败了喵，请重试喵"
+    }
+  },
+  "editActivity": {
+    "title": "编辑活动喵",
+    "basicInfo": {
+      "title": "基本信息喵",
+      "titlePlaceholder": "输入活动标题喵~",
+      "titleRequired": "请输入活动标题喵!",
+      "description": "描述喵",
+      "descriptionPlaceholder": "输入活动描述喵~",
+      "descriptionRequired": "请输入活动描述喵!",
+      "location": "地点喵",
+      "locationPlaceholder": "输入活动地点喵~",
+      "locationRequired": "请输入活动地点喵!",
+      "startTime": "开始时间喵",
+      "startTimePlaceholder": "选择开始时间喵~",
+      "startTimeRequired": "请选择开始时间喵!",
+      "maxParticipants": "最大参加人数喵",
+      "maxParticipantsPlaceholder": "输入最大参加人数(2-100)喵~",
+      "maxParticipantsRequired": "请输入最大参加人数喵!",
+      "maxParticipantsInvalid": "最大参加人数必须在2到100之间喵!"
+    },
+    "routes": {
+      "title": "路线喵",
+      "route": "路线{number}喵",
+      "remove": "移除喵",
+      "title": "标题喵",
+      "titlePlaceholder": "输入路线标题喵~",
+      "titleRequired": "请输入路线标题喵!",
+      "description": "描述喵",
+      "descriptionPlaceholder": "输入路线描述喵~",
+      "descriptionRequired": "请输入路线描述喵!",
+      "distance": "距离(公里)喵",
+      "distancePlaceholder": "输入距离喵~",
+      "distanceRequired": "请输入距离喵!",
+      "distanceInvalid": "距离必须在0到100公里之间喵!",
+      "duration": "时长(小时)喵",
+      "durationPlaceholder": "输入时长喵~",
+      "durationRequired": "请输入时长喵!",
+      "durationInvalid": "时长必须在0到24小时之间喵!",
+      "difficulty": "难度喵",
+      "difficultyPlaceholder": "选择难度喵~",
+      "difficultyRequired": "请选择难度喵!",
+      "add": "添加路线喵"
+    },
+    "tags": {
+      "title": "标签喵",
+      "placeholder": "输入标签并按Enter喵~",
+      "add": "添加喵"
+    },
+    "datePicker": {
+      "title": "选择日期喵"
+    },
+    "difficultyPicker": {
+      "title": "选择难度喵",
+      "easy": "简单喵",
+      "medium": "中等喵",
+      "hard": "困难喵"
+    },
+    "submit": "保存更改喵",
+    "success": "活动更新成功喵~",
+    "errors": {
+      "notLoggedIn": "请先登录喵!",
+      "notCreator": "您不是此活动的创建者喵!",
+      "loadFailed": "加载活动数据失败了喵",
+      "updateFailed": "更新活动失败了喵，请重试喵"
+    }
+  },
+  "common": {
+    "messages": {
+      "loadFailed": "加载失败了喵",
+      "saveFailed": "保存失败了喵",
+      "saveSuccess": "保存成功喵~",
+      "deleteFailed": "删除失败了喵",
+      "deleteSuccess": "删除成功喵~",
+      "operationFailed": "操作失败了喵",
+      "operationSuccess": "操作成功喵~",
+      "createSuccess": "创建成功喵~",
+      "updateSuccess": "更新成功喵~",
+      "favoriteAdded": "已收藏喵~",
+      "favoriteRemoved": "已取消收藏喵",
+      "joinSuccess": "报名成功喵~",
+      "joinCancelled": "已取消报名喵",
+      "voteSuccess": "投票成功喵~",
+      "alreadyVoted": "您已经投过票了喵，每人只能投一次喵!",
+      "activityUpdated": "活动已更新喵~",
+      "activityApproved": "活动已审核通过喵~",
+      "activityRejected": "活动已拒绝喵",
+      "activityStarted": "活动已开始喵~",
+      "activityCompleted": "活动已完成喵~",
+      "activityCancelled": "活动已取消喵",
+      "activityDeleted": "活动已删除喵",
+      "participantRemoved": "参与者已移除喵",
+      "enrollmentStarted": "已开始报名阶段喵~",
+      "noRoutesError": "活动没有路线喵，无法开始报名喵!",
+      "backupSuccess": "备份成功喵~",
+      "backupFailed": "备份失败了喵",
+      "clearSuccess": "清除成功喵~",
+      "clearFailed": "清除失败了喵",
+      "tagExists": "标签已存在喵!",
+      "pleaseEnterEmail": "请先输入邮箱地址喵!",
+      "passwordResetSent": "密码重置邮件已发送喵~",
+      "googleLoginMock": "Mock模式喵：Google登录功能需要配置Supabase喵!"
+    }
+  }
+}

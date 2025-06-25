@@ -125,8 +125,8 @@
                 ]"
               />
 
-              <van-field
-                v-model="route.difficulty"
+                            <van-field
+                :model-value="getDifficultyText(route.difficulty)"
                 :label="$t('createActivity.routes.difficulty')"
                 :placeholder="$t('createActivity.routes.difficultyPlaceholder')"
                 readonly
@@ -195,17 +195,26 @@
       </van-form>
     </div>
 
-    <van-popup v-model:show="showDatePicker" position="bottom">
+    <!-- 日期选择器 -->
+    <van-popup 
+      v-model:show="showDatePicker" 
+      position="bottom"
+    >
       <van-date-picker
+        v-model="currentDate"
         :title="$t('createActivity.datePicker.title')"
-        :min-date="minDate"
         @confirm="onDateConfirm"
         @cancel="showDatePicker = false"
       />
     </van-popup>
 
-    <van-popup v-model:show="showDifficultyPicker" position="bottom">
+    <!-- 难度选择器 -->
+    <van-popup 
+      v-model:show="showDifficultyPicker" 
+      position="bottom"
+    >
       <van-picker
+        v-model="currentDifficulty"
         :title="$t('createActivity.difficultyPicker.title')"
         :columns="difficultyOptions"
         @confirm="onDifficultyConfirm"
@@ -216,7 +225,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { activityApi } from "../api/activity";
@@ -251,12 +260,14 @@ const showDatePicker = ref(false);
 const showDifficultyPicker = ref(false);
 const currentRouteIndex = ref(0);
 const minDate = new Date();
+const currentDate = ref(['2024', '01', '01']); // DatePicker在Vant 4中使用数组格式
+const currentDifficulty = ref([]);
 
-const difficultyOptions = [
-  t('createActivity.difficultyPicker.easy'),
-  t('createActivity.difficultyPicker.medium'),
-  t('createActivity.difficultyPicker.hard'),
-];
+const difficultyOptions = computed(() => [
+  { text: t('createActivity.difficultyPicker.easy'), value: 'Easy' },
+  { text: t('createActivity.difficultyPicker.medium'), value: 'Medium' },
+  { text: t('createActivity.difficultyPicker.hard'), value: 'Hard' },
+]);
 
 const validateMaxParticipants = (value) => {
   const num = parseInt(value);
@@ -302,17 +313,26 @@ const removeTag = (tag) => {
   }
 };
 
-const onDateConfirm = (date) => {
-  formData.startTime = date.toLocaleDateString();
+const onDateConfirm = () => {
+  // 处理日期确认 - Vant 4.x DatePicker返回数组格式 [year, month, day]
+  const [year, month, day] = currentDate.value;
+  formData.startTime = `${year}-${month}-${day}`;
   showDatePicker.value = false;
 };
 
-const onDifficultyConfirm = (value) => {
-  formData.routes[currentRouteIndex.value].difficulty = value;
+const onDifficultyConfirm = ({ selectedOptions }) => {
+  // 处理难度确认
+  formData.routes[currentRouteIndex.value].difficulty = selectedOptions[0].value;
   showDifficultyPicker.value = false;
 };
 
+const getDifficultyText = (value) => {
+  const option = difficultyOptions.value.find(opt => opt.value === value);
+  return option ? option.text : '';
+};
+
 const onSubmit = async () => {
+  console.log('Submitting formData:', JSON.stringify(formData, null, 2));
   try {
     submitting.value = true;
     const activity = await activityApi.createActivity(formData);
@@ -485,15 +505,22 @@ const goBack = () => {
 :deep(.van-popup) {
   border-radius: 16px 16px 0 0;
   overflow: hidden;
+  z-index: 10000 !important;
 }
 
 :deep(.van-picker) {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
+  z-index: 10001 !important;
 }
 
 :deep(.van-date-picker) {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
+  z-index: 10001 !important;
+}
+
+:deep(.van-overlay) {
+  z-index: 9999 !important;
 }
 </style>

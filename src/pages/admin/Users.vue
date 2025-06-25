@@ -25,7 +25,7 @@
                   class="avatar"
                 />
                 <div class="info">
-                  <h3 class="username">{{ user.username }}</h3>
+                  <h3 class="username">{{ user.username || user.name }}</h3>
                   <div class="details">
                     <span class="email">
                       <van-icon name="envelop-o" />
@@ -37,8 +37,8 @@
                     </span>
                   </div>
                   <div class="role">
-                    <van-tag :type="user.isAdmin ? 'danger' : 'primary'">
-                      {{ user.isAdmin ? "管理员" : "普通用户" }}
+                    <van-tag :type="(user.isAdmin || user.is_admin) ? 'danger' : 'primary'">
+                      {{ (user.isAdmin || user.is_admin) ? "管理员" : "普通用户" }}
                     </van-tag>
                   </div>
                 </div>
@@ -59,6 +59,7 @@
               </div>
               <div class="card-actions">
                 <van-button
+                  v-if="!(user.isAdmin || user.is_admin)"
                   size="small"
                   type="primary"
                   plain
@@ -68,6 +69,7 @@
                   编辑
                 </van-button>
                 <van-button
+                  v-if="!(user.isAdmin || user.is_admin)"
                   size="small"
                   type="danger"
                   plain
@@ -76,6 +78,13 @@
                 >
                   删除
                 </van-button>
+                <van-tag
+                  v-if="user.isAdmin || user.is_admin"
+                  type="warning"
+                  size="medium"
+                >
+                  管理员账户
+                </van-tag>
               </div>
             </div>
           </div>
@@ -92,7 +101,7 @@
                   class="avatar"
                 />
                 <div class="info">
-                  <h3 class="username">{{ user.username }}</h3>
+                  <h3 class="username">{{ user.username || user.name }}</h3>
                   <div class="details">
                     <span class="email">
                       <van-icon name="envelop-o" />
@@ -121,6 +130,7 @@
               </div>
               <div class="card-actions">
                 <van-button
+                  v-if="!(user.isAdmin || user.is_admin)"
                   size="small"
                   type="primary"
                   plain
@@ -130,6 +140,7 @@
                   编辑
                 </van-button>
                 <van-button
+                  v-if="!(user.isAdmin || user.is_admin)"
                   size="small"
                   type="danger"
                   plain
@@ -138,6 +149,13 @@
                 >
                   删除
                 </van-button>
+                <van-tag
+                  v-if="user.isAdmin || user.is_admin"
+                  type="warning"
+                  size="medium"
+                >
+                  管理员账户
+                </van-tag>
               </div>
             </div>
           </div>
@@ -223,7 +241,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { userApi } from "../../api/user";
-import { Toast, Dialog } from "vant";
+import { showToast, showConfirmDialog } from "vant";
 
 const searchText = ref("");
 const activeTab = ref(0);
@@ -243,7 +261,7 @@ const form = ref({
 
 // 计算属性
 const adminUsers = computed(() => {
-  return users.value.filter((user) => user.isAdmin);
+  return users.value.filter((user) => user.isAdmin || user.is_admin);
 });
 
 // 加载用户列表
@@ -252,7 +270,7 @@ const loadUsers = async () => {
     const res = await userApi.getAllUsers();
     users.value = res.data;
   } catch (error) {
-    Toast("加载失败");
+    showToast("加载失败");
   }
 };
 
@@ -265,10 +283,10 @@ const onSearch = () => {
 const editUser = (user) => {
   form.value = {
     id: user.id,
-    username: user.username,
+    username: user.username || user.name,
     email: user.email,
     phone: user.phone,
-    isAdmin: user.isAdmin,
+    isAdmin: user.isAdmin || user.is_admin,
   };
   showCreatePopup.value = true;
 };
@@ -276,7 +294,7 @@ const editUser = (user) => {
 // 删除用户
 const deleteUser = async (user) => {
   try {
-    await Dialog.confirm({
+    await showConfirmDialog({
       title: "删除用户",
       message: "确定要删除该用户吗？",
       showCancelButton: true,
@@ -284,10 +302,10 @@ const deleteUser = async (user) => {
 
     await userApi.deleteUser(user.id);
     users.value = users.value.filter((u) => u.id !== user.id);
-    Toast("删除成功");
+    showToast("删除成功");
   } catch (error) {
     if (error) {
-      Toast("删除失败");
+      showToast("删除失败");
     }
   }
 };
@@ -296,17 +314,22 @@ const deleteUser = async (user) => {
 const onSubmit = async () => {
   try {
     submitting.value = true;
+    console.log('Submitting form data:', form.value);
+    
     if (form.value.id) {
-      await userApi.updateUser(form.value.id, form.value);
-      Toast("保存成功");
+      const result = await userApi.updateUser(form.value.id, form.value);
+      console.log('Update result:', result);
+      showToast("保存成功");
     } else {
-      await userApi.createUser(form.value);
-      Toast("创建成功");
+      const result = await userApi.createUser(form.value);
+      console.log('Create result:', result);
+      showToast("创建成功");
     }
     showCreatePopup.value = false;
     loadUsers();
   } catch (error) {
-    Toast("操作失败");
+    console.error('Form submission error:', error);
+    showToast(`操作失败: ${error.message}`);
   } finally {
     submitting.value = false;
   }

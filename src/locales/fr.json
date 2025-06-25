@@ -1,0 +1,394 @@
+{
+  "login": {
+    "title": "Connexion",
+    "welcome": "Bienvenue",
+    "phone": {
+      "title": "Connexion par téléphone",
+      "phoneNumber": "Téléphone",
+      "phonePlaceholder": "Veuillez saisir le numéro de téléphone",
+      "phoneRequired": "Veuillez saisir le numéro de téléphone",
+      "verificationCode": "Code",
+      "codePlaceholder": "Veuillez saisir le code de vérification",
+      "codeRequired": "Veuillez saisir le code de vérification",
+      "sendCode": "Envoyer le code",
+      "resendCode": "Renvoyer dans {countdown}s",
+      "login": "Se connecter"
+    },
+    "email": {
+      "title": "Connexion par email",
+      "email": "Email",
+      "emailPlaceholder": "Veuillez saisir l'email",
+      "emailRequired": "Veuillez saisir l'email",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Veuillez saisir le mot de passe",
+      "passwordRequired": "Veuillez saisir le mot de passe",
+      "login": "Se connecter"
+    },
+    "switchToEmail": "Se connecter avec l'email",
+    "switchToPhone": "Se connecter avec le téléphone",
+    "noAccount": "Pas de compte ?",
+    "registerNow": "S'inscrire maintenant",
+    "orLogin": "Ou se connecter avec",
+    "login": "Se connecter",
+    "forgotPassword": "Mot de passe oublié ?",
+    "codeSent": "Code de vérification envoyé",
+    "sendFailed": "Échec de l'envoi, veuillez réessayer",
+    "loginSuccess": "Connexion réussie",
+    "loginFailed": "Échec de la connexion, veuillez réessayer"
+  },
+  "register": {
+    "title": "S'inscrire",
+    "welcome": "Créer un compte",
+    "form": {
+      "username": {
+        "label": "Nom d'utilisateur",
+        "placeholder": "Veuillez saisir le nom d'utilisateur",
+        "required": "Veuillez saisir le nom d'utilisateur"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Veuillez saisir l'email",
+        "required": "Veuillez saisir l'email",
+        "invalid": "Veuillez saisir un format d'email valide"
+      },
+      "phone": {
+        "label": "Numéro de téléphone",
+        "placeholder": "Veuillez saisir le numéro de téléphone",
+        "required": "Veuillez saisir le numéro de téléphone",
+        "invalid": "Veuillez saisir un format de numéro de téléphone valide"
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "Veuillez saisir le mot de passe",
+        "required": "Veuillez saisir le mot de passe",
+        "minLength": "Le mot de passe doit contenir au moins 6 caractères"
+      },
+      "confirmPassword": {
+        "label": "Confirmer le mot de passe",
+        "placeholder": "Veuillez saisir le mot de passe à nouveau",
+        "required": "Veuillez confirmer le mot de passe",
+        "mismatch": "Les mots de passe ne correspondent pas"
+      }
+    },
+    "submit": "S'inscrire",
+    "hasAccount": "Vous avez déjà un compte ?",
+    "loginNow": "Se connecter maintenant",
+    "success": "Inscription réussie",
+    "failed": "Échec de l'inscription"
+  },
+  "home": {
+    "title": "Club de randonnée",
+    "subtitle": "Explorez la nature, rencontrez des amis",
+    "quickActions": {
+      "createActivity": "Créer une activité",
+      "myActivities": "Mes activités",
+      "favoriteActivities": "Activités favorites",
+      "activityGuide": "Guide d'activité"
+    },
+    "sections": {
+      "enrolling": {
+        "title": "Activités en inscription",
+        "status": "Inscription",
+        "participants": "{current}/{max} participants"
+      },
+      "voting": {
+        "title": "Activités en vote",
+        "status": "Vote",
+        "routes": "{count} itinéraires"
+      }
+    },
+    "tabs": {
+      "home": "Accueil",
+      "activities": "Activités",
+      "profile": "Profil"
+    }
+  },
+  "activities": {
+    "search": {
+      "placeholder": "Rechercher des activités",
+      "filterTags": "Filtrer les tags"
+    },
+    "status": {
+      "upcoming": {
+        "enrolling": "Inscription",
+        "voting": "Vote",
+        "confirmed": "Confirmé"
+      },
+      "ongoing": "En cours",
+      "completed": "Terminé",
+      "cancelled": "Annulé"
+    },
+    "meta": {
+      "participants": "{current}/{max}",
+      "location": "Lieu",
+      "time": "Heure"
+    },
+    "tagPopup": {
+      "title": "Sélectionner les tags",
+      "confirm": "Confirmer"
+    },
+    "availableTags": [
+      "Randonnée",
+      "Escalade",
+      "Camping",
+      "Photographie",
+      "Observation des étoiles",
+      "Pique-nique",
+      "Famille",
+      "Social"
+    ],
+    "errors": {
+      "loadFailed": "Échec du chargement des activités"
+    }
+  },
+  "activityDetail": {
+    "title": "Détails de l'activité",
+    "loading": "Chargement...",
+    "loadFailed": "Échec du chargement : {error}",
+    "meta": {
+      "creator": "Créateur : {name}",
+      "location": "Lieu",
+      "time": "Heure"
+    },
+    "status": {
+      "review": "(En attente de révision)",
+      "rejected": {
+        "title": "Raison du rejet",
+        "reason": "L'activité a été rejetée"
+      },
+      "cancelled": {
+        "title": "Raison de l'annulation",
+        "reason": "L'activité a été annulée"
+      }
+    },
+    "routes": {
+      "voting": {
+        "title": "Vote d'itinéraire (Choisir un)",
+        "myVote": "Mon vote",
+        "votedOther": "Voté autre",
+        "voteThis": "Voter cet itinéraire",
+        "votes": "{count} votes"
+      },
+      "selected": {
+        "title": "Itinéraire sélectionné",
+        "finalVotes": "Votes finaux : {count}"
+      },
+      "info": {
+        "title": "Informations sur l'itinéraire",
+        "distance": "Distance : {distance}km",
+        "duration": "Durée : {duration}h",
+        "difficulty": "Difficulté : {level}"
+      }
+    },
+    "participants": {
+      "title": "Participants ({current}/{max})",
+      "full": "Complet",
+      "empty": "Aucun participant pour le moment",
+      "remove": "Supprimer le participant"
+    },
+    "actions": {
+      "join": "Rejoindre l'activité",
+      "cancelJoin": "Annuler la participation",
+      "vote": "Voter",
+      "cancelVote": "Annuler le vote",
+      "confirm": "Confirmer",
+      "cancel": "Annuler"
+    },
+    "errors": {
+      "joinFailed": "Échec de la participation à l'activité",
+      "cancelJoinFailed": "Échec de l'annulation de la participation",
+      "voteFailed": "Échec du vote",
+      "cancelVoteFailed": "Échec de l'annulation du vote",
+      "removeParticipantFailed": "Échec de la suppression du participant"
+    }
+  },
+  "profile": {
+    "title": "Mon profil",
+    "userId": "ID : {id}",
+    "stats": {
+      "createdActivities": "Créées",
+      "joinedActivities": "Rejointes",
+      "favoriteActivities": "Favorites"
+    },
+    "myActivities": {
+      "title": "Mes activités",
+      "created": "Créées",
+      "joined": "Rejointes",
+      "favorite": "Favorites",
+      "empty": {
+        "created": "Aucune activité créée pour le moment",
+        "joined": "Aucune activité rejointe pour le moment",
+        "favorite": "Aucune activité favorite pour le moment"
+      }
+    },
+    "errors": {
+      "loadFailed": "Échec du chargement des données de profil"
+    }
+  },
+  "createActivity": {
+    "title": "Créer une activité",
+    "basicInfo": {
+      "title": "Informations de base",
+      "titlePlaceholder": "Saisir le titre de l'activité",
+      "titleRequired": "Veuillez saisir le titre de l'activité",
+      "description": "Description",
+      "descriptionPlaceholder": "Saisir la description de l'activité",
+      "descriptionRequired": "Veuillez saisir la description de l'activité",
+      "location": "Lieu",
+      "locationPlaceholder": "Saisir le lieu de l'activité",
+      "locationRequired": "Veuillez saisir le lieu de l'activité",
+      "startTime": "Heure de début",
+      "startTimePlaceholder": "Sélectionner l'heure de début",
+      "startTimeRequired": "Veuillez sélectionner l'heure de début",
+      "maxParticipants": "Nombre maximum de participants",
+      "maxParticipantsPlaceholder": "Saisir le nombre maximum de participants (2-100)",
+      "maxParticipantsRequired": "Veuillez saisir le nombre maximum de participants",
+      "maxParticipantsInvalid": "Le nombre maximum de participants doit être entre 2 et 100"
+    },
+    "routes": {
+      "title": "Itinéraires",
+      "route": "Itinéraire {number}",
+      "remove": "Supprimer",
+      "title": "Titre",
+      "titlePlaceholder": "Saisir le titre de l'itinéraire",
+      "titleRequired": "Veuillez saisir le titre de l'itinéraire",
+      "description": "Description",
+      "descriptionPlaceholder": "Saisir la description de l'itinéraire",
+      "descriptionRequired": "Veuillez saisir la description de l'itinéraire",
+      "distance": "Distance (km)",
+      "distancePlaceholder": "Saisir la distance",
+      "distanceRequired": "Veuillez saisir la distance",
+      "distanceInvalid": "La distance doit être entre 0 et 100 km",
+      "duration": "Durée (heures)",
+      "durationPlaceholder": "Saisir la durée",
+      "durationRequired": "Veuillez saisir la durée",
+      "durationInvalid": "La durée doit être entre 0 et 24 heures",
+      "difficulty": "Difficulté",
+      "difficultyPlaceholder": "Sélectionner la difficulté",
+      "difficultyRequired": "Veuillez sélectionner la difficulté",
+      "add": "Ajouter un itinéraire"
+    },
+    "tags": {
+      "title": "Tags",
+      "placeholder": "Saisir le tag et appuyer sur Entrée",
+      "add": "Ajouter"
+    },
+    "datePicker": {
+      "title": "Sélectionner la date"
+    },
+    "difficultyPicker": {
+      "title": "Sélectionner la difficulté",
+      "easy": "Facile",
+      "medium": "Moyen",
+      "hard": "Difficile"
+    },
+    "submit": "Créer l'activité",
+    "success": "Activité créée avec succès",
+    "errors": {
+      "createFailed": "Échec de la création de l'activité, veuillez réessayer"
+    }
+  },
+  "editActivity": {
+    "title": "Modifier l'activité",
+    "basicInfo": {
+      "title": "Informations de base",
+      "titlePlaceholder": "Saisir le titre de l'activité",
+      "titleRequired": "Veuillez saisir le titre de l'activité",
+      "description": "Description",
+      "descriptionPlaceholder": "Saisir la description de l'activité",
+      "descriptionRequired": "Veuillez saisir la description de l'activité",
+      "location": "Lieu",
+      "locationPlaceholder": "Saisir le lieu de l'activité",
+      "locationRequired": "Veuillez saisir le lieu de l'activité",
+      "startTime": "Heure de début",
+      "startTimePlaceholder": "Sélectionner l'heure de début",
+      "startTimeRequired": "Veuillez sélectionner l'heure de début",
+      "maxParticipants": "Nombre maximum de participants",
+      "maxParticipantsPlaceholder": "Saisir le nombre maximum de participants (2-100)",
+      "maxParticipantsRequired": "Veuillez saisir le nombre maximum de participants",
+      "maxParticipantsInvalid": "Le nombre maximum de participants doit être entre 2 et 100"
+    },
+    "routes": {
+      "title": "Itinéraires",
+      "route": "Itinéraire {number}",
+      "remove": "Supprimer",
+      "title": "Titre",
+      "titlePlaceholder": "Saisir le titre de l'itinéraire",
+      "titleRequired": "Veuillez saisir le titre de l'itinéraire",
+      "description": "Description",
+      "descriptionPlaceholder": "Saisir la description de l'itinéraire",
+      "descriptionRequired": "Veuillez saisir la description de l'itinéraire",
+      "distance": "Distance (km)",
+      "distancePlaceholder": "Saisir la distance",
+      "distanceRequired": "Veuillez saisir la distance",
+      "distanceInvalid": "La distance doit être entre 0 et 100 km",
+      "duration": "Durée (heures)",
+      "durationPlaceholder": "Saisir la durée",
+      "durationRequired": "Veuillez saisir la durée",
+      "durationInvalid": "La durée doit être entre 0 et 24 heures",
+      "difficulty": "Difficulté",
+      "difficultyPlaceholder": "Sélectionner la difficulté",
+      "difficultyRequired": "Veuillez sélectionner la difficulté",
+      "add": "Ajouter un itinéraire"
+    },
+    "tags": {
+      "title": "Tags",
+      "placeholder": "Saisir le tag et appuyer sur Entrée",
+      "add": "Ajouter"
+    },
+    "datePicker": {
+      "title": "Sélectionner la date"
+    },
+    "difficultyPicker": {
+      "title": "Sélectionner la difficulté",
+      "easy": "Facile",
+      "medium": "Moyen",
+      "hard": "Difficile"
+    },
+    "submit": "Enregistrer les modifications",
+    "success": "Activité mise à jour avec succès",
+    "errors": {
+      "notLoggedIn": "Veuillez vous connecter d'abord",
+      "notCreator": "Vous n'êtes pas le créateur de cette activité",
+      "loadFailed": "Échec du chargement des données de l'activité",
+      "updateFailed": "Échec de la mise à jour de l'activité, veuillez réessayer"
+    }
+  },
+  "common": {
+    "messages": {
+      "loadFailed": "Échec du chargement",
+      "saveFailed": "Échec de la sauvegarde",
+      "saveSuccess": "Sauvegarde réussie",
+      "deleteFailed": "Échec de la suppression",
+      "deleteSuccess": "Suppression réussie",
+      "operationFailed": "Échec de l'opération",
+      "operationSuccess": "Opération réussie",
+      "createSuccess": "Création réussie",
+      "updateSuccess": "Mise à jour réussie",
+      "favoriteAdded": "Ajouté aux favoris",
+      "favoriteRemoved": "Retiré des favoris",
+      "joinSuccess": "Participation réussie",
+      "joinCancelled": "Participation annulée",
+      "voteSuccess": "Vote réussi",
+      "alreadyVoted": "Vous avez déjà voté, chaque personne ne peut voter qu'une fois",
+      "activityUpdated": "Activité mise à jour",
+      "activityApproved": "Activité approuvée",
+      "activityRejected": "Activité rejetée",
+      "activityStarted": "Activité commencée",
+      "activityCompleted": "Activité terminée",
+      "activityCancelled": "Activité annulée",
+      "activityDeleted": "Activité supprimée",
+      "participantRemoved": "Participant supprimé",
+      "enrollmentStarted": "Inscription commencée",
+      "noRoutesError": "L'activité n'a pas d'itinéraires, impossible de commencer l'inscription",
+      "backupSuccess": "Sauvegarde réussie",
+      "backupFailed": "Échec de la sauvegarde",
+      "clearSuccess": "Nettoyage réussi",
+      "clearFailed": "Échec du nettoyage",
+      "tagExists": "Le tag existe déjà",
+      "pleaseEnterEmail": "Veuillez saisir l'adresse email",
+      "passwordResetSent": "Email de réinitialisation du mot de passe envoyé",
+      "googleLoginMock": "Mode Mock : la connexion Google nécessite la configuration de Supabase"
+    }
+  }
+}

@@ -63,6 +63,21 @@ const createActivityApi = () => {
         searchActivities(keyword) {
           return supabaseApi.searchActivities(keyword);
         },
+
+        // 取消活动
+        cancelActivity(id, reason) {
+          return supabaseApi.cancelActivity(id, reason);
+        },
+
+        // 拒绝活动
+        rejectActivity(id, reason) {
+          return supabaseApi.rejectActivity(id, reason);
+        },
+
+        // 审核通过活动
+        approveActivity(id) {
+          return supabaseApi.approveActivity(id);
+        },
       };
 
     case 'backend':
@@ -121,6 +136,21 @@ const createActivityApi = () => {
         searchActivities(keyword) {
           return request.get("/activities/search", { params: { keyword } });
         },
+
+        // 取消活动
+        cancelActivity(id, reason) {
+          return request.post(`/activities/${id}/cancel`, { reason });
+        },
+
+        // 拒绝活动
+        rejectActivity(id, reason) {
+          return request.post(`/activities/${id}/reject`, { reason });
+        },
+
+        // 审核通过活动
+        approveActivity(id) {
+          return request.post(`/activities/${id}/approve`);
+        },
       };
 
     default: // mock
@@ -178,6 +208,21 @@ const createActivityApi = () => {
         // 搜索活动
         searchActivities(keyword) {
           return mockApi.searchActivities(keyword);
+        },
+
+        // 取消活动
+        cancelActivity(id, reason) {
+          return mockApi.cancelActivity(id, reason);
+        },
+
+        // 拒绝活动
+        rejectActivity(id, reason) {
+          return mockApi.rejectActivity(id, reason);
+        },
+
+        // 审核通过活动
+        approveActivity(id) {
+          return mockApi.approveActivity(id);
         },
       };
   }

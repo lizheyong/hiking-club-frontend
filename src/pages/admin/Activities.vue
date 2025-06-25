@@ -274,7 +274,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { activityApi } from "../../api/activity";
-import { Toast, Dialog } from "vant";
+import { showToast, showConfirmDialog } from "vant";
 
 const searchText = ref("");
 const activeTab = ref(0);
@@ -314,10 +314,14 @@ const pendingActivities = computed(() => {
 // 加载活动列表
 const loadActivities = async () => {
   try {
-    const res = await activityApi.getAllActivities();
-    activities.value = res.data;
+    console.log('Loading activities...');
+    const res = await activityApi.getActivities();
+    console.log('Activities response:', res);
+    activities.value = res.data || [];
+    console.log('Activities loaded:', activities.value.length);
   } catch (error) {
-    Toast("加载失败");
+    console.error('加载活动失败:', error);
+    showToast("加载失败");
   }
 };
 
@@ -343,7 +347,7 @@ const editActivity = (activity) => {
 // 删除活动
 const deleteActivity = async (activity) => {
   try {
-    await Dialog.confirm({
+    await showConfirmDialog({
       title: "删除活动",
       message: "确定要删除该活动吗？",
       showCancelButton: true,
@@ -351,10 +355,10 @@ const deleteActivity = async (activity) => {
 
     await activityApi.deleteActivity(activity.id);
     activities.value = activities.value.filter((a) => a.id !== activity.id);
-    Toast("删除成功");
+    showToast("删除成功");
   } catch (error) {
     if (error) {
-      Toast("删除失败");
+      showToast("删除失败");
     }
   }
 };
@@ -364,15 +368,15 @@ const approveActivity = async (activity) => {
   try {
     await activityApi.approveActivity(activity.id);
     activity.status = "upcoming";
-    Toast("已通过");
+    showToast("已通过");
   } catch (error) {
-    Toast("操作失败");
+    showToast("操作失败");
   }
 };
 
 const rejectActivity = async (activity) => {
   try {
-    await Dialog.confirm({
+    await showConfirmDialog({
       title: "拒绝活动",
       message: "确定要拒绝该活动吗？",
       showCancelButton: true,
@@ -380,10 +384,10 @@ const rejectActivity = async (activity) => {
 
     await activityApi.rejectActivity(activity.id);
     activity.status = "cancelled";
-    Toast("已拒绝");
+    showToast("已拒绝");
   } catch (error) {
     if (error) {
-      Toast("操作失败");
+      showToast("操作失败");
     }
   }
 };
@@ -417,15 +421,15 @@ const onSubmit = async () => {
     submitting.value = true;
     if (form.value.id) {
       await activityApi.updateActivity(form.value.id, form.value);
-      Toast("保存成功");
+      showToast("保存成功");
     } else {
       await activityApi.createActivity(form.value);
-      Toast("创建成功");
+      showToast("创建成功");
     }
     showCreatePopup.value = false;
     loadActivities();
   } catch (error) {
-    Toast("操作失败");
+    showToast("操作失败");
   } finally {
     submitting.value = false;
   }

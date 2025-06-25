@@ -405,42 +405,79 @@ export const supabaseApi = {
 
     if (error) throw new Error(error.message)
 
+    // 在返回数据前同步路线票数
+    await this.syncRouteVotes(id)
+
+    // 重新获取更新后的数据
+    const { data: updatedData, error: refetchError } = await supabase
+      .from('activities')
+      .select(`
+        *,
+        profiles:creator_id(name),
+        routes(*),
+        participants(
+          user_id,
+          join_time,
+          profiles(name, avatar)
+        ),
+        favorites(user_id),
+        votes(user_id, route_id)
+      `)
+      .eq('id', id)
+      .single()
+
+    if (refetchError) throw new Error(refetchError.message)
+
     // 格式化数据
     const { data: { user } } = await supabase.auth.getUser()
-    return {
-      ...data,
-      coverImage: data.cover_image,
-      startTime: data.start_time,
-      maxParticipants: data.max_participants,
-      creatorName: data.profiles?.name,
-      creatorId: data.creator_id,
-      currentParticipants: data.participants?.length || 0,
-      isJoined: user ? data.participants?.some(p => p.user_id === user.id) : false,
-      isFavorite: user ? data.favorites?.some(f => f.user_id === user.id) : false,
-      routes: data.routes?.map(route => ({
-        ...route,
-        isVoted: user ? data.votes?.some(v => v.user_id === user.id && v.route_id === route.id) : false
-      })) || [],
-      participants: data.participants?.map(p => ({
+    
+    console.log('Updated activity data from DB:', updatedData)
+    console.log('Updated routes from DB:', updatedData.routes)
+    console.log('Updated votes from DB:', updatedData.votes)
+    
+    const formattedData = {
+      ...updatedData,
+      coverImage: updatedData.cover_image,
+      startTime: updatedData.start_time,
+      maxParticipants: updatedData.max_participants,
+      creatorName: updatedData.profiles?.name,
+      creatorId: updatedData.creator_id,
+      currentParticipants: updatedData.participants?.length || 0,
+      isJoined: user ? updatedData.participants?.some(p => p.user_id === user.id) : false,
+      isFavorite: user ? updatedData.favorites?.some(f => f.user_id === user.id) : false,
+      routes: updatedData.routes?.map(route => {
+        const isVoted = user ? updatedData.votes?.some(v => v.user_id === user.id && v.route_id === route.id) : false
+        console.log(`Route ${route.id}: votes=${route.votes}, isVoted=${isVoted}`)
+        return {
+          ...route,
+          isVoted
+        }
+      }) || [],
+      participants: updatedData.participants?.map(p => ({
         id: p.user_id,
         name: p.profiles?.name,
         avatar: p.profiles?.avatar,
         joinTime: p.join_time
       })) || []
     }
+    
+    console.log('Formatted activity data:', formattedData)
+    return formattedData
   },
 
   async createActivity(activityData) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('未登录')
 
-    const { routes, ...activity } = activityData
+            const { routes, maxParticipants, startTime, ...activity } = activityData
     
     // 创建活动
     const { data: newActivity, error } = await supabase
       .from('activities')
       .insert({
         ...activity,
+        max_participants: maxParticipants,
+        start_time: startTime,
         creator_id: user.id,
         current_participants: 0,
         status: 'pending',
@@ -453,29 +490,51 @@ export const supabaseApi = {
 
     // 如果有路线数据，创建路线
     if (routes && routes.length > 0) {
+      const routesToInsert = routes.map(route => ({
+        title: route.title,
+        description: route.description,
+        distance: Number(route.distance),
+        duration: Number(route.duration),
+        difficulty: route.difficulty,
+        activity_id: newActivity.id
+      }));
+
       const { error: routesError } = await supabase
         .from('routes')
-        .insert(routes.map(route => ({
-          ...route,
-          activity_id: newActivity.id
-        })))
+        .insert(routesToInsert);
 
-      if (routesError) throw new Error(routesError.message)
+      if (routesError) {
+        // 如果路线创建失败，删除已创建的活动以保持数据一致性
+        await supabase.from('activities').delete().eq('id', newActivity.id);
+        throw new Error(`Failed to create routes: ${routesError.message}`);
+      }
     }
 
     return newActivity
   },
 
   async updateActivity(id, updateData) {
+    const {
+      maxParticipants,
+      startTime,
+      ...rest
+    } = updateData;
+
+    const updateObject = {
+      ...rest,
+      ...(maxParticipants && { max_participants: maxParticipants }),
+      ...(startTime && { start_time: startTime }),
+    };
+
     const { data, error } = await supabase
       .from('activities')
-      .update(updateData)
+      .update(updateObject)
       .eq('id', id)
       .select()
-      .single()
+      .single();
 
-    if (error) throw new Error(error.message)
-    return data
+    if (error) throw new Error(error.message);
+    return data;
   },
 
   async deleteActivity(id) {
@@ -570,13 +629,60 @@ export const supabaseApi = {
 
     if (error) throw new Error(error.message)
 
-    // 更新路线票数
-    const { error: updateError } = await supabase.rpc('increment_route_votes', {
-      route_id: routeId
-    })
+    // 计算该路线的实际票数（从 votes 表统计）
+    const { data: voteCount } = await supabase
+      .from('votes')
+      .select('*', { count: 'exact' })
+      .eq('route_id', routeId)
 
-    if (updateError) throw new Error(updateError.message)
+    console.log('Vote count for route:', routeId, voteCount)
+
+    // 更新路线表中的票数
+    const { error: updateError } = await supabase
+      .from('routes')
+      .update({ 
+        votes: voteCount?.length || 0
+      })
+      .eq('id', routeId)
+
+    if (updateError) {
+      console.warn('更新票数失败:', updateError)
+    } else {
+      console.log('票数更新成功，新票数:', voteCount?.length || 0)
+    }
+
     return { message: "投票成功" }
+  },
+
+  // 同步所有路线的票数（从 votes 表统计）
+  async syncRouteVotes(activityId) {
+    console.log('开始同步路线票数...')
+    
+    // 获取活动的所有路线
+    const { data: routes } = await supabase
+      .from('routes')
+      .select('id')
+      .eq('activity_id', activityId)
+
+    if (!routes) return
+
+    // 为每个路线同步票数
+    for (const route of routes) {
+      const { data: votes } = await supabase
+        .from('votes')
+        .select('*')
+        .eq('route_id', route.id)
+
+      const voteCount = votes?.length || 0
+      console.log(`路线 ${route.id} 实际票数: ${voteCount}`)
+
+      await supabase
+        .from('routes')
+        .update({ votes: voteCount })
+        .eq('id', route.id)
+    }
+
+    console.log('路线票数同步完成')
   },
 
   // 收藏相关
@@ -684,6 +790,233 @@ export const supabaseApi = {
       data: data || [],
       total: data?.length || 0
     }
+  },
+
+  // 取消活动
+  async cancelActivity(id, reason = '') {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('未登录')
+
+    const { data, error } = await supabase
+      .from('activities')
+      .update({
+        status: 'cancelled',
+        phase: 'cancelled',
+        cancel_reason: reason
+      })
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (error) throw new Error(error.message)
+    return data
+  },
+
+  // 拒绝活动
+  async rejectActivity(id, reason = '') {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('未登录')
+
+    const { data, error } = await supabase
+      .from('activities')
+      .update({
+        status: 'rejected',
+        phase: 'rejected',
+        reject_reason: reason
+      })
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (error) throw new Error(error.message)
+    return data
+  },
+
+  // 审核通过活动
+  async approveActivity(id) {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('未登录')
+
+    const { data, error } = await supabase
+      .from('activities')
+      .update({
+        status: 'upcoming',
+        phase: 'voting'
+      })
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (error) throw new Error(error.message)
+    return data
+  },
+
+  // 管理员用户管理方法
+  async getAllUsers() {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('未登录')
+
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .order('created_at', { ascending: false })
+
+    if (error) throw new Error(error.message)
+    
+    // 格式化用户数据，添加统计信息
+    const formattedData = (data || []).map(user => ({
+      ...user,
+      username: user.name, // 确保 username 字段存在
+      participatedActivities: 0, // TODO: 从数据库获取实际数据
+      createdActivities: 0, // TODO: 从数据库获取实际数据  
+      favoriteActivities: 0 // TODO: 从数据库获取实际数据
+    }))
+    
+    return { data: formattedData, total: formattedData.length }
+  },
+
+  async deleteUser(id) {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('未登录')
+
+    // 检查当前用户是否为管理员
+    const { data: currentUserProfile } = await supabase
+      .from('profiles')
+      .select('is_admin')
+      .eq('id', user.id)
+      .single()
+
+    if (!currentUserProfile?.is_admin) {
+      throw new Error('权限不足：只有管理员可以删除用户')
+    }
+
+    // 检查目标用户是否为管理员
+    const { data: targetUser } = await supabase
+      .from('profiles')
+      .select('is_admin')
+      .eq('id', id)
+      .single()
+
+    if (targetUser?.is_admin) {
+      throw new Error('权限不足：管理员不能删除其他管理员')
+    }
+
+    // 不能删除自己
+    if (id === user.id) {
+      throw new Error('不能删除自己的账户')
+    }
+
+    const { error } = await supabase
+      .from('profiles')
+      .delete()
+      .eq('id', id)
+
+    if (error) throw new Error(error.message)
+    return { message: "用户已删除" }
+  },
+
+  async updateUser(id, updateData) {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('未登录')
+
+    console.log('Current user:', user)
+    console.log('Attempting to update user ID:', id)
+
+    // 检查当前用户是否为管理员
+    const { data: currentUserProfile } = await supabase
+      .from('profiles')
+      .select('is_admin')
+      .eq('id', user.id)
+      .single()
+
+    if (!currentUserProfile?.is_admin) {
+      throw new Error('权限不足：只有管理员可以编辑用户')
+    }
+
+    // 检查目标用户是否为管理员
+    const { data: targetUser } = await supabase
+      .from('profiles')
+      .select('is_admin')
+      .eq('id', id)
+      .single()
+
+    if (targetUser?.is_admin) {
+      throw new Error('权限不足：管理员不能编辑其他管理员')
+    }
+
+    // 过滤掉无效字段，只保留数据库中存在的字段
+    const validFields = {
+      name: updateData.name || updateData.username,
+      email: updateData.email,
+      phone: updateData.phone,
+      is_admin: updateData.isAdmin || updateData.is_admin,
+      avatar: updateData.avatar
+    }
+
+    // 移除 undefined 值
+    Object.keys(validFields).forEach(key => {
+      if (validFields[key] === undefined) {
+        delete validFields[key]
+      }
+    })
+
+    console.log('Updating user with data:', validFields)
+    console.log('User ID:', id)
+
+    // 先检查用户是否存在
+    const { data: existingUser, error: selectError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', id)
+      .single()
+
+    if (selectError) {
+      console.error('User not found:', selectError)
+      throw new Error('用户不存在')
+    }
+
+    console.log('Found existing user:', existingUser)
+
+    // 尝试使用 upsert 方式更新（包含 id 以确保更新而非插入）
+    const updateDataWithId = { ...validFields, id }
+    const { data, error } = await supabase
+      .from('profiles')
+      .upsert(updateDataWithId, { 
+        onConflict: 'id',
+        ignoreDuplicates: false 
+      })
+      .select()
+
+    console.log('Upsert result - data:', data)
+    console.log('Upsert result - error:', error)
+
+    if (error) {
+      console.error('Supabase upsert error:', error)
+      throw new Error(error.message)
+    }
+
+    if (!data || data.length === 0) {
+      console.error('Upsert returned no data - this likely indicates RLS policy blocking the operation')
+      throw new Error('更新失败：权限不足或RLS策略阻止了更新操作')
+    }
+
+    return data[0]
+  },
+
+  async createUser(userData) {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('未登录')
+
+    // 注意：通过 Supabase Admin API 创建用户需要特殊权限
+    // 这里先创建 profile 记录，实际场景中可能需要不同的实现
+    const { data, error } = await supabase
+      .from('profiles')
+      .insert(userData)
+      .select()
+      .single()
+
+    if (error) throw new Error(error.message)
+    return data
   }
 }
 

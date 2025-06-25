@@ -1,0 +1,394 @@
+{
+  "login": {
+    "title": "ログイン",
+    "welcome": "ようこそ",
+    "phone": {
+      "title": "電話ログイン",
+      "phoneNumber": "電話番号",
+      "phonePlaceholder": "電話番号を入力してください",
+      "phoneRequired": "電話番号を入力してください",
+      "verificationCode": "認証コード",
+      "codePlaceholder": "認証コードを入力してください",
+      "codeRequired": "認証コードを入力してください",
+      "sendCode": "コード送信",
+      "resendCode": "{countdown}秒後に再送信",
+      "login": "ログイン"
+    },
+    "email": {
+      "title": "メールログイン",
+      "email": "メール",
+      "emailPlaceholder": "メールアドレスを入力してください",
+      "emailRequired": "メールアドレスを入力してください",
+      "password": "パスワード",
+      "passwordPlaceholder": "パスワードを入力してください",
+      "passwordRequired": "パスワードを入力してください",
+      "login": "ログイン"
+    },
+    "switchToEmail": "メールでログイン",
+    "switchToPhone": "電話でログイン",
+    "noAccount": "アカウントをお持ちでないですか？",
+    "registerNow": "今すぐ登録",
+    "orLogin": "または次でログイン",
+    "login": "ログイン",
+    "forgotPassword": "パスワードを忘れましたか？",
+    "codeSent": "認証コードを送信しました",
+    "sendFailed": "送信に失敗しました。もう一度お試しください",
+    "loginSuccess": "ログイン成功",
+    "loginFailed": "ログインに失敗しました。もう一度お試しください"
+  },
+  "register": {
+    "title": "登録",
+    "welcome": "アカウント作成",
+    "form": {
+      "username": {
+        "label": "ユーザー名",
+        "placeholder": "ユーザー名を入力してください",
+        "required": "ユーザー名を入力してください"
+      },
+      "email": {
+        "label": "メール",
+        "placeholder": "メールアドレスを入力してください",
+        "required": "メールアドレスを入力してください",
+        "invalid": "正しいメール形式を入力してください"
+      },
+      "phone": {
+        "label": "電話番号",
+        "placeholder": "電話番号を入力してください",
+        "required": "電話番号を入力してください",
+        "invalid": "正しい電話番号形式を入力してください"
+      },
+      "password": {
+        "label": "パスワード",
+        "placeholder": "パスワードを入力してください",
+        "required": "パスワードを入力してください",
+        "minLength": "パスワードは6文字以上である必要があります"
+      },
+      "confirmPassword": {
+        "label": "パスワード確認",
+        "placeholder": "パスワードを再度入力してください",
+        "required": "パスワードを確認してください",
+        "mismatch": "パスワードが一致しません"
+      }
+    },
+    "submit": "登録",
+    "hasAccount": "既にアカウントをお持ちですか？",
+    "loginNow": "今すぐログイン",
+    "success": "登録成功",
+    "failed": "登録失敗"
+  },
+  "home": {
+    "title": "ハイキングクラブ",
+    "subtitle": "自然を探検し、友達を作りましょう",
+    "quickActions": {
+      "createActivity": "アクティビティ作成",
+      "myActivities": "私のアクティビティ",
+      "favoriteActivities": "お気に入りアクティビティ",
+      "activityGuide": "アクティビティガイド"
+    },
+    "sections": {
+      "enrolling": {
+        "title": "参加募集中アクティビティ",
+        "status": "参加募集中",
+        "participants": "{current}/{max}名参加"
+      },
+      "voting": {
+        "title": "投票中アクティビティ",
+        "status": "投票中",
+        "routes": "{count}個のルート"
+      }
+    },
+    "tabs": {
+      "home": "ホーム",
+      "activities": "アクティビティ",
+      "profile": "プロフィール"
+    }
+  },
+  "activities": {
+    "search": {
+      "placeholder": "アクティビティを検索",
+      "filterTags": "タグフィルター"
+    },
+    "status": {
+      "upcoming": {
+        "enrolling": "参加募集中",
+        "voting": "投票中",
+        "confirmed": "確定済み"
+      },
+      "ongoing": "進行中",
+      "completed": "完了",
+      "cancelled": "キャンセル"
+    },
+    "meta": {
+      "participants": "{current}/{max}",
+      "location": "場所",
+      "time": "時間"
+    },
+    "tagPopup": {
+      "title": "タグを選択",
+      "confirm": "確認"
+    },
+    "availableTags": [
+      "ハイキング",
+      "登山",
+      "キャンプ",
+      "写真撮影",
+      "星空観察",
+      "ピクニック",
+      "家族",
+      "社交"
+    ],
+    "errors": {
+      "loadFailed": "アクティビティの読み込みに失敗しました"
+    }
+  },
+  "activityDetail": {
+    "title": "アクティビティ詳細",
+    "loading": "読み込み中...",
+    "loadFailed": "読み込み失敗: {error}",
+    "meta": {
+      "creator": "作成者: {name}",
+      "location": "場所",
+      "time": "時間"
+    },
+    "status": {
+      "review": "（審査待ち）",
+      "rejected": {
+        "title": "拒否理由",
+        "reason": "アクティビティが拒否されました"
+      },
+      "cancelled": {
+        "title": "キャンセル理由",
+        "reason": "アクティビティがキャンセルされました"
+      }
+    },
+    "routes": {
+      "voting": {
+        "title": "ルート投票（一つ選択）",
+        "myVote": "私の投票",
+        "votedOther": "他に投票済み",
+        "voteThis": "このルートに投票",
+        "votes": "{count}票"
+      },
+      "selected": {
+        "title": "選択されたルート",
+        "finalVotes": "最終票数: {count}票"
+      },
+      "info": {
+        "title": "ルート情報",
+        "distance": "距離: {distance}km",
+        "duration": "所要時間: {duration}時間",
+        "difficulty": "難易度: {level}"
+      }
+    },
+    "participants": {
+      "title": "参加者 ({current}/{max})",
+      "full": "満員",
+      "empty": "まだ参加者がいません",
+      "remove": "参加者を削除"
+    },
+    "actions": {
+      "join": "アクティビティに参加",
+      "cancelJoin": "参加をキャンセル",
+      "vote": "投票",
+      "cancelVote": "投票をキャンセル",
+      "confirm": "確認",
+      "cancel": "キャンセル"
+    },
+    "errors": {
+      "joinFailed": "アクティビティへの参加に失敗しました",
+      "cancelJoinFailed": "参加キャンセルに失敗しました",
+      "voteFailed": "投票に失敗しました",
+      "cancelVoteFailed": "投票キャンセルに失敗しました",
+      "removeParticipantFailed": "参加者の削除に失敗しました"
+    }
+  },
+  "profile": {
+    "title": "マイプロフィール",
+    "userId": "ID: {id}",
+    "stats": {
+      "createdActivities": "作成済み",
+      "joinedActivities": "参加済み",
+      "favoriteActivities": "お気に入り"
+    },
+    "myActivities": {
+      "title": "私のアクティビティ",
+      "created": "作成済み",
+      "joined": "参加済み",
+      "favorite": "お気に入り",
+      "empty": {
+        "created": "まだアクティビティを作成していません",
+        "joined": "まだアクティビティに参加していません",
+        "favorite": "まだお気に入りアクティビティがありません"
+      }
+    },
+    "errors": {
+      "loadFailed": "プロフィールデータの読み込みに失敗しました"
+    }
+  },
+  "createActivity": {
+    "title": "アクティビティ作成",
+    "basicInfo": {
+      "title": "基本情報",
+      "titlePlaceholder": "アクティビティタイトルを入力してください",
+      "titleRequired": "アクティビティタイトルを入力してください",
+      "description": "説明",
+      "descriptionPlaceholder": "アクティビティの説明を入力してください",
+      "descriptionRequired": "アクティビティの説明を入力してください",
+      "location": "場所",
+      "locationPlaceholder": "アクティビティの場所を入力してください",
+      "locationRequired": "アクティビティの場所を入力してください",
+      "startTime": "開始時間",
+      "startTimePlaceholder": "開始時間を選択してください",
+      "startTimeRequired": "開始時間を選択してください",
+      "maxParticipants": "最大参加者数",
+      "maxParticipantsPlaceholder": "最大参加者数を入力してください（2-100）",
+      "maxParticipantsRequired": "最大参加者数を入力してください",
+      "maxParticipantsInvalid": "最大参加者数は2から100の間である必要があります"
+    },
+    "routes": {
+      "title": "ルート",
+      "route": "ルート {number}",
+      "remove": "削除",
+      "title": "タイトル",
+      "titlePlaceholder": "ルートタイトルを入力してください",
+      "titleRequired": "ルートタイトルを入力してください",
+      "description": "説明",
+      "descriptionPlaceholder": "ルートの説明を入力してください",
+      "descriptionRequired": "ルートの説明を入力してください",
+      "distance": "距離（km）",
+      "distancePlaceholder": "距離を入力してください",
+      "distanceRequired": "距離を入力してください",
+      "distanceInvalid": "距離は0kmから100kmの間である必要があります",
+      "duration": "所要時間（時間）",
+      "durationPlaceholder": "所要時間を入力してください",
+      "durationRequired": "所要時間を入力してください",
+      "durationInvalid": "所要時間は0時間から24時間の間である必要があります",
+      "difficulty": "難易度",
+      "difficultyPlaceholder": "難易度を選択してください",
+      "difficultyRequired": "難易度を選択してください",
+      "add": "ルートを追加"
+    },
+    "tags": {
+      "title": "タグ",
+      "placeholder": "タグを入力してEnterを押してください",
+      "add": "追加"
+    },
+    "datePicker": {
+      "title": "日付を選択"
+    },
+    "difficultyPicker": {
+      "title": "難易度を選択",
+      "easy": "簡単",
+      "medium": "普通",
+      "hard": "難しい"
+    },
+    "submit": "アクティビティを作成",
+    "success": "アクティビティが正常に作成されました",
+    "errors": {
+      "createFailed": "アクティビティの作成に失敗しました。もう一度お試しください"
+    }
+  },
+  "editActivity": {
+    "title": "アクティビティ編集",
+    "basicInfo": {
+      "title": "基本情報",
+      "titlePlaceholder": "アクティビティタイトルを入力してください",
+      "titleRequired": "アクティビティタイトルを入力してください",
+      "description": "説明",
+      "descriptionPlaceholder": "アクティビティの説明を入力してください",
+      "descriptionRequired": "アクティビティの説明を入力してください",
+      "location": "場所",
+      "locationPlaceholder": "アクティビティの場所を入力してください",
+      "locationRequired": "アクティビティの場所を入力してください",
+      "startTime": "開始時間",
+      "startTimePlaceholder": "開始時間を選択してください",
+      "startTimeRequired": "開始時間を選択してください",
+      "maxParticipants": "最大参加者数",
+      "maxParticipantsPlaceholder": "最大参加者数を入力してください（2-100）",
+      "maxParticipantsRequired": "最大参加者数を入力してください",
+      "maxParticipantsInvalid": "最大参加者数は2から100の間である必要があります"
+    },
+    "routes": {
+      "title": "ルート",
+      "route": "ルート {number}",
+      "remove": "削除",
+      "title": "タイトル",
+      "titlePlaceholder": "ルートタイトルを入力してください",
+      "titleRequired": "ルートタイトルを入力してください",
+      "description": "説明",
+      "descriptionPlaceholder": "ルートの説明を入力してください",
+      "descriptionRequired": "ルートの説明を入力してください",
+      "distance": "距離（km）",
+      "distancePlaceholder": "距離を入力してください",
+      "distanceRequired": "距離を入力してください",
+      "distanceInvalid": "距離は0kmから100kmの間である必要があります",
+      "duration": "所要時間（時間）",
+      "durationPlaceholder": "所要時間を入力してください",
+      "durationRequired": "所要時間を入力してください",
+      "durationInvalid": "所要時間は0時間から24時間の間である必要があります",
+      "difficulty": "難易度",
+      "difficultyPlaceholder": "難易度を選択してください",
+      "difficultyRequired": "難易度を選択してください",
+      "add": "ルートを追加"
+    },
+    "tags": {
+      "title": "タグ",
+      "placeholder": "タグを入力してEnterを押してください",
+      "add": "追加"
+    },
+    "datePicker": {
+      "title": "日付を選択"
+    },
+    "difficultyPicker": {
+      "title": "難易度を選択",
+      "easy": "簡単",
+      "medium": "普通",
+      "hard": "難しい"
+    },
+    "submit": "変更を保存",
+    "success": "アクティビティが正常に更新されました",
+    "errors": {
+      "notLoggedIn": "まずログインしてください",
+      "notCreator": "このアクティビティの作成者ではありません",
+      "loadFailed": "アクティビティデータの読み込みに失敗しました",
+      "updateFailed": "アクティビティの更新に失敗しました。もう一度お試しください"
+    }
+  },
+  "common": {
+    "messages": {
+      "loadFailed": "読み込み失敗",
+      "saveFailed": "保存失敗",
+      "saveSuccess": "保存成功",
+      "deleteFailed": "削除失敗",
+      "deleteSuccess": "削除成功",
+      "operationFailed": "操作失敗",
+      "operationSuccess": "操作成功",
+      "createSuccess": "作成成功",
+      "updateSuccess": "更新成功",
+      "favoriteAdded": "お気に入りに追加",
+      "favoriteRemoved": "お気に入りから削除",
+      "joinSuccess": "参加成功",
+      "joinCancelled": "参加キャンセル",
+      "voteSuccess": "投票成功",
+      "alreadyVoted": "既に投票済みです。お一人様一回のみ投票可能です",
+      "activityUpdated": "アクティビティが更新されました",
+      "activityApproved": "アクティビティが承認されました",
+      "activityRejected": "アクティビティが拒否されました",
+      "activityStarted": "アクティビティが開始されました",
+      "activityCompleted": "アクティビティが完了しました",
+      "activityCancelled": "アクティビティがキャンセルされました",
+      "activityDeleted": "アクティビティが削除されました",
+      "participantRemoved": "参加者が削除されました",
+      "enrollmentStarted": "募集が開始されました",
+      "noRoutesError": "アクティビティにルートがないため、募集を開始できません",
+      "backupSuccess": "バックアップ成功",
+      "backupFailed": "バックアップ失敗",
+      "clearSuccess": "クリア成功",
+      "clearFailed": "クリア失敗",
+      "tagExists": "タグが既に存在します",
+      "pleaseEnterEmail": "メールアドレスを入力してください",
+      "passwordResetSent": "パスワードリセットメールが送信されました",
+      "googleLoginMock": "Mockモード：GoogleログインにはSupabaseの設定が必要です"
+    }
+  }
+}

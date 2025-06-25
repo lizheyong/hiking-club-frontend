@@ -264,9 +264,9 @@ onMounted(async () => {
     userInfo.value = user;
 
     const [created, joined, favorite] = await Promise.all([
-      activityApi.getUserCreatedActivities(),
-      activityApi.getUserJoinedActivities(),
-      activityApi.getUserFavoriteActivities(),
+      activityApi.getUserActivities(user.id, 'created'),
+      activityApi.getUserActivities(user.id, 'joined'),
+      activityApi.getUserActivities(user.id, 'favorite'),
     ]);
 
     createdActivities.value = created;

@@ -116,7 +116,8 @@
       },
       "ongoing": "Ongoing",
       "completed": "Completed",
-      "cancelled": "Cancelled"
+      "cancelled": "Cancelled",
+      "pending": "Pending"
     },
     "meta": {
       "participants": "{current}/{max}",
@@ -352,6 +353,43 @@
       "notCreator": "You are not the creator of this activity",
       "loadFailed": "Failed to load activity data",
       "updateFailed": "Failed to update activity, please try again"
+    }
+  },
+  "common": {
+    "messages": {
+      "loadFailed": "Failed to load",
+      "saveFailed": "Failed to save",
+      "saveSuccess": "Save successful",
+      "deleteFailed": "Failed to delete",
+      "deleteSuccess": "Delete successful",
+      "operationFailed": "Operation failed",
+      "operationSuccess": "Operation successful",
+      "createSuccess": "Create successful",
+      "updateSuccess": "Update successful",
+      "favoriteAdded": "Added to favorites",
+      "favoriteRemoved": "Removed from favorites",
+      "joinSuccess": "Join successful",
+      "joinCancelled": "Join cancelled",
+      "voteSuccess": "Vote successful",
+      "alreadyVoted": "You have already voted, each person can only vote once",
+      "activityUpdated": "Activity updated",
+      "activityApproved": "Activity approved",
+      "activityRejected": "Activity rejected",
+      "activityStarted": "Activity started",
+      "activityCompleted": "Activity completed",
+      "activityCancelled": "Activity cancelled",
+      "activityDeleted": "Activity deleted",
+      "participantRemoved": "Participant removed",
+      "enrollmentStarted": "Enrollment started",
+      "noRoutesError": "Activity has no routes, cannot start enrollment",
+      "backupSuccess": "Backup successful",
+      "backupFailed": "Backup failed",
+      "clearSuccess": "Clear successful",
+      "clearFailed": "Clear failed",
+      "tagExists": "Tag already exists",
+      "pleaseEnterEmail": "Please enter email address",
+      "passwordResetSent": "Password reset email sent",
+      "googleLoginMock": "Mock mode: Google login requires Supabase configuration"
     }
   }
 }

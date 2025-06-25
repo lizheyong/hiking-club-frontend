@@ -2,13 +2,16 @@
   <div class="home-page">
     <div class="header">
       <div class="header-content glass-card">
-        <div class="logo-title-container">
-          <img
-            src="../assets/logo.png"
-            alt="Hiking Club Logo"
-            class="logo-image"
-          />
-          <h1 class="title">{{ $t('home.title') }}</h1>
+        <div class="header-top">
+          <div class="logo-title-container">
+            <img
+              src="../assets/logo.png"
+              alt="Hiking Club Logo"
+              class="logo-image"
+            />
+            <h1 class="title">{{ $t('home.title') }}</h1>
+          </div>
+          <LanguageSwitcher />
         </div>
         <p class="subtitle">{{ $t('home.subtitle') }}</p>
       </div>
@@ -152,6 +155,7 @@ import { useUserStore } from "../stores/user";
 import { activityApi } from "../api/activity";
 import { Toast } from "vant";
 import { useI18n } from 'vue-i18n';
+import LanguageSwitcher from '../components/LanguageSwitcher.vue';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -192,7 +196,7 @@ const votingActivities = computed(() => {
     }));
 });
 
-const quickActions = [
+const quickActions = computed(() => [
   {
     icon: "plus",
     text: t('home.quickActions.createActivity'),
@@ -233,7 +237,7 @@ const quickActions = [
       router.push("/guide");
     },
   },
-];
+]);
 
 const tabs = [
   { name: "home", icon: "home-o", textKey: "home.tabs.home", route: "/" },
@@ -253,7 +257,7 @@ const loadActivities = async () => {
     const res = await activityApi.getActivities();
     activities.value = res.data;
   } catch (error) {
-    Toast("加载失败");
+    Toast(t('activities.errors.loadFailed'));
   }
 };
 
@@ -345,11 +349,18 @@ onMounted(() => {
     padding: 24px;
     text-align: center;
 
+    .header-top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
     .logo-title-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 8px;
     }
 
     .logo-image {
@@ -373,6 +384,14 @@ onMounted(() => {
       font-size: 16px;
       font-weight: 500;
       text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+    }
+
+    // 语言切换器定位
+    .language-switcher {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 9999;
     }
   }
 }

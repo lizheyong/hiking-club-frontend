@@ -1,0 +1,394 @@
+{
+  "login": {
+    "title": "登入",
+    "welcome": "歡迎",
+    "phone": {
+      "title": "手機登入",
+      "phoneNumber": "手機",
+      "phonePlaceholder": "請輸入手機號碼",
+      "phoneRequired": "請輸入手機號碼",
+      "verificationCode": "驗證碼",
+      "codePlaceholder": "請輸入驗證碼",
+      "codeRequired": "請輸入驗證碼",
+      "sendCode": "發送驗證碼",
+      "resendCode": "{countdown}秒後重新發送",
+      "login": "登入"
+    },
+    "email": {
+      "title": "電子郵件登入",
+      "email": "電子郵件",
+      "emailPlaceholder": "請輸入電子郵件",
+      "emailRequired": "請輸入電子郵件",
+      "password": "密碼",
+      "passwordPlaceholder": "請輸入密碼",
+      "passwordRequired": "請輸入密碼",
+      "login": "登入"
+    },
+    "switchToEmail": "使用電子郵件登入",
+    "switchToPhone": "使用手機登入",
+    "noAccount": "沒有帳號？",
+    "registerNow": "立即註冊",
+    "orLogin": "或使用以下方式登入",
+    "login": "登入",
+    "forgotPassword": "忘記密碼？",
+    "codeSent": "驗證碼已發送",
+    "sendFailed": "發送失敗，請重試",
+    "loginSuccess": "登入成功",
+    "loginFailed": "登入失敗，請重試"
+  },
+  "register": {
+    "title": "註冊",
+    "welcome": "建立帳號",
+    "form": {
+      "username": {
+        "label": "使用者名稱",
+        "placeholder": "請輸入使用者名稱",
+        "required": "請輸入使用者名稱"
+      },
+      "email": {
+        "label": "電子郵件",
+        "placeholder": "請輸入電子郵件",
+        "required": "請輸入電子郵件",
+        "invalid": "請輸入有效的電子郵件格式"
+      },
+      "phone": {
+        "label": "手機號碼",
+        "placeholder": "請輸入手機號碼",
+        "required": "請輸入手機號碼",
+        "invalid": "請輸入有效的手機號碼格式"
+      },
+      "password": {
+        "label": "密碼",
+        "placeholder": "請輸入密碼",
+        "required": "請輸入密碼",
+        "minLength": "密碼至少需要6個字元"
+      },
+      "confirmPassword": {
+        "label": "確認密碼",
+        "placeholder": "請再次輸入密碼",
+        "required": "請確認密碼",
+        "mismatch": "密碼不相符"
+      }
+    },
+    "submit": "註冊",
+    "hasAccount": "已經有帳號？",
+    "loginNow": "立即登入",
+    "success": "註冊成功",
+    "failed": "註冊失敗"
+  },
+  "home": {
+    "title": "登山俱樂部",
+    "subtitle": "探索自然，結交朋友",
+    "quickActions": {
+      "createActivity": "建立活動",
+      "myActivities": "我的活動",
+      "favoriteActivities": "收藏活動",
+      "activityGuide": "活動指南"
+    },
+    "sections": {
+      "enrolling": {
+        "title": "報名中活動",
+        "status": "報名中",
+        "participants": "{current}/{max}人參加"
+      },
+      "voting": {
+        "title": "投票中活動",
+        "status": "投票中",
+        "routes": "{count}條路線"
+      }
+    },
+    "tabs": {
+      "home": "首頁",
+      "activities": "活動",
+      "profile": "個人檔案"
+    }
+  },
+  "activities": {
+    "search": {
+      "placeholder": "搜尋活動",
+      "filterTags": "篩選標籤"
+    },
+    "status": {
+      "upcoming": {
+        "enrolling": "報名中",
+        "voting": "投票中",
+        "confirmed": "已確認"
+      },
+      "ongoing": "進行中",
+      "completed": "已完成",
+      "cancelled": "已取消"
+    },
+    "meta": {
+      "participants": "{current}/{max}",
+      "location": "地點",
+      "time": "時間"
+    },
+    "tagPopup": {
+      "title": "選擇標籤",
+      "confirm": "確認"
+    },
+    "availableTags": [
+      "健行",
+      "爬山",
+      "露營",
+      "攝影",
+      "觀星",
+      "野餐",
+      "親子",
+      "社交"
+    ],
+    "errors": {
+      "loadFailed": "載入活動失敗"
+    }
+  },
+  "activityDetail": {
+    "title": "活動詳情",
+    "loading": "載入中...",
+    "loadFailed": "載入失敗：{error}",
+    "meta": {
+      "creator": "建立者：{name}",
+      "location": "地點",
+      "time": "時間"
+    },
+    "status": {
+      "review": "（待審核）",
+      "rejected": {
+        "title": "拒絕原因",
+        "reason": "活動已被拒絕"
+      },
+      "cancelled": {
+        "title": "取消原因",
+        "reason": "活動已被取消"
+      }
+    },
+    "routes": {
+      "voting": {
+        "title": "路線投票（選擇一個）",
+        "myVote": "我的投票",
+        "votedOther": "已投其他",
+        "voteThis": "投票此路線",
+        "votes": "{count}票"
+      },
+      "selected": {
+        "title": "已選擇路線",
+        "finalVotes": "最終票數：{count}票"
+      },
+      "info": {
+        "title": "路線資訊",
+        "distance": "距離：{distance}公里",
+        "duration": "時長：{duration}小時",
+        "difficulty": "難度：{level}"
+      }
+    },
+    "participants": {
+      "title": "參加者（{current}/{max}）",
+      "full": "已滿",
+      "empty": "暫無參加者",
+      "remove": "移除參加者"
+    },
+    "actions": {
+      "join": "參加活動",
+      "cancelJoin": "取消參加",
+      "vote": "投票",
+      "cancelVote": "取消投票",
+      "confirm": "確認",
+      "cancel": "取消"
+    },
+    "errors": {
+      "joinFailed": "參加活動失敗",
+      "cancelJoinFailed": "取消參加失敗",
+      "voteFailed": "投票失敗",
+      "cancelVoteFailed": "取消投票失敗",
+      "removeParticipantFailed": "移除參加者失敗"
+    }
+  },
+  "profile": {
+    "title": "我的檔案",
+    "userId": "ID：{id}",
+    "stats": {
+      "createdActivities": "已建立",
+      "joinedActivities": "已參加",
+      "favoriteActivities": "已收藏"
+    },
+    "myActivities": {
+      "title": "我的活動",
+      "created": "已建立",
+      "joined": "已參加",
+      "favorite": "已收藏",
+      "empty": {
+        "created": "尚未建立任何活動",
+        "joined": "尚未參加任何活動",
+        "favorite": "尚未收藏任何活動"
+      }
+    },
+    "errors": {
+      "loadFailed": "載入個人檔案資料失敗"
+    }
+  },
+  "createActivity": {
+    "title": "建立活動",
+    "basicInfo": {
+      "title": "基本資訊",
+      "titlePlaceholder": "輸入活動標題",
+      "titleRequired": "請輸入活動標題",
+      "description": "描述",
+      "descriptionPlaceholder": "輸入活動描述",
+      "descriptionRequired": "請輸入活動描述",
+      "location": "地點",
+      "locationPlaceholder": "輸入活動地點",
+      "locationRequired": "請輸入活動地點",
+      "startTime": "開始時間",
+      "startTimePlaceholder": "選擇開始時間",
+      "startTimeRequired": "請選擇開始時間",
+      "maxParticipants": "最大參加人數",
+      "maxParticipantsPlaceholder": "輸入最大參加人數（2-100）",
+      "maxParticipantsRequired": "請輸入最大參加人數",
+      "maxParticipantsInvalid": "最大參加人數必須在2到100之間"
+    },
+    "routes": {
+      "title": "路線",
+      "route": "路線{number}",
+      "remove": "移除",
+      "title": "標題",
+      "titlePlaceholder": "輸入路線標題",
+      "titleRequired": "請輸入路線標題",
+      "description": "描述",
+      "descriptionPlaceholder": "輸入路線描述",
+      "descriptionRequired": "請輸入路線描述",
+      "distance": "距離（公里）",
+      "distancePlaceholder": "輸入距離",
+      "distanceRequired": "請輸入距離",
+      "distanceInvalid": "距離必須在0到100公里之間",
+      "duration": "時長（小時）",
+      "durationPlaceholder": "輸入時長",
+      "durationRequired": "請輸入時長",
+      "durationInvalid": "時長必須在0到24小時之間",
+      "difficulty": "難度",
+      "difficultyPlaceholder": "選擇難度",
+      "difficultyRequired": "請選擇難度",
+      "add": "新增路線"
+    },
+    "tags": {
+      "title": "標籤",
+      "placeholder": "輸入標籤並按Enter",
+      "add": "新增"
+    },
+    "datePicker": {
+      "title": "選擇日期"
+    },
+    "difficultyPicker": {
+      "title": "選擇難度",
+      "easy": "簡單",
+      "medium": "中等",
+      "hard": "困難"
+    },
+    "submit": "建立活動",
+    "success": "活動建立成功",
+    "errors": {
+      "createFailed": "建立活動失敗，請重試"
+    }
+  },
+  "editActivity": {
+    "title": "編輯活動",
+    "basicInfo": {
+      "title": "基本資訊",
+      "titlePlaceholder": "輸入活動標題",
+      "titleRequired": "請輸入活動標題",
+      "description": "描述",
+      "descriptionPlaceholder": "輸入活動描述",
+      "descriptionRequired": "請輸入活動描述",
+      "location": "地點",
+      "locationPlaceholder": "輸入活動地點",
+      "locationRequired": "請輸入活動地點",
+      "startTime": "開始時間",
+      "startTimePlaceholder": "選擇開始時間",
+      "startTimeRequired": "請選擇開始時間",
+      "maxParticipants": "最大參加人數",
+      "maxParticipantsPlaceholder": "輸入最大參加人數（2-100）",
+      "maxParticipantsRequired": "請輸入最大參加人數",
+      "maxParticipantsInvalid": "最大參加人數必須在2到100之間"
+    },
+    "routes": {
+      "title": "路線",
+      "route": "路線{number}",
+      "remove": "移除",
+      "title": "標題",
+      "titlePlaceholder": "輸入路線標題",
+      "titleRequired": "請輸入路線標題",
+      "description": "描述",
+      "descriptionPlaceholder": "輸入路線描述",
+      "descriptionRequired": "請輸入路線描述",
+      "distance": "距離（公里）",
+      "distancePlaceholder": "輸入距離",
+      "distanceRequired": "請輸入距離",
+      "distanceInvalid": "距離必須在0到100公里之間",
+      "duration": "時長（小時）",
+      "durationPlaceholder": "輸入時長",
+      "durationRequired": "請輸入時長",
+      "durationInvalid": "時長必須在0到24小時之間",
+      "difficulty": "難度",
+      "difficultyPlaceholder": "選擇難度",
+      "difficultyRequired": "請選擇難度",
+      "add": "新增路線"
+    },
+    "tags": {
+      "title": "標籤",
+      "placeholder": "輸入標籤並按Enter",
+      "add": "新增"
+    },
+    "datePicker": {
+      "title": "選擇日期"
+    },
+    "difficultyPicker": {
+      "title": "選擇難度",
+      "easy": "簡單",
+      "medium": "中等",
+      "hard": "困難"
+    },
+    "submit": "儲存變更",
+    "success": "活動更新成功",
+    "errors": {
+      "notLoggedIn": "請先登入",
+      "notCreator": "您不是此活動的建立者",
+      "loadFailed": "載入活動資料失敗",
+      "updateFailed": "更新活動失敗，請重試"
+    }
+  },
+  "common": {
+    "messages": {
+      "loadFailed": "載入失敗",
+      "saveFailed": "儲存失敗",
+      "saveSuccess": "儲存成功",
+      "deleteFailed": "刪除失敗",
+      "deleteSuccess": "刪除成功",
+      "operationFailed": "操作失敗",
+      "operationSuccess": "操作成功",
+      "createSuccess": "建立成功",
+      "updateSuccess": "更新成功",
+      "favoriteAdded": "已加入收藏",
+      "favoriteRemoved": "已移除收藏",
+      "joinSuccess": "參加成功",
+      "joinCancelled": "已取消參加",
+      "voteSuccess": "投票成功",
+      "alreadyVoted": "您已經投過票了，每人只能投票一次",
+      "activityUpdated": "活動已更新",
+      "activityApproved": "活動已通過",
+      "activityRejected": "活動已拒絕",
+      "activityStarted": "活動已開始",
+      "activityCompleted": "活動已完成",
+      "activityCancelled": "活動已取消",
+      "activityDeleted": "活動已刪除",
+      "participantRemoved": "參加者已移除",
+      "enrollmentStarted": "已開始報名",
+      "noRoutesError": "活動沒有路線，無法開始報名",
+      "backupSuccess": "備份成功",
+      "backupFailed": "備份失敗",
+      "clearSuccess": "清除成功",
+      "clearFailed": "清除失敗",
+      "tagExists": "標籤已存在",
+      "pleaseEnterEmail": "請輸入電子郵件地址",
+      "passwordResetSent": "密碼重設郵件已發送",
+      "googleLoginMock": "Mock模式：Google登入需要Supabase設定"
+    }
+  }
+}

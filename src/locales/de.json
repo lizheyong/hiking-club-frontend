@@ -1,0 +1,394 @@
+{
+  "login": {
+    "title": "Anmeldung",
+    "welcome": "Willkommen",
+    "phone": {
+      "title": "Telefon-Anmeldung",
+      "phoneNumber": "Telefon",
+      "phonePlaceholder": "Bitte Telefonnummer eingeben",
+      "phoneRequired": "Bitte Telefonnummer eingeben",
+      "verificationCode": "Code",
+      "codePlaceholder": "Bitte Bestätigungscode eingeben",
+      "codeRequired": "Bitte Bestätigungscode eingeben",
+      "sendCode": "Code senden",
+      "resendCode": "Erneut senden in {countdown}s",
+      "login": "Anmelden"
+    },
+    "email": {
+      "title": "E-Mail-Anmeldung",
+      "email": "E-Mail",
+      "emailPlaceholder": "Bitte E-Mail eingeben",
+      "emailRequired": "Bitte E-Mail eingeben",
+      "password": "Passwort",
+      "passwordPlaceholder": "Bitte Passwort eingeben",
+      "passwordRequired": "Bitte Passwort eingeben",
+      "login": "Anmelden"
+    },
+    "switchToEmail": "Mit E-Mail anmelden",
+    "switchToPhone": "Mit Telefon anmelden",
+    "noAccount": "Kein Konto?",
+    "registerNow": "Jetzt registrieren",
+    "orLogin": "Oder anmelden mit",
+    "login": "Anmelden",
+    "forgotPassword": "Passwort vergessen?",
+    "codeSent": "Bestätigungscode gesendet",
+    "sendFailed": "Senden fehlgeschlagen, bitte erneut versuchen",
+    "loginSuccess": "Anmeldung erfolgreich",
+    "loginFailed": "Anmeldung fehlgeschlagen, bitte erneut versuchen"
+  },
+  "register": {
+    "title": "Registrieren",
+    "welcome": "Konto erstellen",
+    "form": {
+      "username": {
+        "label": "Benutzername",
+        "placeholder": "Bitte Benutzernamen eingeben",
+        "required": "Bitte Benutzernamen eingeben"
+      },
+      "email": {
+        "label": "E-Mail",
+        "placeholder": "Bitte E-Mail eingeben",
+        "required": "Bitte E-Mail eingeben",
+        "invalid": "Bitte ein gültiges E-Mail-Format eingeben"
+      },
+      "phone": {
+        "label": "Telefonnummer",
+        "placeholder": "Bitte Telefonnummer eingeben",
+        "required": "Bitte Telefonnummer eingeben",
+        "invalid": "Bitte ein gültiges Telefonnummernformat eingeben"
+      },
+      "password": {
+        "label": "Passwort",
+        "placeholder": "Bitte Passwort eingeben",
+        "required": "Bitte Passwort eingeben",
+        "minLength": "Passwort muss mindestens 6 Zeichen lang sein"
+      },
+      "confirmPassword": {
+        "label": "Passwort bestätigen",
+        "placeholder": "Bitte Passwort erneut eingeben",
+        "required": "Bitte Passwort bestätigen",
+        "mismatch": "Passwörter stimmen nicht überein"
+      }
+    },
+    "submit": "Registrieren",
+    "hasAccount": "Haben Sie bereits ein Konto?",
+    "loginNow": "Jetzt anmelden",
+    "success": "Registrierung erfolgreich",
+    "failed": "Registrierung fehlgeschlagen"
+  },
+  "home": {
+    "title": "Wanderverein",
+    "subtitle": "Natur erkunden, Freunde finden",
+    "quickActions": {
+      "createActivity": "Aktivität erstellen",
+      "myActivities": "Meine Aktivitäten",
+      "favoriteActivities": "Lieblingsaktivitäten",
+      "activityGuide": "Aktivitätsleitfaden"
+    },
+    "sections": {
+      "enrolling": {
+        "title": "Anmeldeaktivitäten",
+        "status": "Anmeldung",
+        "participants": "{current}/{max} Teilnehmer"
+      },
+      "voting": {
+        "title": "Abstimmungsaktivitäten",
+        "status": "Abstimmung",
+        "routes": "{count} Routen"
+      }
+    },
+    "tabs": {
+      "home": "Startseite",
+      "activities": "Aktivitäten",
+      "profile": "Profil"
+    }
+  },
+  "activities": {
+    "search": {
+      "placeholder": "Aktivitäten suchen",
+      "filterTags": "Tags filtern"
+    },
+    "status": {
+      "upcoming": {
+        "enrolling": "Anmeldung",
+        "voting": "Abstimmung",
+        "confirmed": "Bestätigt"
+      },
+      "ongoing": "Laufend",
+      "completed": "Abgeschlossen",
+      "cancelled": "Abgesagt"
+    },
+    "meta": {
+      "participants": "{current}/{max}",
+      "location": "Ort",
+      "time": "Zeit"
+    },
+    "tagPopup": {
+      "title": "Tags auswählen",
+      "confirm": "Bestätigen"
+    },
+    "availableTags": [
+      "Wandern",
+      "Bergsteigen",
+      "Camping",
+      "Fotografie",
+      "Sternbeobachtung",
+      "Picknick",
+      "Familie",
+      "Soziales"
+    ],
+    "errors": {
+      "loadFailed": "Aktivitäten konnten nicht geladen werden"
+    }
+  },
+  "activityDetail": {
+    "title": "Aktivitätsdetails",
+    "loading": "Wird geladen...",
+    "loadFailed": "Laden fehlgeschlagen: {error}",
+    "meta": {
+      "creator": "Ersteller: {name}",
+      "location": "Ort",
+      "time": "Zeit"
+    },
+    "status": {
+      "review": "(Ausstehende Überprüfung)",
+      "rejected": {
+        "title": "Ablehnungsgrund",
+        "reason": "Aktivität wurde abgelehnt"
+      },
+      "cancelled": {
+        "title": "Stornierungsgrund",
+        "reason": "Aktivität wurde abgesagt"
+      }
+    },
+    "routes": {
+      "voting": {
+        "title": "Routenabstimmung (Eine auswählen)",
+        "myVote": "Meine Stimme",
+        "votedOther": "Andere gewählt",
+        "voteThis": "Diese Route wählen",
+        "votes": "{count} Stimmen"
+      },
+      "selected": {
+        "title": "Ausgewählte Route",
+        "finalVotes": "Endgültige Stimmen: {count}"
+      },
+      "info": {
+        "title": "Routeninformationen",
+        "distance": "Entfernung: {distance}km",
+        "duration": "Dauer: {duration}h",
+        "difficulty": "Schwierigkeit: {level}"
+      }
+    },
+    "participants": {
+      "title": "Teilnehmer ({current}/{max})",
+      "full": "Voll",
+      "empty": "Noch keine Teilnehmer",
+      "remove": "Teilnehmer entfernen"
+    },
+    "actions": {
+      "join": "An Aktivität teilnehmen",
+      "cancelJoin": "Teilnahme absagen",
+      "vote": "Abstimmen",
+      "cancelVote": "Stimme zurückziehen",
+      "confirm": "Bestätigen",
+      "cancel": "Abbrechen"
+    },
+    "errors": {
+      "joinFailed": "Teilnahme an Aktivität fehlgeschlagen",
+      "cancelJoinFailed": "Teilnahmeabsage fehlgeschlagen",
+      "voteFailed": "Abstimmung fehlgeschlagen",
+      "cancelVoteFailed": "Stimmenabsage fehlgeschlagen",
+      "removeParticipantFailed": "Teilnehmerentfernung fehlgeschlagen"
+    }
+  },
+  "profile": {
+    "title": "Mein Profil",
+    "userId": "ID: {id}",
+    "stats": {
+      "createdActivities": "Erstellt",
+      "joinedActivities": "Beigetreten",
+      "favoriteActivities": "Favoriten"
+    },
+    "myActivities": {
+      "title": "Meine Aktivitäten",
+      "created": "Erstellt",
+      "joined": "Beigetreten",
+      "favorite": "Favoriten",
+      "empty": {
+        "created": "Noch keine Aktivitäten erstellt",
+        "joined": "Noch keinen Aktivitäten beigetreten",
+        "favorite": "Noch keine Lieblingsaktivitäten"
+      }
+    },
+    "errors": {
+      "loadFailed": "Profildaten konnten nicht geladen werden"
+    }
+  },
+  "createActivity": {
+    "title": "Aktivität erstellen",
+    "basicInfo": {
+      "title": "Grundlegende Informationen",
+      "titlePlaceholder": "Aktivitätstitel eingeben",
+      "titleRequired": "Bitte Aktivitätstitel eingeben",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Aktivitätsbeschreibung eingeben",
+      "descriptionRequired": "Bitte Aktivitätsbeschreibung eingeben",
+      "location": "Ort",
+      "locationPlaceholder": "Aktivitätsort eingeben",
+      "locationRequired": "Bitte Aktivitätsort eingeben",
+      "startTime": "Startzeit",
+      "startTimePlaceholder": "Startzeit auswählen",
+      "startTimeRequired": "Bitte Startzeit auswählen",
+      "maxParticipants": "Maximale Teilnehmerzahl",
+      "maxParticipantsPlaceholder": "Maximale Teilnehmerzahl eingeben (2-100)",
+      "maxParticipantsRequired": "Bitte maximale Teilnehmerzahl eingeben",
+      "maxParticipantsInvalid": "Maximale Teilnehmerzahl muss zwischen 2 und 100 liegen"
+    },
+    "routes": {
+      "title": "Routen",
+      "route": "Route {number}",
+      "remove": "Entfernen",
+      "title": "Titel",
+      "titlePlaceholder": "Routentitel eingeben",
+      "titleRequired": "Bitte Routentitel eingeben",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Routenbeschreibung eingeben",
+      "descriptionRequired": "Bitte Routenbeschreibung eingeben",
+      "distance": "Entfernung (km)",
+      "distancePlaceholder": "Entfernung eingeben",
+      "distanceRequired": "Bitte Entfernung eingeben",
+      "distanceInvalid": "Entfernung muss zwischen 0 und 100 km liegen",
+      "duration": "Dauer (Stunden)",
+      "durationPlaceholder": "Dauer eingeben",
+      "durationRequired": "Bitte Dauer eingeben",
+      "durationInvalid": "Dauer muss zwischen 0 und 24 Stunden liegen",
+      "difficulty": "Schwierigkeit",
+      "difficultyPlaceholder": "Schwierigkeit auswählen",
+      "difficultyRequired": "Bitte Schwierigkeit auswählen",
+      "add": "Route hinzufügen"
+    },
+    "tags": {
+      "title": "Tags",
+      "placeholder": "Tag eingeben und Enter drücken",
+      "add": "Hinzufügen"
+    },
+    "datePicker": {
+      "title": "Datum auswählen"
+    },
+    "difficultyPicker": {
+      "title": "Schwierigkeit auswählen",
+      "easy": "Leicht",
+      "medium": "Mittel",
+      "hard": "Schwer"
+    },
+    "submit": "Aktivität erstellen",
+    "success": "Aktivität erfolgreich erstellt",
+    "errors": {
+      "createFailed": "Aktivität konnte nicht erstellt werden, bitte erneut versuchen"
+    }
+  },
+  "editActivity": {
+    "title": "Aktivität bearbeiten",
+    "basicInfo": {
+      "title": "Grundlegende Informationen",
+      "titlePlaceholder": "Aktivitätstitel eingeben",
+      "titleRequired": "Bitte Aktivitätstitel eingeben",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Aktivitätsbeschreibung eingeben",
+      "descriptionRequired": "Bitte Aktivitätsbeschreibung eingeben",
+      "location": "Ort",
+      "locationPlaceholder": "Aktivitätsort eingeben",
+      "locationRequired": "Bitte Aktivitätsort eingeben",
+      "startTime": "Startzeit",
+      "startTimePlaceholder": "Startzeit auswählen",
+      "startTimeRequired": "Bitte Startzeit auswählen",
+      "maxParticipants": "Maximale Teilnehmerzahl",
+      "maxParticipantsPlaceholder": "Maximale Teilnehmerzahl eingeben (2-100)",
+      "maxParticipantsRequired": "Bitte maximale Teilnehmerzahl eingeben",
+      "maxParticipantsInvalid": "Maximale Teilnehmerzahl muss zwischen 2 und 100 liegen"
+    },
+    "routes": {
+      "title": "Routen",
+      "route": "Route {number}",
+      "remove": "Entfernen",
+      "title": "Titel",
+      "titlePlaceholder": "Routentitel eingeben",
+      "titleRequired": "Bitte Routentitel eingeben",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Routenbeschreibung eingeben",
+      "descriptionRequired": "Bitte Routenbeschreibung eingeben",
+      "distance": "Entfernung (km)",
+      "distancePlaceholder": "Entfernung eingeben",
+      "distanceRequired": "Bitte Entfernung eingeben",
+      "distanceInvalid": "Entfernung muss zwischen 0 und 100 km liegen",
+      "duration": "Dauer (Stunden)",
+      "durationPlaceholder": "Dauer eingeben",
+      "durationRequired": "Bitte Dauer eingeben",
+      "durationInvalid": "Dauer muss zwischen 0 und 24 Stunden liegen",
+      "difficulty": "Schwierigkeit",
+      "difficultyPlaceholder": "Schwierigkeit auswählen",
+      "difficultyRequired": "Bitte Schwierigkeit auswählen",
+      "add": "Route hinzufügen"
+    },
+    "tags": {
+      "title": "Tags",
+      "placeholder": "Tag eingeben und Enter drücken",
+      "add": "Hinzufügen"
+    },
+    "datePicker": {
+      "title": "Datum auswählen"
+    },
+    "difficultyPicker": {
+      "title": "Schwierigkeit auswählen",
+      "easy": "Leicht",
+      "medium": "Mittel",
+      "hard": "Schwer"
+    },
+    "submit": "Änderungen speichern",
+    "success": "Aktivität erfolgreich aktualisiert",
+    "errors": {
+      "notLoggedIn": "Bitte zuerst anmelden",
+      "notCreator": "Sie sind nicht der Ersteller dieser Aktivität",
+      "loadFailed": "Aktivitätsdaten konnten nicht geladen werden",
+      "updateFailed": "Aktivität konnte nicht aktualisiert werden, bitte erneut versuchen"
+    }
+  },
+  "common": {
+    "messages": {
+      "loadFailed": "Laden fehlgeschlagen",
+      "saveFailed": "Speichern fehlgeschlagen",
+      "saveSuccess": "Erfolgreich gespeichert",
+      "deleteFailed": "Löschen fehlgeschlagen",
+      "deleteSuccess": "Erfolgreich gelöscht",
+      "operationFailed": "Vorgang fehlgeschlagen",
+      "operationSuccess": "Vorgang erfolgreich",
+      "createSuccess": "Erfolgreich erstellt",
+      "updateSuccess": "Erfolgreich aktualisiert",
+      "favoriteAdded": "Zu Favoriten hinzugefügt",
+      "favoriteRemoved": "Aus Favoriten entfernt",
+      "joinSuccess": "Erfolgreich beigetreten",
+      "joinCancelled": "Teilnahme abgesagt",
+      "voteSuccess": "Abstimmung erfolgreich",
+      "alreadyVoted": "Sie haben bereits abgestimmt, jede Person kann nur einmal abstimmen",
+      "activityUpdated": "Aktivität aktualisiert",
+      "activityApproved": "Aktivität genehmigt",
+      "activityRejected": "Aktivität abgelehnt",
+      "activityStarted": "Aktivität gestartet",
+      "activityCompleted": "Aktivität abgeschlossen",
+      "activityCancelled": "Aktivität abgesagt",
+      "activityDeleted": "Aktivität gelöscht",
+      "participantRemoved": "Teilnehmer entfernt",
+      "enrollmentStarted": "Anmeldung gestartet",
+      "noRoutesError": "Aktivität hat keine Routen, Anmeldung kann nicht gestartet werden",
+      "backupSuccess": "Backup erfolgreich",
+      "backupFailed": "Backup fehlgeschlagen",
+      "clearSuccess": "Erfolgreich geleert",
+      "clearFailed": "Leeren fehlgeschlagen",
+      "tagExists": "Tag existiert bereits",
+      "pleaseEnterEmail": "Bitte E-Mail-Adresse eingeben",
+      "passwordResetSent": "E-Mail zum Zurücksetzen des Passworts gesendet",
+      "googleLoginMock": "Mock-Modus: Google-Anmeldung erfordert Supabase-Konfiguration"
+    }
+  }
+}

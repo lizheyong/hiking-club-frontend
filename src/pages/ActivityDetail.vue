@@ -451,7 +451,7 @@ import { useUserStore } from "../stores/user";
 import { activityApi } from "../api/activity";
 import { userApi } from '../api/user';
 import { mockApi } from '../api/mock';
-import { showToast, Dialog, Notify } from "vant";
+import { showToast, Notify, showConfirmDialog } from "vant";
 import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
@@ -549,7 +549,7 @@ const adminActionOptions = computed(() => {
     if (isCreatorOrAdmin.value) {
         actions.push({ name: '编辑活动信息', actionType: 'editActivity' });
     }
-     if (isCreatorOrAdmin.value && activity.value.status !== 'pending' && activity.value.status !== 'cancelled' && activity.value.status !== 'rejected') {
+     if (isCreatorOrAdmin.value && activity.value.status !== 'pending') {
         actions.push({ name: '删除活动', actionType: 'deleteActivity', color: '#ee0a24', subname: '此操作不可逆' });
     }
     return actions;
@@ -656,17 +656,11 @@ async function handleVote(routeId) {
   votingRouteId.value = routeId;
   try {
     await activityApi.voteRoute(activity.value.id, routeId);
-    const votedActivityRoute = activity.value.routes.find(r => r.id === routeId);
-    if (votedActivityRoute) {
-        if (!votedActivityRoute.isVoted) votedActivityRoute.votes++;
-        votedActivityRoute.isVoted = true;
-
-        activity.value.routes.forEach(r => {
-            if (r.id !== routeId && r.isVoted) r.isVoted = false;
-        });
-    }
     showToast("投票成功！");
+    // 重新加载活动数据以获取最新的投票状态
+    await loadActivityDetail();
   } catch (err) {
+    console.error('投票失败:', err);
     showToast(`投票失败: ${err.message}`);
   } finally {
     votingRouteId.value = null;
@@ -793,13 +787,16 @@ async function onAdminActionSelect(item) {
                 showToast("活动已审核通过");
                 break;
             case 'reject':
-                const rejectReason = await Dialog.prompt({ title: '拒绝原因', message: '请输入拒绝此活动的原因 (可选)' });
-                if (rejectReason.action === 'confirm') {
-                    await mockApi.rejectActivity(activityId, rejectReason.value || "管理员未提供原因");
-                    activity.value.status = "rejected";
-                    activity.value.phase = "rejected";
-                    activity.value.rejectReason = rejectReason.value || "管理员未提供原因";
-                    showToast("活动已拒绝");
+                try {
+                    await showConfirmDialog({
+                        title: '拒绝活动',
+                        message: '确定要拒绝这个活动吗？'
+                    });
+                    await activityApi.rejectActivity(activityId, '活动已被拒绝');
+                    showToast('活动已拒绝');
+                    loadActivityDetail();
+                } catch (err) {
+                    // 用户取消，无需处理
                 }
                 break;
             case 'startEnrollment':
@@ -809,8 +806,11 @@ async function onAdminActionSelect(item) {
                 }
                 const hasVotes = activity.value.routes.some(r => r.votes > 0);
                 if (!hasVotes && activity.value.routes.length > 1) {
-                    const confirmed = await Dialog.confirm({ title: '提示', message: '当前没有任何路线获得投票。确定要随机选择一条并开始报名吗？' });
-                    if (confirmed.action !== 'confirm') return;
+                    try {
+                        await showConfirmDialog({ title: '提示', message: '当前没有任何路线获得投票。确定要随机选择一条并开始报名吗？' });
+                    } catch (err) {
+                        return; // 用户取消
+                    }
                 }
                 await mockApi.startEnrollment(activityId);
                 const updatedActivityEnroll = await activityApi.getActivityDetail(activityId);
@@ -830,21 +830,26 @@ async function onAdminActionSelect(item) {
                 showToast("活动已完成");
                 break;
             case 'cancelActivity':
-                const cancelReasonResult = await Dialog.prompt({ title: '取消活动', message: '请输入取消活动的原因 (可选)' });
-                 if (cancelReasonResult.action === 'confirm') {
-                    await mockApi.cancelActivity(activityId, cancelReasonResult.value || "组织者取消");
-                    activity.value.status = "cancelled";
-                    activity.value.phase = "cancelled";
-                    activity.value.cancelReason = cancelReasonResult.value || "组织者取消";
-                    showToast("活动已取消");
+                try {
+                    await showConfirmDialog({
+                        title: '取消活动',
+                        message: '确定要取消这个活动吗？'
+                    });
+                    await activityApi.cancelActivity(activityId, '活动已被取消');
+                    showToast('活动已取消');
+                    loadActivityDetail();
+                } catch (err) {
+                    // 用户取消，无需处理
                 }
                 break;
             case 'deleteActivity':
-                const confirmDelete = await Dialog.confirm({ title: '确认删除', message: '确定要永久删除此活动吗？此操作不可恢复。', confirmButtonColor: '#ee0a24'});
-                if (confirmDelete.action === 'confirm') {
+                try {
+                    await showConfirmDialog({ title: '确认删除', message: '确定要永久删除此活动吗？此操作不可恢复。' });
                     await activityApi.deleteActivity(activityId);
                     showToast("活动已删除");
                     router.replace('/activities');
+                } catch (err) {
+                    // 用户取消，无需处理
                 }
                 break;
             default:
@@ -866,20 +871,18 @@ async function onAdminActionSelect(item) {
 async function handleRemoveParticipant(participant) {
     if (!activity.value || !isCreatorOrAdmin.value) return;
     try {
-        const confirmResult = await Dialog.confirm({
+        await showConfirmDialog({
             title: "移除参与者",
             message: `确定要从活动中移除 ${participant.name} 吗？`,
         });
 
-        if (confirmResult.action === 'confirm') {
-            await mockApi.removeParticipant(activity.value.id, participant.id);
-            activity.value.participants = activity.value.participants.filter(p => p.id !== participant.id);
-            activity.value.currentParticipants--;
-            if (currentUser.value && participant.id === currentUser.value.id) {
-                activity.value.isJoined = false;
-            }
-            showToast("参与者已移除。");
+        await mockApi.removeParticipant(activity.value.id, participant.id);
+        activity.value.participants = activity.value.participants.filter(p => p.id !== participant.id);
+        activity.value.currentParticipants--;
+        if (currentUser.value && participant.id === currentUser.value.id) {
+            activity.value.isJoined = false;
         }
+        showToast("参与者已移除。");
     } catch (err) {
        if (err && err.action === 'cancel') return;
        showToast(`移除失败: ${err.message}`);

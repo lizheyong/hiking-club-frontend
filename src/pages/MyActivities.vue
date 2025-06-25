@@ -96,7 +96,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { activityApi } from "../api/activity";
-import { showToast } from "vant";
+import { showToast, VanTab, VanTabs } from "vant";
 
 const router = useRouter();
 const userStore = useUserStore();
