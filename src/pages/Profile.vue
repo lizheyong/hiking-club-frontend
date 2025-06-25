@@ -44,7 +44,7 @@
 
       <div class="section-title">{{ $t('profile.myActivities.title') }}</div>
       <div class="tabs glass-card">
-        <van-tabs v-model:active="activeTab" animated swipeable>
+        <van-tabs v-model:active="contentActiveTab" animated swipeable>
           <van-tab :title="$t('profile.myActivities.created')">
             <div v-if="createdActivities.length" class="activity-list">
               <div
@@ -237,7 +237,8 @@ const userInfo = ref({
   favoriteActivities: 0,
 });
 
-const activeTab = ref(2); // 默认选中第三个标签（profile）
+const activeTab = ref(2); // 底部主导航栏的激活标签
+const contentActiveTab = ref(0); // 个人资料页内部内容的激活标签
 const createdActivities = ref([]);
 const joinedActivities = ref([]);
 const favoriteActivities = ref([]);
@@ -269,9 +270,13 @@ onMounted(async () => {
       activityApi.getUserActivities(user.id, 'favorite'),
     ]);
 
-    createdActivities.value = created;
-    joinedActivities.value = joined;
-    favoriteActivities.value = favorite;
+    createdActivities.value = created.data;
+    joinedActivities.value = joined.data;
+    favoriteActivities.value = favorite.data;
+
+    userInfo.value.createdActivities = created.total;
+    userInfo.value.joinedActivities = joined.total;
+    userInfo.value.favoriteActivities = favorite.total;
   } catch (error) {
     showToast(t('profile.errors.loadFailed'));
     console.error(error);
@@ -540,6 +545,7 @@ const handleLogout = async () => {
       padding: 4px 8px;
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.9);
+      color: #fff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
   }
@@ -605,27 +611,15 @@ const handleLogout = async () => {
 
 .tabbar-container {
   position: fixed;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  z-index: 99;
-  padding: 8px 16px;
-  padding-bottom: calc(8px + env(safe-area-inset-bottom));
-  box-sizing: border-box;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 100;
 
   .tabbar {
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    padding: 6px 0;
-    height: 55px;
-    border-radius: 28px;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    padding: 12px 0;
 
     .tab-item {
       display: flex;

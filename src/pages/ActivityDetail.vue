@@ -714,7 +714,7 @@ async function handleCancelJoin() {
 async function handleToggleFavorite() {
     if (!activity.value) return;
     try {
-        const response = await mockApi.toggleFavorite(activity.value.id);
+        const response = await activityApi.toggleFavorite(activity.value.id);
         activity.value.isFavorite = response.isFavorite;
         showToast(response.message);
     } catch (err) {

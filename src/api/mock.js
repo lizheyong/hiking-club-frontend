@@ -1024,6 +1024,23 @@ export const mockApi = {
     };
   },
 
+  // Get current user's activities
+  async getMyActivities() {
+    await delay(1000);
+    // Mock current user ID (in real app, this would come from auth)
+    const currentUserId = 1;
+    
+    // Get activities the user has joined
+    const activities = mockActivities.filter((activity) =>
+      activity.participants.some((p) => p.id === currentUserId)
+    );
+
+    return {
+      data: activities,
+      total: activities.length,
+    };
+  },
+
   // Search activities
   async searchActivities(keyword) {
     await delay(1000);

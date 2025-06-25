@@ -59,6 +59,11 @@ const createActivityApi = () => {
           return supabaseApi.getUserActivities(userId, type);
         },
 
+        // 获取我的活动
+        getMyActivities() {
+          return supabaseApi.getMyActivities();
+        },
+
         // 搜索活动
         searchActivities(keyword) {
           return supabaseApi.searchActivities(keyword);
@@ -77,6 +82,11 @@ const createActivityApi = () => {
         // 审核通过活动
         approveActivity(id) {
           return supabaseApi.approveActivity(id);
+        },
+
+        // 获取收藏活动
+        getFavoriteActivities() {
+          return supabaseApi.getFavoriteActivities();
         },
       };
 
@@ -130,6 +140,11 @@ const createActivityApi = () => {
         // 获取用户活动
         getUserActivities(userId, type) {
           return request.get(`/users/${userId}/activities`, { params: { type } });
+        },
+
+        // 获取我的活动
+        getMyActivities() {
+          return request.get('/users/me/activities');
         },
 
         // 搜索活动
@@ -203,6 +218,11 @@ const createActivityApi = () => {
         // 获取用户活动
         getUserActivities(userId, type) {
           return mockApi.getUserActivities(userId, type);
+        },
+
+        // 获取我的活动
+        getMyActivities() {
+          return mockApi.getMyActivities();
         },
 
         // 搜索活动

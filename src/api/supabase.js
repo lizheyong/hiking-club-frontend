@@ -469,7 +469,7 @@ export const supabaseApi = {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('未登录')
 
-            const { routes, maxParticipants, startTime, ...activity } = activityData
+    const { routes, maxParticipants, startTime, coverImage, ...activity } = activityData
     
     // 创建活动
     const { data: newActivity, error } = await supabase
@@ -481,7 +481,8 @@ export const supabaseApi = {
         creator_id: user.id,
         current_participants: 0,
         status: 'pending',
-        phase: 'review'
+        phase: 'review',
+        cover_image: coverImage, // 保存封面图片URL
       })
       .select()
       .single()
@@ -690,6 +691,20 @@ export const supabaseApi = {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('未登录')
 
+    console.log('Toggle favorite for activity:', activityId, 'user:', user.id)
+
+    // 先检查活动是否存在
+    const { data: activity, error: activityError } = await supabase
+      .from('activities')
+      .select('id')
+      .eq('id', activityId)
+      .single()
+
+    if (activityError || !activity) {
+      console.error('Activity not found:', activityError)
+      throw new Error('活动不存在')
+    }
+
     // 检查是否已收藏
     const { data: existing } = await supabase
       .from('favorites')
@@ -720,6 +735,33 @@ export const supabaseApi = {
       if (error) throw new Error(error.message)
       return { message: "已添加收藏", isFavorite: true }
     }
+  },
+
+  // 获取收藏活动
+  async getFavoriteActivities() {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('未登录')
+
+    const { data, error } = await supabase
+      .from('favorites')
+      .select(`
+        activity:activities(*, profiles:creator_id(name))
+      `)
+      .eq('user_id', user.id)
+
+    if (error) throw new Error(error.message)
+
+    // 格式化数据
+    const formattedData = data.map(fav => ({
+      ...fav.activity,
+      isFavorite: true, // 因为是收藏列表，所以都是true
+      coverImage: fav.activity.cover_image,
+      startTime: fav.activity.start_time,
+      maxParticipants: fav.activity.max_participants,
+      creatorName: fav.activity.profiles?.name,
+    }))
+
+    return { data: formattedData, total: formattedData.length }
   },
 
   // 获取用户活动
@@ -765,9 +807,93 @@ export const supabaseApi = {
     const { data, error } = await query.order('created_at', { ascending: false })
     if (error) throw new Error(error.message)
 
+    const { data: { user } } = await supabase.auth.getUser()
+    const formattedData = data.map(activity => ({
+      ...activity,
+      coverImage: activity.cover_image,
+      startTime: activity.start_time,
+      maxParticipants: activity.max_participants,
+      currentParticipants: activity.participants?.length || 0,
+      isJoined: user ? activity.participants?.some(p => p.user_id === user.id) : false,
+      isFavorite: user ? activity.favorites?.some(f => f.user_id === user.id) : false,
+      routes: activity.routes?.map(route => ({
+        ...route,
+        isVoted: user ? activity.votes?.some(v => v.user_id === user.id && v.route_id === route.id) : false
+      })) || [],
+      participants: activity.participants?.map(p => ({
+        id: p.user_id,
+        name: p.profiles?.name,
+        avatar: p.profiles?.avatar,
+        joinTime: p.join_time
+      })) || []
+    }))
+
     return {
-      data: data || [],
-      total: data?.length || 0
+      data: formattedData,
+      total: formattedData.length
+    }
+  },
+
+  // 获取我的活动
+  async getMyActivities() {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('用户未登录')
+
+    // 首先获取用户参与的活动ID
+    const { data: userParticipations, error: participationError } = await supabase
+      .from('participants')
+      .select('activity_id')
+      .eq('user_id', user.id)
+
+    if (participationError) throw new Error(participationError.message)
+    
+    if (!userParticipations || userParticipations.length === 0) {
+      return { data: [], total: 0 }
+    }
+
+    const activityIds = userParticipations.map(p => p.activity_id)
+
+    // 然后获取这些活动的完整信息
+    const { data, error } = await supabase
+      .from('activities')
+      .select(`
+        *,
+        profiles:creator_id(name),
+        routes(*),
+        participants(user_id, join_time, profiles(name, avatar)),
+        favorites(user_id)
+      `)
+      .in('id', activityIds)
+      .order('created_at', { ascending: false })
+
+    if (error) throw new Error(error.message)
+
+    // 转换数据格式以匹配前端期望
+    const formattedData = data.map(activity => ({
+      ...activity,
+      coverImage: activity.cover_image,
+      startTime: activity.start_time,
+      maxParticipants: activity.max_participants,
+      creatorName: activity.profiles?.name,
+      creatorId: activity.creator_id,
+      currentParticipants: activity.participants?.length || 0,
+      isJoined: true, // 因为这是用户参与的活动，所以都是已参与
+      isFavorite: activity.favorites?.some(f => f.user_id === user.id) || false,
+      routes: activity.routes?.map(route => ({
+        ...route,
+        isVoted: false // 这里可以后续优化加入投票状态
+      })) || [],
+      participants: activity.participants?.map(p => ({
+        id: p.user_id,
+        name: p.profiles?.name,
+        avatar: p.profiles?.avatar,
+        joinTime: p.join_time
+      })) || []
+    }))
+
+    return {
+      data: formattedData || [],
+      total: formattedData?.length || 0
     }
   },
 
@@ -849,6 +975,23 @@ export const supabaseApi = {
 
     if (error) throw new Error(error.message)
     return data
+  },
+
+  // 上传活动图片
+  async uploadActivityImage(file) {
+    const { data, error } = await supabase.storage
+      .from('activity-images')
+      .upload(`public/${Date.now()}_${file.name}`, file)
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    const { data: publicUrlData } = supabase.storage
+      .from('activity-images')
+      .getPublicUrl(data.path)
+
+    return publicUrlData.publicUrl
   },
 
   // 管理员用户管理方法
